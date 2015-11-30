@@ -1,4 +1,5 @@
 <?php
+// Test Commit Commentary
 include_once ("include/config.php");
 include_once ("include/functions.php");
 
@@ -7,7 +8,7 @@ getHeaderHome();
 ?>
 <div class="container">
     <header class="clearfix">
-	<h1><img src="images/logo/Logo3.png" class="logo_home"/>De Bonte <span>Koe</span></h1>
+		<h1><img src="images/logo/Logo3.png" class="logo_home"/>De Bonte <span>Koe</span></h1>
     </header>
     
     <section>
