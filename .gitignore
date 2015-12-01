@@ -4,5 +4,5 @@ locks
 phpMyAdmin
 wwwroot
 
-//database connect data
+# Database connect data
 include/config.php
