@@ -3,3 +3,6 @@ diagnostics
 locks
 phpMyAdmin
 wwwroot
+
+//database connect data
+include/config.php
