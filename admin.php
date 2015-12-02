@@ -17,7 +17,7 @@
 		$pagename = "Reserveringen";
 		break;
 		default:
-		$pagename = "Admin Pagina";
+		$pagename = "Admin Paneel";
 	}
 ?>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>De Bonte Koe - Admin pagina</title>
+		<title>De Bonte Koe - <?php echo $pagename ?></title>
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -160,6 +160,7 @@
 					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 				</script>
 
+				<!-- Niet nodig?
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
 						<button class="btn btn-success">
@@ -191,13 +192,13 @@
 
 						<span class="btn btn-danger"></span>
 					</div>
-				</div><!-- /.sidebar-shortcuts -->
+				</div>--><!-- /.sidebar-shortcuts -->
 
 				<ul class="nav nav-list">
 					<li class="<?php if ($case=='') echo 'active'; ?>">
 						<a href="<?php echo $_SERVER['PHP_SELF']; ?>">
 							<i class="menu-icon fa fa-tachometer"></i>
-							<span class="menu-text"> Admin pagina </span>
+							<span class="menu-text"> Admin Paneel </span>
 						</a>
 
 						<b class="arrow"></b>
