@@ -7,7 +7,7 @@ PHP groep project voor school
 	<li>Cyndi - Uitgaanscentrum</li>
 	<li>Shivam - Bioscoop Module</li>
 	<li>Maarten - Documentatie verbeteren</li>
-	<li>Ben - Admin pagina(Rick maakt daar binnenkort wel een mooie pagina van)</li>
+	<li>Ben - Admin pagina</li>
 	<li>Wouter - ???</li>
 </ul>
 
