@@ -67,7 +67,7 @@ INSERT INTO `menukaart_soort_id` (`id`, `naam`, `opmerking`) VALUES
 
 CREATE TABLE `reserveringen` (
   `id` int(6) UNSIGNED NOT NULL,
-  `naam` varchar(50) NOT NULL,
+  `naam` varchar(64) NOT NULL,
   `aantalpers` int(64) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `opmerking` text
@@ -88,7 +88,7 @@ INSERT INTO `reserveringen` (`id`, `naam`, `aantalpers`, `date`, `opmerking`) VA
 
 CREATE TABLE `users` (
   `id` int(6) NOT NULL,
-  `naam` varchar(50) NOT NULL,
+  `naam` varchar(64) NOT NULL,
   `ww` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
