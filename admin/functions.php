@@ -37,6 +37,8 @@ function reserveringen_home()
 			</div><!-- /.page-header -->
 			<div class="container">
 				<h2>Test Table</h2>
+				<button type="button" class="btn btn-primary">Wijzig Table</button>
+				<br><br>
 				<div class="table-responsive">
 					<table class="table">
 						<tr>

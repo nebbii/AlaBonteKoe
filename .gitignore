@@ -9,5 +9,4 @@ wwwroot
 
 # Database connect data
 config.php
-**/config.php
-
+include/config.php
