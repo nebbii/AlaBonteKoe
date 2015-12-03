@@ -149,6 +149,21 @@
 	width: 33%;
 	padding: 0 25px;
 }
+.mediabox_nagerecht {
+	float: left;
+	width: 100%;
+	padding: 0 25px;
+}
+
+.menukaart {
+    width: 100%;
+}
+
+.menukaart tr td {
+    padding-top: 9px;
+    border-bottom: dashed 1px;
+    width: 75%;
+}
 
 .mediabox img {
 	max-width: 100%;
@@ -156,7 +171,7 @@
 	margin: 0 auto;
 }
 
-.mediabox h3 {
+.mediabox h4 {
 	margin: 0.75em 0 0.5em;
 }
 

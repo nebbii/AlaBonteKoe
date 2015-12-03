@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" name="Rick van Koppen">
     <link rel="shortcut icon" href="../favicon.ico"> 
-    <link rel="stylesheet" href="css/stylesheet.css" type="text="text/css" />
+    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="js/jquery.zaccordion.js"></script>
@@ -17,7 +17,7 @@
 				$("#slider").zAccordion({
 					tabWidth: "15%",
 					width: "100%",
-                                        speed: 1050,
+                                        
 					height: "100%",
                                         slideClass: 'slider',
                                         animationStart: function () {
@@ -63,7 +63,7 @@
                 <div class="slider-bg"></div>
                     <div class="slider-info">
                             <strong>Uitgaanscentrum</strong>
-                            <p class="slider-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in condimentum sem. Aenean faucibus dignissim auctor. In ut libero vitae augue laoreet iaculis at a tellus.</p>
+                            <p class="slider-text">Dit is de Uitgaanscentrum van de Bonte Koe, hier kan je kijken welke zalen wij hebben en wat er te beleven is. Er zijn totaal 3 zalen met allemaal een andere stijl. Dus kom een keertje langs om het te beleven!!!</p>
                     </div>
             </li>
             <li>
@@ -73,7 +73,7 @@
                     <div class="slider-bg"></div>
                     <div class="slider-info">
                             <strong>De Bioscoop</strong>
-                            <p class="slider-text">Duis viverra velit orci. Sed vestibulum mi nec est imperdiet sed ullamcorper augue molestie. Donec ultrices facilisis erat at porttitor.</p>
+                            <p class="slider-text">Dit is de Bioscoop van de Bonte Koe, Hier kan je naar de nieuwste films in de beste kwaliteit. Op deze pagina kan je ook gelijk zien hoelaat elke film draait en hoeveel plekken ernog beschikbaar zijn.</p>
                     </div>
             </li>
     </ul>
