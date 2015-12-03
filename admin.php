@@ -1,6 +1,7 @@
 <?php
 	include_once("admin/functions.php");
-
+	
+	include_once("include/config.php");
 	include_once("include/nebLib.php");
 
 	if(!isset($_GET['q']))
@@ -298,19 +299,21 @@
 
 						<!-- /section:basics/content.searchbox -->
 					</div>
-				<?php
-					$case = $_GET['q'];
-					switch($case) 
-					{
-					case "rest_res":
-					reserveringen_home();
-					break;
-					
-					default:
-					main_page();
-					}
-				
-				?>	
+						<?php
+						
+						$case = $_GET['q'];
+						switch($case) {
+							
+							case "rest_res":
+							reserveringen_home();
+							break;
+							
+							default:
+							main_page();
+							
+						}
+						
+						?>	
 				</div>
 			</div><!-- /.main-content -->
 

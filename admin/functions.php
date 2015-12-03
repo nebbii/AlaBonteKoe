@@ -1,5 +1,6 @@
 <?php
-function main_page() {
+function main_page() 
+{
 	?>
 	<div class='page-content'>
 		<div class='page-header'>
@@ -20,7 +21,8 @@ function main_page() {
 	<?php
 }
 
-function reserveringen_home() {
+function reserveringen_home() 
+{
 	?>
 		<!-- /section:basics/content.breadcrumbs -->
 		<div class='page-content'>
@@ -51,7 +53,7 @@ function reserveringen_home() {
 		</div><!-- /.page-content -->
 	</div>
 	<?php
+	
 }
-
 
 ?>
