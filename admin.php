@@ -1,9 +1,32 @@
+<?php
+	include_once("admin/functions.php");
+	
+	include_once("include/config.php");
+	include_once("include/nebLib.php");
+
+	if(!isset($_GET['q']))
+	{
+		$_GET['q']='';
+	} 
+	// define tags for breadcrumbs
+	$case = $_GET['q'];
+	$cpath = Array();
+	switch($case) 
+	{
+		case "rest_res":
+		$cpath = array("Restaurant");
+		$pagename = "Reserveringen";
+		break;
+		default:
+		$pagename = "Admin Paneel";
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>De Bonte Koe - Admin pagina</title>
+		<title>De Bonte Koe - <?php echo $pagename ?></title>
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -101,7 +124,7 @@
 								</li>
 
 								<li>
-									<a href="profile.html">
+									<a href="#">
 										<i class="ace-icon fa fa-user"></i>
 										Profile
 									</a>
@@ -138,6 +161,7 @@
 					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 				</script>
 
+				<!-- Niet nodig?
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
 						<button class="btn btn-success">
@@ -148,7 +172,7 @@
 							<i class="ace-icon fa fa-pencil"></i>
 						</button>
 
-						<!-- #section:basics/sidebar.layout.shortcuts -->
+						<!-- #section:basics/sidebar.layout.shortcuts 
 						<button class="btn btn-warning">
 							<i class="ace-icon fa fa-users"></i>
 						</button>
@@ -157,7 +181,7 @@
 							<i class="ace-icon fa fa-cogs"></i>
 						</button>
 
-						<!-- /section:basics/sidebar.layout.shortcuts -->
+						<!-- /section:basics/sidebar.layout.shortcuts 
 					</div>
 
 					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
@@ -172,10 +196,10 @@
 				</div><!-- /.sidebar-shortcuts -->
 
 				<ul class="nav nav-list">
-					<li class="active">
-						<a href="admin.php">
+					<li class="<?php if ($case=='') echo 'active'; ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF']; ?>">
 							<i class="menu-icon fa fa-tachometer"></i>
-							<span class="menu-text"> Admin pagina </span>
+							<span class="menu-text"> Admin Paneel </span>
 						</a>
 
 						<b class="arrow"></b>
@@ -193,8 +217,8 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
-								<a href="#">
+							<li class="<?php if ($case=='rest_res') echo 'active'; ?>">
+								<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_res"; ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Reserveringen
 								</a>
@@ -213,8 +237,8 @@
 						</ul>
 					</li>
 
-					<li class="">
-						<a href="calendar.html">
+					<li class="<?php if ($case=='bios') echo 'active'; ?>">
+						<a href="#">
 							<i class="menu-icon fa fa-calendar"></i>
 
 							<span class="menu-text">Bioscoop
@@ -241,48 +265,55 @@
 
 			<!-- /section:basics/sidebar -->
 			<div class="main-content">
-				<div class="main-content-inner">
+				<div class='main-content-inner'>
 					<!-- #section:basics/content.breadcrumbs -->
-					<div class="breadcrumbs" id="breadcrumbs">
-						<script type="text/javascript">
+					<div class='breadcrumbs' id='breadcrumbs'>
+						<script type='text/javascript'>
 							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
 						</script>
 
-						<ul class="breadcrumb">
+						<ul class='breadcrumb'>
 							<li>
-								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">De Bonte Koe</a>
+								<i class='ace-icon fa fa-home home-icon'></i>
+								<a href='#'>De Bonte Koe</a>
 							</li>
-							<li class="active">Admin pagina</li>
+							<?php
+								for($i=0;$i<count($cpath)-1;$i++) {
+								   echo "<li><a href='#'> &gt;".$cpath[$i]."</a></li>";
+								}
+								echo end($cpath);
+							?>
+							
+							<li class='active'><?php echo $pagename; ?></li>
 						</ul><!-- /.breadcrumb -->
 
 						<!-- #section:basics/content.searchbox -->
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="ace-icon fa fa-search nav-search-icon"></i>
+						<div class='nav-search' id='nav-search'>
+							<form class='form-search'>
+								<span class='input-icon'>
+									<input type='text' placeholder='Search ...' class='nav-search-input' id='nav-search-input' autocomplete='off' />
+									<i class='ace-icon fa fa-search nav-search-icon'></i>
 								</span>
 							</form>
 						</div><!-- /.nav-search -->
 
 						<!-- /section:basics/content.searchbox -->
 					</div>
-
-					<!-- /section:basics/content.breadcrumbs -->
-					<div class="page-content">
-						<div class="page-header">
-							<h1>
-								Admin pagina
-								<small>
-									<i class="ace-icon fa fa-angle-double-right"></i>
-									overview &amp; stats
-								</small>
-							</h1>
-						</div><!-- /.page-header -->
-
+						<?php
 						
-					</div><!-- /.page-content -->
+						$case = $_GET['q'];
+						switch($case) {
+							
+							case "rest_res":
+							reserveringen_home();
+							break;
+							
+							default:
+							main_page();
+							
+						}
+						
+						?>	
 				</div>
 			</div><!-- /.main-content -->
 
