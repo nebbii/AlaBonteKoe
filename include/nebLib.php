@@ -3,12 +3,6 @@
 //	This big bag of tricks was composed by me
 //	rule 1: do not talk about the big bag of tricks
 //	rule 2: tell your friends about the big bag of tricks
-//	---		---		---		---		---		---		*/
-//	# - This file should be placed in the same directory
-//		where the database constants (HOST,USER,PASS,DBNAME)
-//		are defined. If this file is not named "config.php",
-//		then the dbConnect() function needs to be 
-//		modified to work properly.
 /*	***			***				***			  ***	*/
 
 session_start();

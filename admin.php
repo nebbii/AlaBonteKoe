@@ -1,24 +1,43 @@
 <?php
-	include_once("admin/functions.php");
 	
-	include_once("include/config.php");
+	include_once("admin/functions.php");
+	include("classes/database.class.php");
 	include_once("include/nebLib.php");
+	include_once("include/config.php");
+	include_once("include/functions.php");
+	
+	$conn = Database::getInstance();
 
+	$conn->connect(HOST,USER,PASS,DBNAME);
+	
 	if(!isset($_GET['q']))
 	{
 		$_GET['q']='';
 	} 
-	// define tags for breadcrumbs
+	
 	$case = $_GET['q'];
-	$cpath = Array();
+	
+	// define tags for breadcrumbs
 	switch($case) 
 	{
 		case "rest_res":
-		$cpath = array("Restaurant");
-		$pagename = "Reserveringen";
+		  $cpath = array(
+			array("head" => "Restaurant", "url" => ""),
+			array("head" => "Reserveringen", "url" => "?q=rest_res"));
+		  $pagename = "Reserveringen";
+		break;
+		case "rest_res_new":
+		  $cpath = array(
+			array("head" => "Restaurant", "url" => ""),
+			array("head" => "Reserveringen", "url" => "?q=rest_res"),
+			array("head" => "Nieuwe reservering", "url" => "?q=rest_res_new")
+			);
+		  $pagename = "Nieuwe reservering";
 		break;
 		default:
-		$pagename = "Admin Paneel";
+		$cpath = array(
+			array("head" => "Admin Paneel", "url" => "")
+			);
 	}
 ?>
 <!DOCTYPE html>
@@ -26,7 +45,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>De Bonte Koe - <?php echo $pagename ?></title>
+		<title>De Bonte Koe - <?php echo $cpath[count($cpath)-1]["head"] ?></title>
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -275,16 +294,16 @@
 						<ul class='breadcrumb'>
 							<li>
 								<i class='ace-icon fa fa-home home-icon'></i>
-								<a href='#'>De Bonte Koe</a>
+								<a href=''>De Bonte Koe</a>
 							</li>
 							<?php
 								for($i=0;$i<count($cpath)-1;$i++) {
-								   echo "<li><a href='#'> &gt;".$cpath[$i]."</a></li>";
+								   echo "<li><a href='".$_SERVER['PHP_SELF'].$cpath[$i]["url"]."'>".$cpath[$i]["head"]."</a></li>";
 								}
-								echo end($cpath);
+								//echo end($cpath);
 							?>
 							
-							<li class='active'><?php echo $pagename; ?></li>
+							<li class='active'><?php echo $cpath[count($cpath)-1]["head"]; /*echo "<pre>";print_r($cpath);echo "</pre>";*/ ?></li>
 						</ul><!-- /.breadcrumb -->
 
 						<!-- #section:basics/content.searchbox -->
@@ -302,15 +321,16 @@
 						<?php
 						
 						$case = $_GET['q'];
-						switch($case) {
-							
-							case "rest_res":
-							reserveringen_home();
-							break;
-							
-							default:
-							main_page();
-							
+						switch($case) 
+						{
+						case "rest_res":
+						  reserveringen_home();
+						break;	
+						case "rest_res_new":
+						  reserveringen_form();
+						break;
+						default:
+						  main_page();
 						}
 						
 						?>	

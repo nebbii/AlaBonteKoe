@@ -1,4 +1,16 @@
 <?php
+// database connect
+/*function dbConnect()
+{
+	include_once("config.php");
+	global $dbLink = new mysqli(HOST,USER,PASS,DBNAME);
+	
+	if ($dbLink->connect_errno) {
+		print_r("Database connect failed!");
+	}
+}*/
+
+// # html block functions
 function getHeaderHome()
 {
 	?>
@@ -122,5 +134,6 @@ function getFooter()
 		</script>
 	<?php
 }
+
 
 ?>
