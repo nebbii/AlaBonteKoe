@@ -9,5 +9,5 @@ wwwroot
 
 # Database connect data
 config.php
-include/config.php
+AlaBonteKoe/include/config.php
 
