@@ -1,4 +1,7 @@
 <?php
+
+/* Begin HTML Block */
+
 function main_page() 
 {
 	?>
@@ -41,6 +44,12 @@ function reserveringen_home()
 			<div class="container">
 				<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_res_new"; ?>" class="btn btn-primary">Nieuwe reservering</a>
 				<br><br>
+				<?php 
+					if(isset($_GET['a'])) 
+					{
+						echo "<h4>Nieuwe reservering aangemaakt!</h4>";
+					}
+				?>
 				<div class="table-responsive">
 					<table class="table">
 						<tr>
@@ -87,17 +96,20 @@ function reserveringen_form()
 				</h1>
 			</div><!-- /.page-header -->
 			<div class="container">
-				<form class="form-horizontal" role="form">
+				<div>
+				<h3>Hier kan u een nieuwe reservering maken.</h3><br>
+				</div>
+				<form action="<?php echo $_SERVER['PHP_SELF']."?q=rest_res&a=submitres";?>" method="POST" class="form-horizontal" role="form">
 				  <div class="form-group">
-					<label class="control-label col-sm-2" for="email">Naam Reservering:</label>
+					<label class="control-label col-sm-2" for="naam">Naam Reservering:</label>
 					<div class="col-sm-6">
-					  <input type="email" class="form-control" id="resnaam" placeholder="Naam">
+					  <input type="text" class="form-control" name="naam" id="naam" placeholder="Nieuwe reservering">
 					</div>
 				  </div>
 				  <div class="form-group">
-				    <label class="control-label col-sm-2" for="aantpers">Aantal Personen: </label>
+				    <label class="control-label col-sm-2" for="aantalpers">Aantal Personen: </label>
 					<div class="col-sm-2">
-					  <select class="form-control" id="aantpers">
+					  <select class="form-control" name="aantalpers" id="aantalpers">
 					    <option value="1" selected>1</option>
 					    <option value="2">2</option>
 					    <option value="3">3</option>
@@ -112,13 +124,23 @@ function reserveringen_form()
 					</div>
 				  </div>
 				  <div class="form-group">
-				    <label class="control-label col-sm-2">Datum en Tijd</label>
+				    <label class="control-label col-sm-2">Datum &amp; Tijd</label>
 					<div class='col-sm-3'>
-						<div class='input-group' id='datetimepicker1'>
-							<input type='date' class="form-control">
-							
+						<div class='input-group' id='date'>
+							<input type='text' class="form-control" name="date" value="<?php echo date("Y/m/d"); ?>">	
 						</div>
 					</div>
+					<div class='col-sm-3'>
+						<div class='input-group' id='text'>
+							<input type='text' class="form-control" name="time" value="<?php echo date("H:i"); ?>"></input>	
+						</div>
+					</div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="opmerking">Opmerking</label>
+					<div class="col-sm-6">
+					  <textarea class="form-control" name="opmerking" id="opmerking"></textarea>
+					</div><hr>
 				  </div>
 				  <div class="form-group"> 
 					<div class="col-sm-offset-2 col-sm-10">
@@ -130,6 +152,39 @@ function reserveringen_form()
 			</div>
 		</div><!-- /.page-content -->
 	<?php
+	
+}
+
+/*	End HTML Functions */
+
+function reservering_processform()
+{
+	// begin met sql variabel bouwen
+	$sql = "INSERT INTO `reserveringen`(";
+	
+	$_POST['date'] .= " ".$_POST['time'];
+	unset($_POST['time']);
+	
+	foreach ($_POST as $key => $value) 
+	{
+		$sql .= "`".$key."`,";
+	}
+	
+	$sql = substr($sql,0,-1).") VALUES (";
+	
+	foreach ($_POST as $key => $value) 
+	{
+		$sql .= "\"".$value."\",";
+	}
+	
+	$sql = substr($sql,0,-1).")";
+	
+	global $conn;
+	
+	///*debug: view query: */ echo $sql;print_r("<pre>");print_r($_POST);print_r("</pre>");
+	$conn->doQuery($sql);
+	
+	
 	
 }
 

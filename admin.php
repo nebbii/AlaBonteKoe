@@ -21,6 +21,10 @@
 	switch($case) 
 	{
 		case "rest_res":
+		  if((isset($_GET['a']))&&($_GET['a']=='submitres'))
+		  {
+			reservering_processform();
+		  }
 		  $cpath = array(
 			array("head" => "Restaurant", "url" => ""),
 			array("head" => "Reserveringen", "url" => "?q=rest_res"));
@@ -294,11 +298,11 @@
 						<ul class='breadcrumb'>
 							<li>
 								<i class='ace-icon fa fa-home home-icon'></i>
-								<a href=''>De Bonte Koe</a>
+								<a href='<?php echo $_SERVER['PHP_SELF']; ?>'>De Bonte Koe</a>
 							</li>
 							<?php
 								for($i=0;$i<count($cpath)-1;$i++) {
-								   echo "<li><a href='".$_SERVER['PHP_SELF'].$cpath[$i]["url"]."'>".$cpath[$i]["head"]."</a></li>";
+								   echo "<li>".(($cpath[$i]["url"]!="") ? "<a href='".$_SERVER['PHP_SELF'].$cpath[$i]["url"]."'>" : '').$cpath[$i]["head"].(($cpath[$i]["url"]!="") ? "</a>" : "")."</li>";
 								}
 								//echo end($cpath);
 							?>
