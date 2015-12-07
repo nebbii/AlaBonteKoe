@@ -45,9 +45,18 @@ function reserveringen_home()
 				<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_res_new"; ?>" class="btn btn-primary">Nieuwe reservering</a>
 				<br><br>
 				<?php 
-					if(isset($_GET['a'])) 
-					{
-						echo "<h4>Nieuwe reservering aangemaakt!</h4>";
+					// table notification box
+					if(isset($_GET['a']))
+					{	
+						switch($_GET['a']) 
+						{
+							case "submitres":
+								echo "<h4>Nieuwe reservering aangemaakt.</h4>";
+							break;
+							case "delres":
+								echo "<h4>Reservering verwijderd.</h4>";
+							break;
+						}
 					}
 				?>
 				<div class="table-responsive">
@@ -58,15 +67,19 @@ function reserveringen_home()
 							<th>Aantal Personen</th>
 							<th>Datum &amp Tijd</th>
 							<th>Opmerking</th>
+							<th>Verwijder</th>
 						</tr>
 					<?php
 					while($row = $conn->loadObjectList()) {
 						echo "<tr>";
-						echo "<td>".$row['id']."</td>";
-						echo "<td>".$row['naam']."</td>";
-						echo "<td>".$row['aantalpers']."</td>";
-						echo "<td>".$row['date']."</td>";
-						echo "<td>".$row['opmerking']."</td>";
+						echo "<td><input type='text' name='res[{$row['id']}][id]' value='".$row['id']."'></td>";
+						echo "<td><input type='text' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
+						echo "<td><input type='text' name='res[{$row['id']}][aantalpers]' value='".$row['aantalpers']."'></td>";
+						echo "<td><input type='text' name='res[{$row['id']}][date]' value='".$row['date']."'></td>";
+						echo "<td><input type='text' name='res[{$row['id']}][opmerking]' value='".$row['opmerking']."'></td>";
+						
+						echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_res&a=delres&id={$row['id']}'><span class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
+						
 						echo "</tr>";
 					}
 					?>

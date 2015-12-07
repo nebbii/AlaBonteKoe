@@ -9,24 +9,30 @@
 
 	$conn->connect(HOST,USER,PASS,DBNAME);
 	
-	// check for login
-	if (isset($_GET['a'])&&$_GET['a']=="login")
+	// check for action
+	if (isset($_GET['a']))
 	{
-		$usr = $_POST['username'];
-		$pwd = $_POST['password'];
-		$conn->doQuery("SELECT * FROM `users` WHERE EXISTS (SELECT * FROM `users` WHERE `naam`='{$usr}' AND `ww`='{$pwd}')");
-		
-		if($conn->loadObjectList()) 
+		switch($_GET['a'])
 		{
-			$_SESSION['login'] = 1;
-			$_SESSION['naam'] = $usr;
+			case "login":
+				$usr = $_POST['username'];
+				$pwd = $_POST['password'];
+				$conn->doQuery("SELECT * FROM `users` WHERE EXISTS".
+						"(SELECT * FROM `users` WHERE `naam`='{$usr}' AND `ww`='{$pwd}')");
+				if($conn->loadObjectList()) 
+				{
+					$_SESSION['login'] = 1;
+					$_SESSION['naam'] = $usr;
+				}
+			break;
+			case "logoff":
+				unset($_SESSION['login']);
+			break;
+			case "delres":
+				$conn->doQuery("DELETE FROM `reserveringen` where `id`={$_GET['id']}");
+			break;
 		}
 	}
-	if (isset($_GET['a'])&&$_GET['a']=="logoff")
-	{
-		unset($_SESSION['login']);
-	}
-	
 	
 	// define $case for both switches
 	if(!isset($_GET['q']))
