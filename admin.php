@@ -10,7 +10,7 @@
 	$conn->connect(HOST,USER,PASS,DBNAME);
 	
 	// check for login
-	if (isset($_GET['a'])&&$_GET['a'][0]=="l")
+	if (isset($_GET['a'])&&$_GET['a']=="login")
 	{
 		$usr = $_POST['username'];
 		$pwd = $_POST['password'];
@@ -21,6 +21,10 @@
 			$_SESSION['login'] = 1;
 			$_SESSION['naam'] = $usr;
 		}
+	}
+	if (isset($_GET['a'])&&$_GET['a']=="logoff")
+	{
+		unset($_SESSION['login']);
 	}
 	
 	
@@ -128,7 +132,7 @@
 					<a href="#" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
-							Admin pagina
+							Admin Pagina
 						</small>
 					</a>
 
@@ -172,7 +176,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a href="<?php echo $_SERVER['PHP_SELF']."?a=logoff"; ?>">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>
@@ -366,7 +370,7 @@
 						Je bent momenteel niet ingelogd.
 					</div>
 					<h3>Vul uw login gegevens in.</h3>
-					<form action="<?php echo $_SERVER['PHP_SELF']."?a=l".randomString(); ?>"method="POST" class="form-horiontal" role="form">
+					<form action="<?php echo $_SERVER['PHP_SELF']."?a=login"?>" method="POST" class="form-horiontal" role="form">
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="username">Usernaam:</label>
 					    <div class="col-sm-10">
