@@ -1,7 +1,6 @@
 <?php
-	
 	include_once("admin/functions.php");
-	include("classes/database.class.php");
+	include_once("classes/database.class.php");
 	include_once("include/nebLib.php");
 	include_once("include/config.php");
 	include_once("include/functions.php");
@@ -10,13 +9,29 @@
 
 	$conn->connect(HOST,USER,PASS,DBNAME);
 	
+	// check for login
+	if (isset($_GET['a'])&&$_GET['a'][0]=="l")
+	{
+		$usr = $_POST['username'];
+		$pwd = $_POST['password'];
+		$conn->doQuery("SELECT * FROM `users` WHERE EXISTS (SELECT * FROM `users` WHERE `naam`='{$usr}' AND `ww`='{$pwd}')");
+		
+		if($conn->loadObjectList()) 
+		{
+			$_SESSION['login'] = 1;
+			$_SESSION['naam'] = $usr;
+		}
+	}
+	
+	
+	// define $case for both switches
 	if(!isset($_GET['q']))
 	{
 		$_GET['q']='';
-	} 
+	} 	
 	
 	$case = $_GET['q'];
-	
+
 	// define tags for breadcrumbs
 	switch($case) 
 	{
@@ -41,7 +56,7 @@
 		default:
 		$cpath = array(
 			array("head" => "Admin Paneel", "url" => "")
-			);
+		);
 	}
 ?>
 <!DOCTYPE html>
@@ -89,11 +104,12 @@
 
 	<body class="no-skin">
 		<!-- #section:basics/navbar.layout -->
+		<?php if (isset($_SESSION['login'])): ?>
 		<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
 			</script>
-
+				
 			<div class="navbar-container" id="navbar-container">
 				<!-- #section:basics/sidebar.mobile.toggle -->
 				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
@@ -122,7 +138,7 @@
 
 					<!-- /section:basics/navbar.toggle -->
 				</div>
-
+			
 				<!-- #section:basics/navbar.dropdown -->
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
@@ -132,7 +148,7 @@
 								
 								<span class="user-info">
 									<small>Welcome,</small>
-									Admin
+									<?php echo $_SESSION['naam']?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -174,6 +190,8 @@
 
 		<!-- /section:basics/navbar.layout -->
 		<div class="main-container" id="main-container">
+			
+			
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
@@ -323,23 +341,53 @@
 						<!-- /section:basics/content.searchbox -->
 					</div>
 						<?php
-						
-						$case = $_GET['q'];
-						switch($case) 
+						// print huidige pagina
+						if (isset($_GET['q']))
 						{
-						case "rest_res":
-						  reserveringen_home();
-						break;	
-						case "rest_res_new":
-						  reserveringen_form();
-						break;
-						default:
-						  main_page();
+							$case = $_GET['q'];
+							switch($case) 
+							{
+							case "rest_res":
+							  reserveringen_home();
+							break;	
+							case "rest_res_new":
+							  reserveringen_form();
+							break;
+							default:
+							  main_page();
+							}
 						}
-						
 						?>	
 				</div>
 			</div><!-- /.main-content -->
+			<?php else: ?>
+				<div class="container">
+					<div class="alert alert-info">
+						Je bent momenteel niet ingelogd.
+					</div>
+					<h3>Vul uw login gegevens in.</h3>
+					<form action="<?php echo $_SERVER['PHP_SELF']."?a=l".randomString(); ?>"method="POST" class="form-horiontal" role="form">
+					  <div class="form-group">
+					    <label class="control-label col-sm-2" for="username">Usernaam:</label>
+					    <div class="col-sm-10">
+					      <input class="form-control" type="username" name="username" id="username" placeholder="Uw login">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="control-label col-sm-2" for="password">Wachtwoord:</label>
+						<div class="col-sm-10">
+						  <input class="form-control" type="password" name="password" id="password" placeholder="  Uw wachtwoord">
+						</div>
+					  </div><br><br>
+					  <div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+					      <button type="submit" class="btn btn-success">Login</button>
+					    </div>
+					  </div>
+					  
+					</form>
+				</div>
+			<?php endif; ?>
 
 			<div class="footer">
 				<div class="footer-inner">
@@ -407,6 +455,6 @@
 		<script src="assets/js/ace/ace.widget-on-reload.js"></script>
 		<script src="assets/js/ace/ace.searchbox-autocomplete.js"></script>
 
-
+	
 	</body>
 </html>

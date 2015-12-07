@@ -5,9 +5,7 @@
 //	rule 2: tell your friends about the big bag of tricks
 /*	***			***				***			  ***	*/
 
-session_start();
-
-function RandomString($length = 10) {
+function randomString($length = 10) {
 	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$charactersLength = strlen($characters);
 	$randomString = '';
