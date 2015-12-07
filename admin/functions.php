@@ -1,11 +1,7 @@
 <?php
 session_start();
+
 /* Begin HTML Block */
-function login() {
-	
-}
-
-
 function main_page() 
 {
 	?>
