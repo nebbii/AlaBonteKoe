@@ -28,6 +28,32 @@
 			case "logoff":
 				unset($_SESSION['login']);
 			break;
+			
+			case "savechanges":
+				//echo "<pre>Post dump:\n"; print_r($_POST['res']);
+				foreach($_POST['res'] as $entry)
+				{
+					
+					if($entry['check']==1) 
+					{
+						$sql = "UPDATE `reserveringen` SET";
+						unset($entry['check']);
+						
+						foreach($entry as $key => $value)
+						{
+							$sql .= " `{$key}`='{$value}',";
+						}
+						$sql = substr($sql,0,-1);
+						$sql .= " WHERE `id`={$entry['id']}";
+						
+						$conn->doQuery($sql);
+					}
+					$sql = null;
+					//echo $sql."\n\n";echo "</pre>";
+					
+				}
+			break;
+			
 			case "delres":
 				$conn->doQuery("DELETE FROM `reserveringen` where `id`={$_GET['id']}");
 			break;

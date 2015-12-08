@@ -42,7 +42,7 @@ function reserveringen_home()
 				</h1>
 			</div><!-- /.page-header -->
 			<div class="container">
-				<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_res_new"; ?>" class="btn btn-primary">Nieuwe reservering</a>
+				<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_res_new"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nieuwe reservering</a>
 				<br><br>
 				<?php 
 					// table notification box
@@ -53,15 +53,27 @@ function reserveringen_home()
 							case "submitres":
 								echo "<h4>Nieuwe reservering aangemaakt.</h4>";
 							break;
+							case "savechanges":
+								echo "<h4>Wijzigingen opgeslagen.</h4>";
+							break;
 							case "delres":
 								echo "<h4>Reservering verwijderd.</h4>";
 							break;
 						}
 					}
 				?>
+				<script>
+				function tickupbox(id){
+					//alert("Hello world!");
+					document.getElementById('rescheck['+id+']').value = 1;
+					document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
+					document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
+				}
+				</script>
 				<div class="table-responsive">
-					<table class="table">
-						<tr>
+					<form action="<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_res&a=savechanges" method="POST"><table class="table">
+						<tr>	
+							<th>&nbsp;</th>
 							<th>Reservering #</th>
 							<th>Naam</th>
 							<th>Aantal Personen</th>
@@ -72,18 +84,26 @@ function reserveringen_home()
 					<?php
 					while($row = $conn->loadObjectList()) {
 						echo "<tr>";
-						echo "<td><input type='text' name='res[{$row['id']}][id]' value='".$row['id']."'></td>";
-						echo "<td><input type='text' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
-						echo "<td><input type='text' name='res[{$row['id']}][aantalpers]' value='".$row['aantalpers']."'></td>";
-						echo "<td><input type='text' name='res[{$row['id']}][date]' value='".$row['date']."'></td>";
-						echo "<td><input type='text' name='res[{$row['id']}][opmerking]' value='".$row['opmerking']."'></td>";
+						echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";
+						echo "<input type='hidden' name='res[{$row['id']}][id]' value='".$row['id']."'>";
+						echo "<td><span id='checkboxglyph[{$row['id']}]'></span></td>";
+						//echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][id]' value='".$row['id']."'></td>";
+						echo "<td>".$row['id']."</td>";
+						echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
+						echo "<td><input type='number' maxlength='6' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][aantalpers]' value='".$row['aantalpers']."'></td>";
+						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][date]' value='".$row['date']."'></td>";
+						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][opmerking]' value='".$row['opmerking']."'></td>";
 						
-						echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_res&a=delres&id={$row['id']}'><span class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
+						echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_res&a=delres&id={$row['id']}'><span style='font-size:1.5em;' class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
 						
 						echo "</tr>";
 					}
 					?>
 					</table>
+					<div class="form-group"> 
+					    <span id="savechangecontain"></span>
+					</div>
+					</form>
 				</div>
 			</div>
 		</div><!-- /.page-content -->
