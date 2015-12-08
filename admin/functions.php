@@ -50,7 +50,7 @@ function reserveringen_home()
 					{	
 						switch($_GET['a']) 
 						{
-							case "submitres":
+							case "submit":
 								echo "<h4>Nieuwe reservering aangemaakt.</h4>";
 							break;
 							case "savechanges":
@@ -132,7 +132,7 @@ function reserveringen_form()
 				<div>
 				<h3>Hier kan u een nieuwe reservering maken.</h3><br>
 				</div>
-				<form action="<?php echo $_SERVER['PHP_SELF']."?q=rest_res&a=submitres";?>" method="POST" class="form-horizontal" role="form">
+				<form action="<?php echo $_SERVER['PHP_SELF']."?q=rest_res&a=submit";?>" method="POST" class="form-horizontal" role="form">
 				  <div class="form-group">
 					<label class="control-label col-sm-2" for="naam">Naam Reservering:</label>
 					<div class="col-sm-6">
@@ -216,9 +216,191 @@ function reservering_processform()
 	
 	///*debug: view query: */ echo $sql;print_r("<pre>");print_r($_POST);print_r("</pre>");
 	$conn->doQuery($sql);
+}
+
+function menukaart_home() 
+{
+	global $conn;
+	
+	// build select options
+	$conn->doQuery("SELECT * FROM `menukaart_soort_id`");
+	$option = Array();
+	while($row = $conn->loadObjectList()){
+		$option[$row['id']] = $row['naam'];
+	}
+	//echo "<pre>";print_r($option);echo "</pre>";
+	?>
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class='page-content'>
+			<div class='page-header'>
+				<h1>
+					Menukaart
+					<small>
+						<i class='ace-icon fa fa-angle-double-right'></i>
+						menukaart &amp; meer
+					</small>
+				</h1>
+			</div><!-- /.page-header -->
+			<div class="container">
+				<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu_new"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nieuw gerecht</a>
+				<br><br>
+				<?php 
+					// table notification box
+					if(isset($_GET['a']))
+					{	
+						switch($_GET['a']) 
+						{
+							case "submit":
+								echo "<h4>Nieuwe item aangemaakt.</h4>";
+							break;
+							case "savechanges":
+								echo "<h4>Wijzigingen opgeslagen.</h4>";
+							break;
+							case "delres":
+								echo "<h4>Item verwijderd.</h4>";
+							break;
+						}
+					}
+				?>
+				<script>
+				function tickupbox(id){
+					//alert("Hello world!");
+					document.getElementById('rescheck['+id+']').value = 1;
+					document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
+					document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
+				}
+				</script>
+				<div class="table-responsive">
+					<form action="<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_menu&a=savechanges" method="POST" id="res"><table class="table">
+						<tr>	
+							<th>&nbsp;</th>
+							<th>Gerecht #</th>
+							<th>Naam</th>
+							<th><span style='font-size:0.8em;' class="glyphicon glyphicon-euro"></span> Prijs</th>
+							<th>Soort</th>
+							<th>Verwijder</th>
+						</tr>
+					<?php
+					$conn->doQuery("SELECT * FROM `menukaart`");
+					while($row = $conn->loadObjectList()) { 
+						echo "<tr>";
+						echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";
+						echo "<input type='hidden' name='res[{$row['id']}][id]' value='".$row['id']."'>";
+						
+						echo "<td><span id='checkboxglyph[{$row['id']}]'></span></td>";
+						echo "<td>".$row['id']."</td>";
+						echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
+						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][prijs]' value='".$row['prijs']."'></td>";
+						echo "<td><select class='form-control' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][soort_id]' id='soort_id'>";
+						foreach($option as $key => $value) 
+						{
+							echo "<option value='".$key."' ".(($key==$row['soort_id']) ? 'selected' : '').">".$value."</option>";
+						}
+						echo "</select></td>";
+						
+						echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_menu&a=delres&id={$row['id']}'><span style='font-size:1.5em;' class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
+						
+						echo "</tr>";
+					}
+					?>
+					</table>
+					<div class="form-group"> 
+					    <span id="savechangecontain"></span>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.page-content -->
+	<?php
+	
+}
+
+function menukaart_form()
+{
+	global $conn;
+	$conn->doQuery("SELECT * FROM `reserveringen`");
+	
+	?>
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class='page-content'>
+			<div class='page-header'>
+				<h1>
+					Menukaart
+					<small>
+						<i class='ace-icon fa fa-angle-double-right'></i>
+						Nieuw gerecht aanmaken
+					</small>
+				</h1>
+			</div><!-- /.page-header -->
+			<div class="container">
+				<div>
+				<h3>Hier kan u een nieuw item voor het menu maken.</h3><br>
+				</div>
+				<form action="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu&a=submit";?>" method="POST" class="form-horizontal" role="form">
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="naam">Naam Gerecht:</label>
+					<div class="col-sm-6">
+					  <input type="text" class="form-control" name="naam" id="naam" placeholder="Nieuwe reservering">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="prijs">Prijs: <span class="glyphicon glyphicon-euro"></span></label>
+					<div class="col-sm-6">
+					  <input type="text" class="form-control" name="prijs" id="prijs" placeholder="0.00">
+					</div>
+				  </div>
+				  <?php 
+					$conn->doQuery("SELECT * FROM `menukaart_soort_id`");
+				  ?>
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="soort">Soort: <span class="glyphicon glyphicon-euro"></span></label>
+					<div class="col-sm-6">
+					  <select class="form-control" name="soort_id" id="soort_id">
+					  <?php
+						while($row = $conn->loadObjectList()){
+							echo "<option value='".$row['id']."'>".$row['naam']."</option>";
+						}
+					  ?>
+					  </select>
+					</div>
+				  </div>
+				  <div class="form-group"> 
+					<div class="col-sm-offset-2 col-sm-10">
+					  <button type="submit" class="btn btn-primary">Toevoegen</button>
+					</div>
+				  </div>
+
+
+			</div>
+		</div><!-- /.page-content -->
+	<?php
+	
+}
+
+function menukaart_processform()
+{
+	global $conn;
+	// begin met sql variabel bouwen
+	$sql = "INSERT INTO `menukaart`(";
+
+	foreach ($_POST as $key => $value) 
+	{
+		$sql .= "`".$key."`,";
+	}
+	
+	$sql = substr($sql,0,-1).") VALUES (";
+	
+	foreach ($_POST as $key => $value) 
+	{
+		$sql .= "\"".$value."\",";
+	}
+	
+	$sql = substr($sql,0,-1).")";
 	
 	
 	
+	///*debug: view query: */ echo $sql;print_r("<pre>");print_r($_POST);print_r("</pre>");
+	$conn->doQuery($sql);
 }
 
 ?>

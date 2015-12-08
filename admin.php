@@ -9,6 +9,14 @@
 
 	$conn->connect(HOST,USER,PASS,DBNAME);
 	
+	// define $case for both switches
+	if(!isset($_GET['q']))
+	{
+		$_GET['q']='';
+	} 	
+	
+	$case = $_GET['q'];
+	
 	// check for action
 	if (isset($_GET['a']))
 	{
@@ -33,10 +41,17 @@
 				//echo "<pre>Post dump:\n"; print_r($_POST['res']);
 				foreach($_POST['res'] as $entry)
 				{
-					
+					switch($_GET['q']) 
+					{
+						case 'rest_res':
+						$sql = "UPDATE `reserveringen` SET";
+						break;
+						case 'rest_menu':
+						$sql = "UPDATE `menukaart` SET";
+						break;
+					}
 					if($entry['check']==1) 
 					{
-						$sql = "UPDATE `reserveringen` SET";
 						unset($entry['check']);
 						
 						foreach($entry as $key => $value)
@@ -48,8 +63,8 @@
 						
 						$conn->doQuery($sql);
 					}
-					$sql = null;
 					//echo $sql."\n\n";echo "</pre>";
+					$sql = null;
 					
 				}
 			break;
@@ -60,27 +75,24 @@
 		}
 	}
 	
-	// define $case for both switches
-	if(!isset($_GET['q']))
-	{
-		$_GET['q']='';
-	} 	
-	
-	$case = $_GET['q'];
-
 	// define tags for breadcrumbs
 	switch($case) 
 	{
 		case "rest_res":
-		  if((isset($_GET['a']))&&($_GET['a']=='submitres'))
+		  if((isset($_GET['a']))&&($_GET['a']=='submit'))
 		  {
 			reservering_processform();
+		  }
+		  if((isset($_GET['a']))&&($_GET['a']=='delres'))
+		  {
+			$conn->doQuery("DELETE FROM `reserveringen` where `id`={$_GET['id']}");
 		  }
 		  $cpath = array(
 			array("head" => "Restaurant", "url" => ""),
 			array("head" => "Reserveringen", "url" => "?q=rest_res"));
 		  $pagename = "Reserveringen";
 		break;
+		
 		case "rest_res_new":
 		  $cpath = array(
 			array("head" => "Restaurant", "url" => ""),
@@ -89,6 +101,30 @@
 			);
 		  $pagename = "Nieuwe reservering";
 		break;
+		
+		case "rest_menu":
+		  if((isset($_GET['a']))&&($_GET['a']=='submit'))
+		    {
+			  menukaart_processform();
+		    }
+		  if((isset($_GET['a']))&&($_GET['a']=='delres'))
+		  {
+			$conn->doQuery("DELETE FROM `menukaart` where `id`={$_GET['id']}");
+		  }
+		  $cpath = array(
+			array("head" => "Restaurant", "url" => ""),
+			array("head" => "Menukaart", "url" => "?q=rest_menu"));
+		  $pagename = "Menukaart";
+		break;
+		
+		case "rest_menu_new":
+		  $cpath = array(
+			array("head" => "Restaurant", "url" => ""),
+			array("head" => "Menukaart", "url" => "?q=rest_menu"));
+			array("head" => "Nieuw gerecht", "url" => "?q=rest_res_new");
+		  $pagename = "Menukaart";
+		break;
+		// sort of error handler: no q given, direct to admin panel
 		default:
 		$cpath = array(
 			array("head" => "Admin Paneel", "url" => "")
@@ -161,7 +197,7 @@
 				<!-- /section:basics/sidebar.mobile.toggle -->
 				<div class="navbar-header pull-left">
 					<!-- #section:basics/navbar.layout.brand -->
-					<a href="#" class="navbar-brand">
+					<a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
 							Admin Pagina
@@ -303,8 +339,8 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
-								<a href="#">
+							<li class="<?php if ($case=='rest_menu') echo 'active'; ?>">
+								<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu"; ?>">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Menukaart
 								</a>
@@ -315,7 +351,7 @@
 					</li>
 
 					<li class="<?php if ($case=='bios') echo 'active'; ?>">
-						<a href="#">
+						<a href="<?php echo $_SERVER['PHP_SELF']."?q=bios"; ?>">
 							<i class="menu-icon fa fa-calendar"></i>
 
 							<span class="menu-text">Bioscoop
@@ -386,8 +422,14 @@
 							case "rest_res":
 							  reserveringen_home();
 							break;	
-							case "rest_res_new":
-							  reserveringen_form();
+							  case "rest_res_new":
+								reserveringen_form();
+							  break;
+							case "rest_menu":
+							  menukaart_home();
+							break;
+							case "rest_menu_new":
+							  menukaart_form();
 							break;
 							default:
 							  main_page();
@@ -429,9 +471,9 @@
 				<div class="footer-inner">
 					<!-- #section:basics/footer -->
 					<div class="footer-content">
-						<span class="bigger-120">
+						<span class="bigger-110">
 							<span class="blue bolder">ALA</span>
-							De Bonte Koe 2015-2016
+							De Bonte Koe 2015-2016. Front-end Bootstrap Template made by (?), Back-end and template adjustments written by <a href='http://www.benwolt.eu/'>Ben Wolthuis</a>.
 						</span>
 					</div>
 
