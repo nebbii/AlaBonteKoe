@@ -14,7 +14,10 @@ p span {color:#00f;}
 li {list-style-position: inside;}
 
 #slider li {position:relative;}
-#slider div.slider-bg {background:#000;top:80%;height:200px;width:100%;left:0;position:absolute;z-index:10;opacity:.5;}
+//#slider div.slider-bg {background:#000;top:80%;height:200px;width:100%;left:0;position:absolute;z-index:10;opacity:.5;}
+#slider div.slider-bg-restaurant {background:#D8267D;top:80%;height:200px;width:100%;left:0;position:absolute;z-index:10;opacity:.5;}
+#slider div.slider-bg-uitgaan {background:#41BCEB;top:80%;height:200px;width:100%;left:0;position:absolute;z-index:10;opacity:.5;}
+#slider div.slider-bg-bioscoop {background:#FF6A00;top:80%;height:200px;width:100%;left:0;position:absolute;z-index:10;opacity:.5;}
 #slider div.slider-info {top:86%;height:72px;left:0;position:absolute;width:90%;z-index:15;padding:15px;}
 #slider div.slider-info strong {font-size:22px;color:#fff;margin-bottom:5px;}
 #slider div.slider-info p {display:none;font-size:18px;line-height:14px;color:#fff;margin:0 !important;}
