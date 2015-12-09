@@ -10,3 +10,4 @@ wwwroot
 # Database connect data
 config.php
 include/config.php
+filelist.txt
