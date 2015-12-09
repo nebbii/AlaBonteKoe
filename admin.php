@@ -39,6 +39,13 @@
 			
 			case "savechanges":
 				//echo "<pre>Post dump:\n"; print_r($_POST['res']);
+				if($_POST['s_submit']==true) {
+					$sql = "INSERT INTO `menukaart_soort_id`(`naam`) VALUES ('".$_POST['nsoort']."')";
+					$conn->doQuery($sql);
+					//echo $sql;
+					break;
+				}
+				
 				foreach($_POST['res'] as $entry)
 				{
 					switch($_GET['q']) 
@@ -123,6 +130,12 @@
 			array("head" => "Menukaart", "url" => "?q=rest_menu"));
 			array("head" => "Nieuw gerecht", "url" => "?q=rest_res_new");
 		  $pagename = "Menukaart";
+		break;
+		case "bioscoop":
+		  $cpath = array(
+			array("head" => "Bioscoop", "url" => "?q=bioscoop")
+			);
+		  $pagename = "Bioscoop";
 		break;
 		// sort of error handler: no q given, direct to admin panel
 		default:
@@ -350,8 +363,8 @@
 						</ul>
 					</li>
 
-					<li class="<?php if ($case=='bios') echo 'active'; ?>">
-						<a href="<?php echo $_SERVER['PHP_SELF']."?q=bios"; ?>">
+					<li class="<?php if ($case=='bioscoop') echo 'active'; ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF']."?q=bioscoop"; ?>">
 							<i class="menu-icon fa fa-calendar"></i>
 
 							<span class="menu-text">Bioscoop
@@ -430,6 +443,9 @@
 							break;
 							case "rest_menu_new":
 							  menukaart_form();
+							break;
+							case "bioscoop":
+							  bioscoop_home();
 							break;
 							default:
 							  main_page();

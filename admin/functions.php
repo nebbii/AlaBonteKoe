@@ -266,7 +266,7 @@ function menukaart_home()
 				function tickupbox(id){
 					//alert("Hello world!");
 					document.getElementById('rescheck['+id+']').value = 1;
-					document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
+					//document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
 					document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
 				}
 				</script>
@@ -277,13 +277,16 @@ function menukaart_home()
 				</script>
 				
 				<div class="table-responsive">
-					<form action="<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_menu&a=savechanges" method="POST" id="res"><table class="table">
+					<form action='<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_menu&a=savechanges' method='POST' id='res'><table class='table'>
 						<tr>	
 							<th>&nbsp;</th>
 							<th>Gerecht #</th>
 							<th>Naam</th>
 							<th><span style='font-size:0.8em;' class="glyphicon glyphicon-euro"></span> Prijs</th>
-							<th>Soort <a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"><span class='glyphicon glyphicon-plus-sign text-success'></span></a></th>
+							<th>Soort<span class='glyphicon glyphicon-plus-sign text-success'></span></a>
+								<input type="text" name="nsoort" maxlength='64' placeholder="Nieuw Soort">
+								<button type='submit' name="s_submit" value="true" class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;Voeg Toe</button>
+							</th>
 							<th>Verwijder</th>
 						</tr>
 					<?php
@@ -407,6 +410,41 @@ function menukaart_processform()
 	
 	///*debug: view query: */ echo $sql;print_r("<pre>");print_r($_POST);print_r("</pre>");
 	$conn->doQuery($sql);
+}
+
+function bioscoop_home(){
+	global $conn;
+	
+	$sql = "SELECT * from `zalen`";
+	$conn->doQuery($sql);
+	
+	?>
+	<!-- /section:basics/content.breadcrumbs -->
+		<div class='page-content'>
+			<div class='page-header'>
+				<h1>
+					Bioscoop
+					<small>
+						<i class='ace-icon fa fa-angle-double-right'></i>
+						Bioscopen, films &amp; meer
+					</small>
+				</h1>
+			</div><!-- /.page-header -->
+			<div class="container">
+			<div class='col-sm-12'><a href="<?php echo $_SERVER['PHP_SELF']."?q=bioscoop_new"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nieuwe Zaal</a></div>
+    			<?php
+				while($row = $conn->loadObjectList() ) { 
+					echo "<div class='col-sm-4'>
+						<div class='thumbnail'>
+						  <img src='data:image/jpeg;base64,".base64_encode($row['foto'])."'/>
+						  <h4>".$row['naam']."</h4>"
+						  .$row['tekst']."
+						</div>
+					  </div>";
+				}
+			  ?>
+			</div>
+			<?php
 }
 
 ?>
