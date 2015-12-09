@@ -270,6 +270,12 @@ function menukaart_home()
 					document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
 				}
 				</script>
+				
+				<script>
+				// hier komt popover jquery?
+				
+				</script>
+				
 				<div class="table-responsive">
 					<form action="<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_menu&a=savechanges" method="POST" id="res"><table class="table">
 						<tr>	
@@ -277,7 +283,7 @@ function menukaart_home()
 							<th>Gerecht #</th>
 							<th>Naam</th>
 							<th><span style='font-size:0.8em;' class="glyphicon glyphicon-euro"></span> Prijs</th>
-							<th>Soort</th>
+							<th>Soort <a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"><span class='glyphicon glyphicon-plus-sign text-success'></span></a></th>
 							<th>Verwijder</th>
 						</tr>
 					<?php
