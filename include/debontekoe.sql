@@ -109,7 +109,7 @@ CREATE TABLE `zalen` (
   `id` int(6) NOT NULL,
   `naam` varchar(64) NOT NULL,
   `tekst` text,
-  `foto` blob
+  `foto` mediumblob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
