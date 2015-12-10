@@ -345,6 +345,24 @@ function menukaart_form()
 				<div>
 				<h3>Hier kan u een nieuw item voor het menu maken.</h3><br>
 				</div>
+				<?php 
+					// table notification box
+					if(isset($_GET['a']))
+					{	
+						switch($_GET['a']) 
+						{
+							case "submit":
+								echo "<h4>Nieuwe item aangemaakt.</h4>";
+							break;
+							case "savechanges":
+								echo "<h4>Wijzigingen opgeslagen.</h4>";
+							break;
+							case "delres":
+								echo "<h4>Item verwijderd.</h4>";
+							break;
+						}
+					}
+				?>
 				<form action="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu&a=submit";?>" method="POST" class="form-horizontal" role="form">
 				  <div class="form-group">
 					<label class="control-label col-sm-2" for="naam">Naam Gerecht:</label>
@@ -378,7 +396,7 @@ function menukaart_form()
 					  <button type="submit" class="btn btn-primary">Toevoegen</button>
 					</div>
 				  </div>
-
+				</form>
 
 			</div>
 		</div><!-- /.page-content -->
@@ -430,21 +448,128 @@ function bioscoop_home(){
 					</small>
 				</h1>
 			</div><!-- /.page-header -->
-			<div class="container">
+			<div class="container col-sm-12">
+			<?php 
+					// table notification box
+					if(isset($_GET['a']))
+					{	
+						switch($_GET['a']) 
+						{
+							case "submit":
+								echo "<h4>Nieuwe item aangemaakt.</h4>";
+							break;
+							case "savechanges":
+								echo "<h4>Wijzigingen opgeslagen.</h4>";
+							break;
+							case "delres":
+								echo "<h4>Item verwijderd.</h4>";
+							break;
+						}
+					}
+				?>
 			<div class='col-sm-12'><a href="<?php echo $_SERVER['PHP_SELF']."?q=bioscoop_new"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nieuwe Zaal</a></div>
     			<?php
 				while($row = $conn->loadObjectList() ) { 
-					echo "<div class='col-sm-4'>
-						<div class='thumbnail'>
-						  <img src='data:image/jpeg;base64,".base64_encode($row['foto'])."'/>
-						  <h4>".$row['naam']."</h4>"
-						  .$row['tekst']."
-						</div>
-					  </div>";
+					echo "<div class='col-sm-4'>".
+							"<a class='' href='#'>".
+							"<div class='thumbnail'>".
+							  "<img src='data:image/jpeg;base64,".base64_encode($row['foto'])."'/></a>".
+							  "<h4>".$row['naam']." ".
+							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop&a=delres&id={$row['id']}'><span class='glyphicon glyphicon-remove-sign text-danger'></span></a>".
+							  "</h4>"
+							.$row['tekst'].
+							"</div>".
+						"</div>";
 				}
 			  ?>
 			</div>
 			<?php
+}
+
+function bioscoop_form()
+{
+	global $conn;
+	$conn->doQuery("SELECT * FROM `reserveringen`");
+	
+	?>
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class='page-content'>
+			<div class='page-header'>
+				<h1>
+					Bioscoop
+					<small>
+						<i class='ace-icon fa fa-angle-double-right'></i>
+						Nieuwe zaal aanmaken
+					</small>
+				</h1>
+			</div><!-- /.page-header -->
+			<div class="container col-sm-offset-2 col-sm-8">
+				<div>
+				<h3>Hier kan u een nieuwe zaal aanmaken.</h3><br>
+				</div>
+				<form action="<?php echo $_SERVER['PHP_SELF']."?q=bioscoop&a=submit";?>" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="naam">Zaal naam:</label>
+					<div class="col-sm-10">
+					  <input type="text" class="form-control" name="naam" id="naam" placeholder="Nieuwe reservering">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="tekst">Omschrijving:</label>
+					<div class="col-sm-10">
+					  <textarea class="form-control" rows="4" name="tekst" id="tekst" placeholder="Omschrijving"></textarea>
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="foto">Afbeelding:</label>
+					<div class="col-sm-10">
+					  <input type="file" name="foto" id="foto">
+					</div>
+				  </div>
+				  <div class="form-group"> 
+					<div class="col-sm-offset-2 col-sm-10">
+					  <button type="submit" class="btn btn-primary">Toevoegen</button>
+					</div>
+				  </div>
+				</form>
+
+			</div>
+		</div><!-- /.page-content -->
+	<?php
+	
+}
+
+function bioscoop_processform()
+{
+	global $conn;
+	// begin met sql variabel bouwen
+	$sql = "INSERT INTO `zalen`(";
+	foreach ($_POST as $key => $value) 
+	{
+		$sql .= "`".$key."`,";
+	}
+	if(file_exists($_FILES['foto']['tmp_name'])) 
+	{
+		$sql .= "`foto`,";
+	}
+	
+	$sql = substr($sql,0,-1).") VALUES (";
+	
+	foreach ($_POST as $key => $value) 
+	{
+		$sql .= "\"".$value."\",";
+	}
+	if(file_exists($_FILES['foto']['tmp_name'])) 
+	{	
+		$sql .= "\"".mysql_escape_string(file_get_contents($_FILES['foto']['tmp_name']))."\",";
+	}
+	$sql = substr($sql,0,-1).")";
+	
+	
+	// WARNING might crash browser with blob in $sql
+	///*debug: view query: */ echo $sql;print_r("<pre>");print_r($_POST);;print_r("</pre>");
+	
+	$conn->doQuery($sql);
 }
 
 ?>

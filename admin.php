@@ -37,6 +37,7 @@
 				unset($_SESSION['login']);
 			break;
 			
+			// table edit for all modules
 			case "savechanges":
 				//echo "<pre>Post dump:\n"; print_r($_POST['res']);
 				if($_POST['s_submit']==true) {
@@ -46,6 +47,7 @@
 					break;
 				}
 				
+				// alle form posts heten 'res'!
 				foreach($_POST['res'] as $entry)
 				{
 					switch($_GET['q']) 
@@ -82,66 +84,86 @@
 		}
 	}
 	
-	// define tags for breadcrumbs
+	// tags for breadcrumbs + functions that need to be called before pagination
 	switch($case) 
 	{
-		case "rest_res":
-		  if((isset($_GET['a']))&&($_GET['a']=='submit'))
-		  {
-			reservering_processform();
-		  }
-		  if((isset($_GET['a']))&&($_GET['a']=='delres'))
-		  {
-			$conn->doQuery("DELETE FROM `reserveringen` where `id`={$_GET['id']}");
-		  }
-		  $cpath = array(
-			array("head" => "Restaurant", "url" => ""),
-			array("head" => "Reserveringen", "url" => "?q=rest_res"));
-		  $pagename = "Reserveringen";
-		break;
+		/* Restaurant > Reserveringen */
+			case "rest_res":
+			  if((isset($_GET['a']))&&($_GET['a']=='submit'))
+			  {
+				reservering_processform();
+			  }
+			  if((isset($_GET['a']))&&($_GET['a']=='delres'))
+			  {
+				$conn->doQuery("DELETE FROM `reserveringen` where `id`={$_GET['id']}");
+			  }
+			  $cpath = array(
+				array("head" => "Restaurant", "url" => ""),
+				array("head" => "Reserveringen", "url" => "?q=rest_res"));
+			  $pagename = "Reserveringen";
+			break;
+			case "rest_res_new":
+			  $cpath = array(
+				array("head" => "Restaurant", "url" => ""),
+				array("head" => "Reserveringen", "url" => "?q=rest_res"),
+				array("head" => "Nieuwe reservering", "url" => "?q=rest_res_new")
+				);
+			  $pagename = "Nieuwe reservering";
+			break;
 		
-		case "rest_res_new":
-		  $cpath = array(
-			array("head" => "Restaurant", "url" => ""),
-			array("head" => "Reserveringen", "url" => "?q=rest_res"),
-			array("head" => "Nieuwe reservering", "url" => "?q=rest_res_new")
-			);
-		  $pagename = "Nieuwe reservering";
-		break;
+		/* Restaurant > Menukaart */
+			case "rest_menu":
+			  if((isset($_GET['a']))&&($_GET['a']=='submit'))
+				{
+				  menukaart_processform();
+				}
+			  if((isset($_GET['a']))&&($_GET['a']=='delres'))
+			  {
+				$conn->doQuery("DELETE FROM `menukaart` where `id`={$_GET['id']}");
+			  }
+			  $cpath = array(
+				array("head" => "Restaurant", "url" => ""),
+				array("head" => "Menukaart", "url" => "?q=rest_menu"));
+			  $pagename = "Menukaart";
+			break;
+			case "rest_menu_new":
+			  $cpath = array(
+				array("head" => "Restaurant", "url" => ""),
+				array("head" => "Menukaart", "url" => "?q=rest_menu"));
+				array("head" => "Nieuw gerecht", "url" => "?q=rest_res_new");
+			  $pagename = "Menukaart";
+			break;
 		
-		case "rest_menu":
-		  if((isset($_GET['a']))&&($_GET['a']=='submit'))
-		    {
-			  menukaart_processform();
-		    }
-		  if((isset($_GET['a']))&&($_GET['a']=='delres'))
-		  {
-			$conn->doQuery("DELETE FROM `menukaart` where `id`={$_GET['id']}");
-		  }
-		  $cpath = array(
-			array("head" => "Restaurant", "url" => ""),
-			array("head" => "Menukaart", "url" => "?q=rest_menu"));
-		  $pagename = "Menukaart";
-		break;
+		/* Bioscoop */
+			case "bioscoop":
+			  if((isset($_GET['a']))&&($_GET['a']=='submit'))
+				{
+				  bioscoop_processform();
+				}
+			  if((isset($_GET['a']))&&($_GET['a']=='delres'))
+			  {
+				$conn->doQuery("DELETE FROM `zalen` where `id`={$_GET['id']}");
+			  }
+			  
+			  $cpath = array(
+				array("head" => "Bioscoop", "url" => "?q=bioscoop")
+				);
+			  $pagename = "Bioscoop";
+			break;
+			case "bioscoop_new":
+				$cpath = array(
+				array("head" => "Bioscoop", "url" => "?q=bioscoop"),
+				array("head" => "Nieuwe Zaal", "url" => "?q=bioscoop_new")
+				);
+			  $pagename = "Nieuwe Bioscoop";
+			break;
 		
-		case "rest_menu_new":
-		  $cpath = array(
-			array("head" => "Restaurant", "url" => ""),
-			array("head" => "Menukaart", "url" => "?q=rest_menu"));
-			array("head" => "Nieuw gerecht", "url" => "?q=rest_res_new");
-		  $pagename = "Menukaart";
-		break;
-		case "bioscoop":
-		  $cpath = array(
-			array("head" => "Bioscoop", "url" => "?q=bioscoop")
-			);
-		  $pagename = "Bioscoop";
-		break;
-		// sort of error handler: no q given, direct to admin panel
-		default:
-		$cpath = array(
-			array("head" => "Admin Paneel", "url" => "")
-		);
+		/* Admin Panel */
+			default:
+				$cpath = array(
+					array("head" => "Admin Paneel", "url" => "")
+				);
+			break;
 	}
 ?>
 <!DOCTYPE html>
@@ -432,23 +454,34 @@
 							$case = $_GET['q'];
 							switch($case) 
 							{
-							case "rest_res":
-							  reserveringen_home();
-							break;	
-							  case "rest_res_new":
-								reserveringen_form();
-							  break;
-							case "rest_menu":
-							  menukaart_home();
-							break;
-							case "rest_menu_new":
-							  menukaart_form();
-							break;
-							case "bioscoop":
-							  bioscoop_home();
-							break;
-							default:
-							  main_page();
+							/* Restaurant > Reserveringen */
+								case "rest_res":
+								  reserveringen_home();
+								break;	
+								  case "rest_res_new":
+									reserveringen_form();
+								  break;
+							
+							/* Restaurant > Menukaart */
+								case "rest_menu":
+								  menukaart_home();
+								break;
+								  case "rest_menu_new":
+								    menukaart_form();
+								  break;
+								
+							/* Bioscoop*/
+								case "bioscoop":
+								  bioscoop_home();
+								break;
+								  case "bioscoop_new":
+								    bioscoop_form();
+								  break;
+							
+							/* Admin Panel */
+								default:
+								  main_page();
+								break;
 							}
 						}
 						?>	
@@ -489,7 +522,7 @@
 					<div class="footer-content">
 						<span class="bigger-110">
 							<span class="blue bolder">ALA</span>
-							De Bonte Koe 2015-2016. Front-end Bootstrap Template made by (?), Back-end and template adjustments written by <a href='http://www.benwolt.eu/'>Ben Wolthuis</a>.
+							De Bonte Koe 2015-2016. Front-end Bootstrap Template made by Rick, Back-end and template adjustments written by <a href='http://www.benwolt.eu/'>Ben Wolthuis</a>.
 						</span>
 					</div>
 
