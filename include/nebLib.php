@@ -34,4 +34,8 @@ function annBox($a){
 	echo "<h5>".$a."</h5><hr>";
 }
 
+function isProxy(){ 
+    return (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) ? true : false; 
+} 
+
 ?>
