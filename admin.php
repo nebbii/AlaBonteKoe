@@ -40,12 +40,12 @@
 			// table edit for all modules
 			case "savechanges":
 				//echo "<pre>Post dump:\n"; print_r($_POST['res']);
-				if($_POST['s_submit']==true) {
+				/*if(isset($_POST['s_submit'])&&$_POST['s_submit']==true) {
 					$sql = "INSERT INTO `menukaart_soort_id`(`naam`) VALUES ('".$_POST['nsoort']."')";
 					$conn->doQuery($sql);
 					//echo $sql;
 					break;
-				}
+				}*/
 				
 				// alle form posts heten 'res'!
 				foreach($_POST['res'] as $entry)
@@ -341,7 +341,7 @@
 
 						<span class="btn btn-danger"></span>
 					</div>
-				</div><!-- /.sidebar-shortcuts -->
+				</div>--><!-- /.sidebar-shortcuts -->
 
 				<ul class="nav nav-list">
 					<li class="<?php if ($case=='') echo 'active'; ?>">

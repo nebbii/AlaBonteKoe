@@ -226,8 +226,17 @@ function menukaart_home()
 	$conn->doQuery("SELECT * FROM `menukaart_soort_id`");
 	$option = Array();
 	while($row = $conn->loadObjectList()){
-		$option[$row['id']] = $row['naam'];
+			$option[$row['id']] = array(
+							'naam' => $row['naam'],
+							'c_id' => $row['course']
+			);
 	}
+	$conn->doquery("select * from `menukaart_soort_id_course`");
+	$course_id = array();
+	while($row = $conn->loadobjectlist()){
+		$course_id[$row['id']] = $row['coursenaam'];
+	}
+	
 	//echo "<pre>";print_r($option);echo "</pre>";
 	?>
 		<!-- /section:basics/content.breadcrumbs -->
@@ -284,8 +293,8 @@ function menukaart_home()
 							<th>Naam</th>
 							<th><span style='font-size:0.8em;' class="glyphicon glyphicon-euro"></span> Prijs</th>
 							<th>Soort<span class='glyphicon glyphicon-plus-sign text-success'></span></a>
-								<input type="text" name="nsoort" maxlength='64' placeholder="Nieuw Soort">
-								<button type='submit' name="s_submit" value="true" class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;Voeg Toe</button>
+								<!--<input type="text" name="nsoort" maxlength='64' placeholder="Nieuw Soort">-->
+								<!--<button type='submit' name="s_submit" value="true" class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;Voeg Toe</button>-->
 							</th>
 							<th>Verwijder</th>
 						</tr>
@@ -301,9 +310,18 @@ function menukaart_home()
 						echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
 						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][prijs]' value='".$row['prijs']."'></td>";
 						echo "<td><select class='form-control' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][soort_id]' id='soort_id'>";
-						foreach($option as $key => $value) 
-						{
-							echo "<option value='".$key."' ".(($key==$row['soort_id']) ? 'selected' : '').">".$value."</option>";
+						foreach($course_id as $ckey => $cvalue) {
+							echo "<optgroup label='".$cvalue."'>";			
+							foreach($option as $key => $value) 
+							{
+								if($value['c_id']==$ckey) {	
+									echo "<option value='".$key."' ".(($key==$row['soort_id']) ? 'selected' : '').">"
+									.$value['naam']."</option>";
+								}/* else {
+									echo "<option>course numb = ".$ckey.", option key is ".$value['c_id']."</option>";
+								}*/
+							}
+							echo "</optgroup>";
 						}
 						echo "</select></td>";
 						
@@ -377,18 +395,30 @@ function menukaart_form()
 					</div>
 				  </div>
 				  <?php 
-					$conn->doQuery("SELECT * FROM `menukaart_soort_id`");
 				  ?>
 				  <div class="form-group">
 					<label class="control-label col-sm-2" for="soort">Soort: <span class="glyphicon glyphicon-euro"></span></label>
 					<div class="col-sm-6">
 					  <select class="form-control" name="soort_id" id="soort_id">
 					  <?php
-						while($row = $conn->loadObjectList()){
-							echo "<option value='".$row['id']."'>".$row['naam']."</option>";
-						}
+							$conn->doquery("select * from `menukaart_soort_id_course`");
+								$course_id = array();
+								while($row = $conn->loadobjectlist()){
+									$course_id[$row['id']] = $row['coursenaam'];
+								}
+								foreach($course_id as $key=>$value) {
+									echo "<optgroup label='".$value."'>";				
+									$conn->doquery("select * from `menukaart_soort_id`");
+									while($row = $conn->loadobjectlist()){
+										if($row['course']==$key){
+						  				echo "<option value='".$row['id']."'>".$row['naam']."</option>";
+										}
+									}
+									echo "</optgroup>";
+								}	
 					  ?>
-					  </select>
+						</select>
+						<?php //echo "<pre>";print_r($course_id);echo "</pre>"; ?>
 					</div>
 				  </div>
 				  <div class="form-group"> 
@@ -476,6 +506,7 @@ function bioscoop_home(){
 							  "<img src='data:image/jpeg;base64,".base64_encode($row['foto'])."'/></a>".
 							  "<h4>".$row['naam']." ".
 							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop&a=delres&id={$row['id']}'><span class='glyphicon glyphicon-remove-sign text-danger'></span></a>".
+							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop&a=editres&id={$row['id']}'><span class='glyphicon glyphicon-remove-sign text-danger'></span></a>".
 							  "</h4>"
 							.$row['tekst'].
 							"</div>".
