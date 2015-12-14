@@ -131,6 +131,7 @@ input[type="submit"]:hover {
     width: 30%;
     background: url(../images/header_bg.png) ;
     float: left;
+    border-radius: 75px;
     
 }
 
