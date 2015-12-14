@@ -3,6 +3,7 @@ include_once('include/config.php');
 include_once('classes/database.class.php');
 include_once('classes/table.class.php');
 include_once('classes/reservering.class.php');
+include_once "page_navigation.php";
 
 if (!empty($_POST))
 {
@@ -19,20 +20,10 @@ if (!empty($_POST))
 
 }
 else {
+    
+    echo getNav();
 ?>
-<!DOCTYPE html>
-<html lang=\"nl\">
-<head>
-    <title>DeBonteKoe</title>
-    <meta charset="iso-8859-1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-    <meta name="description" content="">
-    <meta name="author" name="Rick van Koppen">
-    <link rel="shortcut icon" href="../favicon.ico"> 
-    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" />
-    <link rel="stylesheet" href="css/datepicker.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-</head>
+
 <body class="restaurant">
 
 <div class="banner_restaurant">
@@ -125,6 +116,10 @@ else {
     </p> 
     <br />
 </div>
+    
+    
+<link rel="stylesheet" href="css/datepicker.css">
+<link rel="stylesheet" href="css/bootstrap.css">
 <script src="js/jquery-1.9.1.min.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript">

@@ -1,23 +1,9 @@
-<?php
-//include_once ("include/functions.php");
-//
-//getheaderRestaurant();
-?>
+<?php 
 
-<!DOCTYPE html>
-<html lang=\"nl\">
-<head>
-    <title>DeBonteKoe</title>
-    <meta charset="iso-8859-1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-    <meta name="description" content="">
-    <meta name="author" name="Rick van Koppen">
-    <link rel="shortcut icon" href="../favicon.ico"> 
-    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" /> 
-    <link rel="stylesheet" type="text/css" href="css/demo.css" />
-    <link rel="stylesheet" type="text/css" href="css/component.css" />
-  
-</head>
+include_once "page_navigation.php";
+
+echo getNav();
+?>
 <body class="restaurant">
 
 <div class="banner_restaurant">
@@ -324,6 +310,7 @@
 
     </div>
     <br /><br />
+    <link rel="stylesheet" type="text/css" href="css/tabs_menukaart.css" />
     <script src="js/cbpFWTabs.js"></script>
 		<script>
 			new CBPFWTabs( document.getElementById( 'tabs' ) );
