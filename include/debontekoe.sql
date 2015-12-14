@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2015 at 11:23 AM
+-- Generation Time: Dec 14, 2015 at 10:36 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -33,13 +33,6 @@ CREATE TABLE `menukaart` (
   `soort_id` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `menukaart`
---
-
-INSERT INTO `menukaart` (`id`, `naam`, `prijs`, `soort_id`) VALUES
-(1, 'test', 10.98, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -48,16 +41,21 @@ INSERT INTO `menukaart` (`id`, `naam`, `prijs`, `soort_id`) VALUES
 
 CREATE TABLE `menukaart_soort_id` (
   `id` int(6) NOT NULL,
+  `course` int(11) NOT NULL,
   `naam` varchar(64) NOT NULL,
   `opmerking` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `menukaart_soort_id`
+-- Table structure for table `menukaart_soort_id_course`
 --
 
-INSERT INTO `menukaart_soort_id` (`id`, `naam`, `opmerking`) VALUES
-(1, 'Test Soort', 'Dit is een test soort~');
+CREATE TABLE `menukaart_soort_id_course` (
+  `id` int(6) NOT NULL,
+  `coursenaam` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -66,19 +64,12 @@ INSERT INTO `menukaart_soort_id` (`id`, `naam`, `opmerking`) VALUES
 --
 
 CREATE TABLE `reserveringen` (
-  `id` int(6) UNSIGNED NOT NULL,
+  `id` int(6) NOT NULL,
   `naam` varchar(64) NOT NULL,
-  `aantalpers` int(64) DEFAULT NULL,
+  `aantalpers` int(6) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `opmerking` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `reserveringen`
---
-
-INSERT INTO `reserveringen` (`id`, `naam`, `aantalpers`, `date`, `opmerking`) VALUES
-(1, 'test', 10, '2015-12-31 12:30:00', 'Dit is een test opmerking!');
 
 -- --------------------------------------------------------
 
@@ -91,13 +82,6 @@ CREATE TABLE `users` (
   `naam` varchar(64) NOT NULL,
   `ww` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `naam`, `ww`) VALUES
-(1, 'test', 'test123');
 
 -- --------------------------------------------------------
 
@@ -128,7 +112,15 @@ ALTER TABLE `menukaart`
 --
 ALTER TABLE `menukaart_soort_id`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+  ADD KEY `id` (`id`),
+  ADD KEY `course` (`course`);
+
+--
+-- Indexes for table `menukaart_soort_id_course`
+--
+ALTER TABLE `menukaart_soort_id_course`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indexes for table `reserveringen`
@@ -156,17 +148,22 @@ ALTER TABLE `zalen`
 -- AUTO_INCREMENT for table `menukaart`
 --
 ALTER TABLE `menukaart`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `menukaart_soort_id`
 --
 ALTER TABLE `menukaart_soort_id`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `menukaart_soort_id_course`
+--
+ALTER TABLE `menukaart_soort_id_course`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `reserveringen`
 --
 ALTER TABLE `reserveringen`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -176,7 +173,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `zalen`
 --
 ALTER TABLE `zalen`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
