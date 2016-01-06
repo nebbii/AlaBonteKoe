@@ -11,6 +11,7 @@ include/config.php
 filelist.txt
 
 # Unnessecary bloat
+documentatie/*.doc*
 documentatie/losse bestanden
 include/tcpdf/
 *.psd
