@@ -18,16 +18,16 @@
 </head>
 
 <body>
-<div class="jquery-script-ads" align="center"><script type="text/javascript"><!--
+<!--<div class="jquery-script-ads" align="center"><script type="text/javascript">
 google_ad_client = "ca-pub-2783044520727903";
 /* jQuery_demo */
 google_ad_slot = "2780937993";
 google_ad_width = 728;
 google_ad_height = 100;
-//-->
+//
 </script>
 <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script></div>
+</script></div>-->
 <div class="open"> <span class="cls"></span> <span>
   <ul class="sub-menu">
     <li> <a href="index.php">Home</a> </li>
