@@ -13,4 +13,4 @@ include/config.php
 filelist.txt
 
 # Unnessecary bloat
-include\tcpdf
+include/tcpdf/
