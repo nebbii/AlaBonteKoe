@@ -1,5 +1,3 @@
-documentatie
-
 # Server Files
 deployment
 diagnostics
@@ -13,5 +11,6 @@ include/config.php
 filelist.txt
 
 # Unnessecary bloat
+documentatie/losse bestanden
 include/tcpdf/
 *.psd
