@@ -11,3 +11,6 @@ wwwroot
 config.php
 include/config.php
 filelist.txt
+
+# Unnessecary bloat
+include\tcpdf
