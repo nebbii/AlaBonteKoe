@@ -226,10 +226,10 @@ function menukaart_home()
 	$conn->doQuery("SELECT * FROM `menukaart_soort_id`");
 	$option = Array();
 	while($row = $conn->loadObjectList()){
-			$option[$row['id']] = array(
-							'naam' => $row['naam'],
-							'c_id' => $row['course']
-			);
+		$option[$row['id']] = array(
+			'naam' => $row['naam'],
+			'c_id' => $row['course']
+		);
 	}
 	$conn->doquery("select * from `menukaart_soort_id_course`");
 	$course_id = array();
@@ -345,7 +345,6 @@ function menukaart_home()
 function menukaart_form()
 {
 	global $conn;
-	$conn->doQuery("SELECT * FROM `reserveringen`");
 	
 	?>
 		<!-- /section:basics/content.breadcrumbs -->
@@ -486,9 +485,9 @@ function bioscoop_home(){
 						switch($_GET['a']) 
 						{
 							case "submit":
-								echo "<h4>Nieuwe item aangemaakt.</h4>";
+								echo "<h4>Nieuw item aangemaakt.</h4>";
 							break;
-							case "savechanges":
+							case "edit":
 								echo "<h4>Wijzigingen opgeslagen.</h4>";
 							break;
 							case "delres":
@@ -505,8 +504,9 @@ function bioscoop_home(){
 							"<div class='thumbnail'>".
 							  "<img src='data:image/jpeg;base64,".base64_encode($row['foto'])."'/></a>".
 							  "<h4>".$row['naam']." ".
+							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop_new&a=editres&id={$row['id']}'><span class='glyphicon glyphicon-edit text-success'></span></a>".
+							  "&nbsp;".
 							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop&a=delres&id={$row['id']}'><span class='glyphicon glyphicon-remove-sign text-danger'></span></a>".
-							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop&a=editres&id={$row['id']}'><span class='glyphicon glyphicon-remove-sign text-danger'></span></a>".
 							  "</h4>"
 							.$row['tekst'].
 							"</div>".
@@ -520,8 +520,66 @@ function bioscoop_home(){
 function bioscoop_form()
 {
 	global $conn;
-	$conn->doQuery("SELECT * FROM `reserveringen`");
-	
+	if(isset($_GET['a'])) /* check for edit */
+	{ 
+		$conn->doQuery("SELECT * FROM `zalen` where `id`='".$_GET['id']."' LIMIT 1");
+		
+		while($row = $conn->loadObjectList()) 
+		{
+			$id 			= $row['id'];
+			$naam 			= $row['naam'];
+			$tekst 			= $row['tekst'];
+			$foto_blob 		= $row['foto'];
+		}
+	// (if-statement extends into next php block)
+	?>
+		<div class='page-content'>
+			<div class='page-header'>
+				<h1>
+					Bioscoop
+					<small>
+						<i class='ace-icon fa fa-angle-double-right'></i>
+						Zaal Wijzigen
+					</small>
+				</h1>
+			</div><!-- /.page-header -->
+			<div class="container col-sm-offset-2 col-sm-8">
+				<div>
+				<h3>Hier kan u de nieuwe gegevens van de zaal invoeren.</h3><br>
+				</div>
+				<form action="<?php echo $_SERVER['PHP_SELF']."?q=bioscoop&a=edit&id=".$_GET['id']."";?>" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="naam">Zaal naam:</label>
+					<div class="col-sm-10">
+					  <input type="text" class="form-control" name="naam" id="naam" placeholder="Nieuwe zaal" value="<?php echo $naam ?>">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="tekst">Omschrijving:</label>
+					<div class="col-sm-10">
+					  <textarea class="form-control" rows="4" name="tekst" id="tekst" placeholder="Omschrijving"><?php echo $tekst ?></textarea>
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="control-label col-sm-2" for="foto">Afbeelding:</label>
+					<div class="col-sm-10">
+					  <img width=25% src="data:image/jpeg;base64,<?php echo base64_encode($foto_blob) ?>">
+					  <input type="file" name="foto" id="foto">
+					</div>
+				  </div>
+				  <div class="form-group"> 
+					<div class="col-sm-offset-2 col-sm-10">
+					  <button type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
+					</div>
+				  </div>
+				</form>
+
+			</div>
+		</div>
+	<?php
+	}
+	else /* if no edit request was made */
+	{
 	?>
 		<!-- /section:basics/content.breadcrumbs -->
 		<div class='page-content'>
@@ -542,7 +600,7 @@ function bioscoop_form()
 				  <div class="form-group">
 					<label class="control-label col-sm-2" for="naam">Zaal naam:</label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" name="naam" id="naam" placeholder="Nieuwe reservering">
+					  <input type="text" class="form-control" name="naam" id="naam" placeholder="Nieuwe zaal">
 					</div>
 				  </div>
 				  <div class="form-group">
@@ -567,38 +625,63 @@ function bioscoop_form()
 			</div>
 		</div><!-- /.page-content -->
 	<?php
-	
+	}
 }
 
 function bioscoop_processform()
 {
+	//"UPDATE `zalen` SET `naam` = 'Test Zaal333333' WHERE `zalen`.`id` = 15"
 	global $conn;
 	// begin met sql variabel bouwen
-	$sql = "INSERT INTO `zalen`(";
-	foreach ($_POST as $key => $value) 
+	if($_GET['a']=="submit") 
 	{
-		$sql .= "`".$key."`,";
+		$sql = "INSERT INTO `zalen`(";
+		foreach ($_POST as $key => $value) 
+		{
+			$sql .= "`".$key."`,";
+		}
+		if(file_exists($_FILES['foto']['tmp_name'])) 
+		{
+			$sql .= "`foto`,";
+		}
+		
+		$sql = substr($sql,0,-1).") VALUES (";
+		
+		foreach ($_POST as $key => $value) 
+		{
+			$sql .= "\"".$value."\",";
+		}
+		if(file_exists($_FILES['foto']['tmp_name'])) 
+		{	
+			$sql .= "\"".mysql_escape_string(file_get_contents($_FILES['foto']['tmp_name']))."\"";
+			$sql .= ") "; 
+		} else {
+			$sql = substr($sql,0,-1).") "; 
+		}
+		
+		
 	}
-	if(file_exists($_FILES['foto']['tmp_name'])) 
+	elseif($_GET['a']=="edit")
 	{
-		$sql .= "`foto`,";
+		$sql = "UPDATE `zalen` SET ";
+		foreach ($_POST as $key => $value) 
+		{
+			$sql .= "`".$key."` = '".$value."', ";
+		}
+		if(file_exists($_FILES['foto']['tmp_name'])) 
+		{	
+			$sql .= "`foto` = \"".mysql_escape_string(file_get_contents($_FILES['foto']['tmp_name']))."\"";
+		} else {
+			$sql = substr($sql,0,-2); 
+		}
+		
+		$sql .= " WHERE `zalen`.`id` = '".$_GET['id']."'";
 	}
 	
-	$sql = substr($sql,0,-1).") VALUES (";
-	
-	foreach ($_POST as $key => $value) 
-	{
-		$sql .= "\"".$value."\",";
-	}
-	if(file_exists($_FILES['foto']['tmp_name'])) 
-	{	
-		$sql .= "\"".mysql_escape_string(file_get_contents($_FILES['foto']['tmp_name']))."\",";
-	}
-	$sql = substr($sql,0,-1).")";
 	
 	
-	// WARNING might crash browser with blob in $sql
-	///*debug: view query: */ echo $sql;print_r("<pre>");print_r($_POST);;print_r("</pre>");
+	// Show query (WARNING: might crash browser with blob in $sql)
+	//echo $sql;print_r("<pre>");print_r($_POST);print_r("</pre>");
 	
 	$conn->doQuery($sql);
 }

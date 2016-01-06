@@ -140,6 +140,10 @@
 				{
 				  bioscoop_processform();
 				}
+			  if((isset($_GET['a']))&&($_GET['a']=='edit'))
+				{
+				  bioscoop_processform();
+				}
 			  if((isset($_GET['a']))&&($_GET['a']=='delres'))
 			  {
 				$conn->doQuery("DELETE FROM `zalen` where `id`={$_GET['id']}");
