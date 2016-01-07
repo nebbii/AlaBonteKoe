@@ -1,6 +1,41 @@
 <?php 
+	// navigation
 	include_once "page_navigation.php";
 	echo getNav();
+	
+	// restaurant menu build
+	include_once("classes/database.class.php");
+	include_once("include/config.php");
+	
+	$conn = Database::getInstance();
+	
+	$sql =	"SELECT 
+				`menukaart`.`id`,
+				`menukaart`.`naam`,
+				`menukaart`.`prijs`,
+				`menukaart_soort_id`.`naam` as soortnaam
+			FROM 
+				`menukaart`
+			INNER JOIN `menukaart_soort_id` 
+				ON `menukaart`.`soort_id` = `menukaart_soort_id`.`id` 
+			ORDER BY
+				`menukaart`.`id`
+			ASC";
+				
+	$conn->connect(HOST,USER,PASS,DBNAME);
+	
+	$conn->doQuery($sql);
+	
+	while($row = $conn->loadObjectList()) {
+		$result[$row['id']] = array (
+			"naam" 	=>$row['naam'],
+			"prijs"	=>$row['prijs'],
+			"soort"	=>$row['soortnaam']
+		);
+	}
+	
+	echo "<pre style='background: white; border-radius: 2px'>Test:\n"; print_r($result); echo "</pre>";
+	
 ?>
 <body class="restaurant">
 
@@ -35,7 +70,10 @@
 							<h4>Koude voorgerechten</h4>
 							<br />
 							<table class="menukaart">
-								<tr>
+							<?php
+								
+							?>
+								<!--<tr>
 									<td>Haringtartaar met tomaat en lente-ui</td>
 									<td>&euro; 3,50</td>
 								</tr>
@@ -50,7 +88,7 @@
 								<tr>
 									<td>Gemarineerde champignons met geitenkaas</td>
 									<td>&euro; 3,-</td>
-								</tr>
+								</tr>-->
 							</table>
 						</div>
 						<div class="mediabox">
