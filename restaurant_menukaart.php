@@ -13,11 +13,14 @@
 				`menukaart`.`id`,
 				`menukaart`.`naam`,
 				`menukaart`.`prijs`,
-				`menukaart_soort_id`.`naam` as soortnaam
+				`menukaart_soort_id`.`naam` as soortnaam,
+				`menukaart_soort_id_course`.`coursenaam`
 			FROM 
 				`menukaart`
 			INNER JOIN `menukaart_soort_id` 
 				ON `menukaart`.`soort_id` = `menukaart_soort_id`.`id` 
+			INNER JOIN `menukaart_soort_id_course` 
+				ON `menukaart_soort_id`.`course` = `menukaart_soort_id_course`.`id` 
 			ORDER BY
 				`menukaart`.`id`
 			ASC";
@@ -28,9 +31,10 @@
 	
 	while($row = $conn->loadObjectList()) {
 		$result[$row['id']] = array (
-			"naam" 	=>$row['naam'],
-			"prijs"	=>$row['prijs'],
-			"soort"	=>$row['soortnaam']
+			"naam" 			=> $row['naam'],
+			"prijs"			=> $row['prijs'],
+			"soort"			=> $row['soortnaam'],
+			"coursenaam"	=> $row['coursenaam']
 		);
 	}
 	
@@ -57,7 +61,7 @@
 			<h2 class="main_header"><img src="images/decoratie_menukaart_links2.png" style="width: 10%;"><i style="padding: 10px;">Menukaart</i><img src="images/decoratie_menukaart_rechts2.png" style="width: 10%;"></h2>
 			<div id="tabs" class="tabs">
 				<nav>
-					<ul>
+					<ul style="list-style-type: none;">
 						<li><a href="#section-1"><span>Voorgerecht</span></a></li>
 						<li><a href="#section-2"><span>Hoofdgerecht</span></a></li>
 						<li><a href="#section-3"><span>Nagerecht</span></a></li>
@@ -65,15 +69,79 @@
 					</ul>
 				</nav>
 				<div class="content">
-					<section id="section-1">
+						<?php
+							// Voorgerecht
+							echo '<section id="section-">
+								<div class="mediabox">
+									<h2>Voorgerechten</h2>
+									<br />
+									<table class="menukaart">';
+							foreach($result as $key)
+							{
+								if($key['coursenaam']=="Voorgerecht") {
+									echo "<tr>";
+									echo "<td>".$key['naam']."</td>";
+									echo "<td>&euro;".$key['prijs']."</td>";
+									echo "</tr>";
+								}
+							}
+							echo '</table></div></section>';
+							// Hoofdgerecht
+							echo '<section id="section-">
+								<div class="mediabox">
+									<h2>Hoofdgerecht</h2>
+									<br />
+									<table class="menukaart">';
+							foreach($result as $key)
+							{
+								if($key['coursenaam']=="Hoofdgerecht") {
+									echo "<tr>";
+									echo "<td>".$key['naam']."</td>";
+									echo "<td>&euro;".$key['prijs']."</td>";
+									echo "</tr>";
+								}
+							}
+							echo '</table></div></section>';
+							// Nagerecht
+							echo '<section id="section-">
+								<div class="mediabox">
+									<h2>Nagerecht</h2>
+									<br />
+									<table class="menukaart">';
+							foreach($result as $key)
+							{
+								if($key['coursenaam']=="Nagerecht") {
+									echo "<tr>";
+									echo "<td>".$key['naam']."</td>";
+									echo "<td>&euro;".$key['prijs']."</td>";
+									echo "</tr>";
+								}
+							}
+							echo '</table></div></section>';
+							// Dranken
+							echo '<section id="section-">
+								<div class="mediabox">
+									<h2>Dranken</h2>
+									<br />
+									<table class="menukaart">';
+							foreach($result as $key)
+							{
+								if($key['coursenaam']=="Dranken") {
+									echo "<tr>";
+									echo "<td>".$key['naam']."</td>";
+									echo "<td>&euro;".$key['prijs']."</td>";
+									echo "</tr>";
+								}
+							}
+							echo '</table></div></section>';
+						?>
+					<!--<section id="section-1">
 						<div class="mediabox">
 							<h4>Koude voorgerechten</h4>
 							<br />
 							<table class="menukaart">
-							<?php
-								
-							?>
-								<!--<tr>
+							
+								<tr>
 									<td>Haringtartaar met tomaat en lente-ui</td>
 									<td>&euro; 3,50</td>
 								</tr>
@@ -88,7 +156,7 @@
 								<tr>
 									<td>Gemarineerde champignons met geitenkaas</td>
 									<td>&euro; 3,-</td>
-								</tr>-->
+								</tr>
 							</table>
 						</div>
 						<div class="mediabox">
@@ -316,7 +384,7 @@
 								</tr>
 							</table>
 						</div>
-					</section>
+					</section>-->
 				</div><!-- /content -->
 			</div><!-- /tabs -->     
 			<img src="images/decoratie_menukaart_onder.png" style="height: 100px; width: 350px;"/>
