@@ -38,7 +38,7 @@
 		);
 	}
 	
-	echo "<pre style='background: white; border-radius: 2px'>Test:\n"; print_r($result); echo "</pre>";
+	echo "<pre style='background: white; border-radius: 2px'>Regular visitor, don't look! You're not ready!\n"; print_r($result); echo "</pre>";
 	
 ?>
 <body class="restaurant">
@@ -71,7 +71,7 @@
 				<div class="content">
 						<?php
 							// Voorgerecht
-							echo '<section id="section-">
+							echo '<section id="section-1">
 								<div class="mediabox">
 									<h2>Voorgerechten</h2>
 									<br />
@@ -87,7 +87,7 @@
 							}
 							echo '</table></div></section>';
 							// Hoofdgerecht
-							echo '<section id="section-">
+							echo '<section id="section-2">
 								<div class="mediabox">
 									<h2>Hoofdgerecht</h2>
 									<br />
@@ -103,7 +103,7 @@
 							}
 							echo '</table></div></section>';
 							// Nagerecht
-							echo '<section id="section-">
+							echo '<section id="section-3">
 								<div class="mediabox">
 									<h2>Nagerecht</h2>
 									<br />
@@ -119,7 +119,7 @@
 							}
 							echo '</table></div></section>';
 							// Dranken
-							echo '<section id="section-">
+							echo '<section id="section-4">
 								<div class="mediabox">
 									<h2>Dranken</h2>
 									<br />
