@@ -9,12 +9,14 @@
 	
 	$conn = Database::getInstance();
 	
+	// prepare menukaart
+	
 	$sql =	"SELECT 
 				`menukaart`.`id`,
 				`menukaart`.`naam`,
 				`menukaart`.`prijs`,
 				`menukaart_soort_id`.`naam` as soortnaam,
-				`menukaart_soort_id_course`.`coursenaam`
+				`menukaart_soort_id_course`.`id` as courseid
 			FROM 
 				`menukaart`
 			INNER JOIN `menukaart_soort_id` 
@@ -34,12 +36,12 @@
 			"naam" 			=> $row['naam'],
 			"prijs"			=> $row['prijs'],
 			"soort"			=> $row['soortnaam'],
-			"coursenaam"	=> $row['coursenaam']
+			"courseid"		=> $row['courseid']
 		);
 	}
 	
+	/* Debug echo */
 	echo "<pre style='background: white; border-radius: 2px'>Regular visitor, don't look! You're not ready!\n"; print_r($result); echo "</pre>";
-	
 ?>
 <body class="restaurant">
 
@@ -70,70 +72,82 @@
 				</nav>
 				<div class="content">
 						<?php
-							// Voorgerecht
-							echo '<section id="section-1">
+							$sql = "SELECT * FROM `menukaart_soort_id` ORDER BY `id`";
+							
+							/* *** Voorgerecht *** */
+							?> <section id="section-1">
 								<div class="mediabox">
 									<h2>Voorgerechten</h2>
 									<br />
-									<table class="menukaart">';
+									<table class="menukaart">
+							<?php
 							foreach($result as $key)
 							{
-								if($key['coursenaam']=="Voorgerecht") {
+								if($key['courseid']==1) {
 									echo "<tr>";
 									echo "<td>".$key['naam']."</td>";
+									echo "<td>&nbsp;</td>";
 									echo "<td>&euro;".$key['prijs']."</td>";
 									echo "</tr>";
 								}
 							}
-							echo '</table></div></section>';
-							// Hoofdgerecht
-							echo '<section id="section-2">
+							echo "</table></div></section>";
+							/* *** Hoofdgerecht *** */
+							?> <section id="section-2">
 								<div class="mediabox">
 									<h2>Hoofdgerecht</h2>
 									<br />
-									<table class="menukaart">';
+									<table class="menukaart">
+							<?php
 							foreach($result as $key)
 							{
-								if($key['coursenaam']=="Hoofdgerecht") {
+								if($key['courseid']==2) {
 									echo "<tr>";
 									echo "<td>".$key['naam']."</td>";
+									echo "<td>&nbsp;</td>";
 									echo "<td>&euro;".$key['prijs']."</td>";
 									echo "</tr>";
 								}
 							}
-							echo '</table></div></section>';
-							// Nagerecht
-							echo '<section id="section-3">
-								<div class="mediabox">
-									<h2>Nagerecht</h2>
-									<br />
-									<table class="menukaart">';
+							echo "</table></div></section>";
+							/* *** Nagerecht *** */
+							?> 
+								<section id="section-3">
+									<div class="mediabox">
+										<h2>Nagerecht</h2>
+										<br />
+										<table class="menukaart">
+							<?php
 							foreach($result as $key)
 							{
-								if($key['coursenaam']=="Nagerecht") {
+								if($key['courseid']==3) {
 									echo "<tr>";
 									echo "<td>".$key['naam']."</td>";
+									echo "<td>&nbsp;</td>";
 									echo "<td>&euro;".$key['prijs']."</td>";
 									echo "</tr>";
 								}
 							}
-							echo '</table></div></section>';
-							// Dranken
-							echo '<section id="section-4">
-								<div class="mediabox">
-									<h2>Dranken</h2>
-									<br />
-									<table class="menukaart">';
+							echo "</table></div></section>"; 
+							/*	*** Dranken ***	*/
+							?>
+								<section id="section-4">
+									<div class="mediabox">
+										<h2>Dranken</h2>
+										<br />
+										<table class="menukaart">
+							<?php
 							foreach($result as $key)
 							{
-								if($key['coursenaam']=="Dranken") {
+								if($key['courseid']==4) {
 									echo "<tr>";
 									echo "<td>".$key['naam']."</td>";
+									echo "<td>&nbsp;</td>";
 									echo "<td>&euro;".$key['prijs']."</td>";
 									echo "</tr>";
 								}
 							}
-							echo '</table></div></section>';
+							echo "</table></div></section>";
 						?>
 					<!--<section id="section-1">
 						<div class="mediabox">
@@ -386,7 +400,7 @@
 						</div>
 					</section>-->
 				</div><!-- /content -->
-			</div><!-- /tabs -->     
+			</div><!-- /tabs -->
 			<img src="images/decoratie_menukaart_onder.png" style="height: 100px; width: 350px;"/>
 		</center>
 		<br /><br /><br />
