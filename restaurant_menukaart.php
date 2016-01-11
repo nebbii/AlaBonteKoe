@@ -15,7 +15,7 @@
 				`menukaart`.`id`,
 				`menukaart`.`naam`,
 				`menukaart`.`prijs`,
-				`menukaart_soort_id`.`naam` as soortnaam,
+				`menukaart`.`soort_id`,
 				`menukaart_soort_id_course`.`id` as courseid
 			FROM 
 				`menukaart`
@@ -36,7 +36,7 @@
 			"id"			=> $row['id'],
 			"naam" 			=> $row['naam'],
 			"prijs"			=> $row['prijs'],
-			"soort"			=> $row['soortnaam'],
+			"soort_id"		=> $row['soort_id'],
 			"courseid"		=> $row['courseid']
 		);
 	}
@@ -66,6 +66,12 @@
 				
 				<div class="content">
 				<?php
+					// store soorten for later use
+					$conn->doQuery("SELECT * FROM `menukaart_soort_id` ORDER BY `id`");
+					while($row = $conn->loadObjectList())
+					{
+						$soort_id[] = $row;
+					}
 					// store courses for later use
 					$conn->doQuery("SELECT * FROM `menukaart_soort_id_course` ORDER BY `id`");
 					while($row = $conn->loadObjectList())
@@ -86,31 +92,40 @@
 					</nav>
 				<?php
 					// 'Menukaart'
-					foreach($course_id as $key)
+					foreach($course_id as $ckey)
 					{
 					?>
-						<section id="section-<?php echo $key['id'] ?>">
+						<section id="section-<?php echo $ckey['id'] ?>">
 							<div class="mediabox">
-								<h2><?php echo $key['coursenaam'] ?></h2>
-								<br />
-								<table class="menukaart">
+								
+								<h2><?php echo $ckey['coursenaam'] ?></h2>
+								<table class='menukaart'>
 					<?php
-						foreach($result as $ckey)
+						foreach($soort_id as $skey)
 						{
-							if($ckey['courseid']==$key['id'])
+							if($skey['course']==$ckey['id'])
 							{
-								echo "<tr>";
-								echo "<td>".$ckey['naam']."</td>";
-								echo "<td>&nbsp;</td>";
-								echo "<td>&euro;".$ckey['prijs']."</td>";
-								echo "</tr>";
+								echo "<tr><th colspan='10'>".$skey['naam']."</th></tr>";
+								foreach($result as $key)
+								{
+									if(($key['soort_id']==$skey['id'])&&($key['courseid']==$ckey['id']))
+									{
+										echo "<tr>";
+										echo "<td>".$key['naam']."</td>";
+										echo "<td>&nbsp;</td>";
+										echo "<td>&euro;".$key['prijs']."</td>";
+										echo "</tr>";
+									}
+								}
 							}
 						}
-					?>
-								</table>
+						?>
+								</table>	
 							</div>
 						</section>
+						</br>
 					<?php
+						
 					}
 				?>
 				</div><!-- /content -->
