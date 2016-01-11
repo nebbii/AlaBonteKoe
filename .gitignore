@@ -15,3 +15,6 @@ documentatie/*.doc*
 documentatie/losse bestanden
 include/tcpdf/
 *.psd
+
+# Ignore hidden Vim files
+*~
