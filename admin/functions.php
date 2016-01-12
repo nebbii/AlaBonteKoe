@@ -63,12 +63,12 @@ function reserveringen_home()
 					}
 				?>
 				<script>
-				function tickupbox(id){
-					//alert("Hello world!");
-					document.getElementById('rescheck['+id+']').value = 1;
-					document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
-					document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
-				}
+					function tickupbox(id)
+					{
+						document.getElementById('rescheck['+id+']').value = 1;
+						document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
+						document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
+					}
 				</script>
 				<div class="table-responsive">
 					<form action="<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_res&a=savechanges" method="POST"><table class="table">
@@ -260,7 +260,7 @@ function menukaart_home()
 						switch($_GET['a']) 
 						{
 							case "submit":
-								echo "<h4>Nieuwe item aangemaakt.</h4>";
+								echo "<h4>Nieuw item aangemaakt.</h4>";
 							break;
 							case "savechanges":
 								echo "<h4>Wijzigingen opgeslagen.</h4>";
@@ -272,12 +272,12 @@ function menukaart_home()
 					}
 				?>
 				<script>
-				function tickupbox(id){
-					//alert("Hello world!");
-					document.getElementById('rescheck['+id+']').value = 1;
-					//document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
-					document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
-				}
+					function tickupbox(id)
+					{
+						document.getElementById('rescheck['+id+']').value = 1;
+						//document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
+						document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
+					}
 				</script>
 				
 				<script>
@@ -292,7 +292,7 @@ function menukaart_home()
 							<th>Gerecht #</th>
 							<th>Naam</th>
 							<th><span style='font-size:0.8em;' class="glyphicon glyphicon-euro"></span> Prijs</th>
-							<th>Soort<span class='glyphicon glyphicon-plus-sign text-success'></span></a>
+							<th>Soort&nbsp;<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu_soort"; ?>"><span class='glyphicon glyphicon-edit text-success'></span></a>
 								<!--<input type="text" name="nsoort" maxlength='64' placeholder="Nieuw Soort">-->
 								<!--<button type='submit' name="s_submit" value="true" class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;Voeg Toe</button>-->
 							</th>
@@ -362,24 +362,6 @@ function menukaart_form()
 				<div>
 				<h3>Hier kan u een nieuw item voor het menu maken.</h3><br>
 				</div>
-				<?php 
-					// table notification box
-					if(isset($_GET['a']))
-					{	
-						switch($_GET['a']) 
-						{
-							case "submit":
-								echo "<h4>Nieuwe item aangemaakt.</h4>";
-							break;
-							case "savechanges":
-								echo "<h4>Wijzigingen opgeslagen.</h4>";
-							break;
-							case "delres":
-								echo "<h4>Item verwijderd.</h4>";
-							break;
-						}
-					}
-				?>
 				<form action="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu&a=submit";?>" method="POST" class="form-horizontal" role="form">
 				  <div class="form-group">
 					<label class="control-label col-sm-2" for="naam">Naam Gerecht:</label>
@@ -457,6 +439,95 @@ function menukaart_processform()
 	
 	///*debug: view query: */ echo $sql;print_r("<pre>");print_r($_POST);print_r("</pre>");
 	$conn->doQuery($sql);
+}
+
+function menukaart_soort_home() 
+{
+	global $conn;
+
+	?>
+		<!-- /section:basics/content.breadcrumbs -->
+		<div class='page-content'>
+			<div class='page-header'>
+				<h1>
+					Menukaart Soorten
+					<small>
+						<i class='ace-icon fa fa-angle-double-right'></i>
+						menukaart soorten &amp; meer
+					</small>
+				</h1>
+			</div><!-- /.page-header -->
+			<div class="container">
+				<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu_soort&a=addres"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nieuwe soort</a>
+				<br><br>
+				<?php 
+					// table notification box
+					if(isset($_GET['a']))
+					{	
+						switch($_GET['a']) 
+						{
+							case "addres":
+								echo "<h4>Nieuwe soort aangemaakt.</h4>";
+							break;
+							case "savechanges":
+								echo "<h4>Wijzigingen opgeslagen.</h4>";
+							break;
+							case "delres":
+								echo "<h4>Soort verwijderd.</h4>";
+							break;
+						}
+					}
+				?>
+				<script>
+					function tickupbox(id)
+					{
+						document.getElementById('rescheck['+id+']').value = 1;
+						document.getElementById('checkboxglyph['+id+']').innerHTML = "<span class='glyphicon glyphicon-ok-circle text-success'></span>"
+						document.getElementById('savechangecontain').innerHTML = "<button type='submit' class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span> Wijzigen Opslaan</button>"
+					}
+				</script>
+				
+				<script>
+				// hier komt popover jquery?
+				
+				</script>
+				
+				<div class="table-responsive">
+					<form action='<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_menu_soort&a=savechanges' method='POST' id='res'><table class='table'>
+						<tr>	
+							<th>&nbsp;</th>
+							<th>Soort #</th>
+							<th>Course</th>
+							<th>Naam</th>
+							<th>Verwijder</th>
+						</tr>
+					<?php
+					$conn->doQuery("SELECT * FROM `menukaart_soort_id`");
+					while($row = $conn->loadObjectList()) { 
+						echo "<tr>";
+						echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";
+						echo "<input type='hidden' name='res[{$row['id']}][id]' value='".$row['id']."'>";
+						
+						echo "<td><span id='checkboxglyph[{$row['id']}]'></span></td>";
+						echo "<td>".$row['id']."</td>";
+						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][course]' value='".$row['course']."'</td>";
+						echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value=\"".$row['naam']."\"></td>";
+						
+						echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_menu_soort&a=delres&id={$row['id']}'><span style='font-size:1.5em;' class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
+						
+						echo "</tr>";
+					}
+					?>
+					</table>
+					<div class="form-group"> 
+					    <span id="savechangecontain"></span>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.page-content -->
+	<?php
+	
 }
 
 function bioscoop_home(){

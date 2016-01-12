@@ -50,31 +50,36 @@
 				// alle form posts heten 'res'!
 				foreach($_POST['res'] as $entry)
 				{
-					switch($_GET['q']) 
-					{
-						case 'rest_res':
-						$sql = "UPDATE `reserveringen` SET";
-						break;
-						case 'rest_menu':
-						$sql = "UPDATE `menukaart` SET";
-						break;
-					}
 					if($entry['check']==1) 
 					{
+						switch($_GET['q']) 
+						{
+							case 'rest_res':
+							$sql = "UPDATE `reserveringen` SET";
+							break;
+							case 'rest_menu':
+							$sql = "UPDATE `menukaart` SET";
+							break;
+							case 'rest_menu_soort':
+							$sql = "UPDATE `menukaart_soort_id` SET";
+							break;
+							default:
+								continue;
+							break;
+						}
 						unset($entry['check']);
 						
 						foreach($entry as $key => $value)
 						{
-							$sql .= " `{$key}`='{$value}',";
+							$sql .= " `{$key}`='".addslashes($value)."',";
 						}
 						$sql = substr($sql,0,-1);
 						$sql .= " WHERE `id`={$entry['id']}";
 						
 						$conn->doQuery($sql);
+						//echo $sql."\n\n";echo "</pre>";
+						$sql = null;
 					}
-					//echo $sql."\n\n";echo "</pre>";
-					$sql = null;
-					
 				}
 			break;
 			
@@ -84,7 +89,7 @@
 		}
 	}
 	
-	// tags for breadcrumbs + functions that need to be called before pagination
+	// functions that need to be called before pagination + tags for breadcrumbs
 	switch($case) 
 	{
 		/* Restaurant > Reserveringen */
@@ -132,6 +137,21 @@
 				array("head" => "Menukaart", "url" => "?q=rest_menu"));
 				array("head" => "Nieuw gerecht", "url" => "?q=rest_res_new");
 			  $pagename = "Menukaart";
+			break;
+			case "rest_menu_soort":
+			  if((isset($_GET['a']))&&($_GET['a']=='addres'))
+				{
+				  $conn->doQuery("INSERT INTO `menukaart_soort_id`(`course`,`naam`,`opmerking`) values (1,'Nieuwe Soort',null)");
+				}
+			  if((isset($_GET['a']))&&($_GET['a']=='delres'))
+			    {
+			      $conn->doQuery("DELETE FROM `menukaart_soort_id` where `id`={$_GET['id']}");
+			    }
+			  $cpath = array(
+				array("head" => "Restaurant", "url" => ""),
+				array("head" => "Menukaart", "url" => "?q=rest_menu"),
+				array("head" => "Soorten", "url" => "?q=rest_menu_soort"));
+			  $pagename = "Nieuwe Soort";
 			break;
 		
 		/* Bioscoop */
@@ -215,6 +235,8 @@
 
 	<body class="no-skin">
 		<!-- #section:basics/navbar.layout -->
+		
+		<!-- ! If user is not logged in, show login page ! -->
 		<?php if (isset($_SESSION['login'])): ?>
 		<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
@@ -451,30 +473,33 @@
 
 						<!-- /section:basics/content.searchbox -->
 					</div>
-						<?php
+					<?php
 						// print huidige pagina
 						if (isset($_GET['q']))
 						{
 							$case = $_GET['q'];
 							switch($case) 
 							{
-							/* Restaurant > Reserveringen */
+								/* Restaurant > Reserveringen */
 								case "rest_res":
 								  reserveringen_home();
 								break;	
 								  case "rest_res_new":
 									reserveringen_form();
 								  break;
-							
-							/* Restaurant > Menukaart */
+
+								/* Restaurant > Menukaart */
 								case "rest_menu":
 								  menukaart_home();
 								break;
 								  case "rest_menu_new":
 								    menukaart_form();
 								  break;
+								  case "rest_menu_soort":
+								    menukaart_soort_home();
+								  break;
 								
-							/* Bioscoop*/
+								/* Bioscoop*/
 								case "bioscoop":
 								  bioscoop_home();
 								break;
@@ -482,13 +507,13 @@
 								    bioscoop_form();
 								  break;
 							
-							/* Admin Panel */
+								/* Admin Panel */
 								default:
 								  main_page();
 								break;
 							}
 						}
-						?>	
+					?>	
 				</div>
 			</div><!-- /.main-content -->
 			<?php else: ?>
