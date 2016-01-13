@@ -110,6 +110,17 @@
 								{
 									if(($key['soort_id']==$skey['id'])&&($key['courseid']==$ckey['id']))
 									{
+										// fix price decimals
+										if((strlen(substr($key['prijs'], strpos($key['prijs'], ".")+1))==1)&&strpos($key['prijs'], ".")==true)
+										{
+											$key['prijs'] .= 0;											
+										}
+										elseif(strpos($key['prijs'], ".")==false)
+										{
+											$key['prijs'] .= ",-";
+										}
+										$key['prijs'] = str_replace(".", ",", $key['prijs']);
+										
 										echo "<tr>";
 										echo "<td>".$key['naam']."</td>";
 										echo "<td>&nbsp;</td>";
