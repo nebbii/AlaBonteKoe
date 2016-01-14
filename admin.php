@@ -484,8 +484,17 @@
 					background-opacity:		50%;
 				}
 				</style>
-				<div class="container admin_login">
-					<div class="alert alert-info">
+				<div class="container admin_login">					
+					<div class="col-sm-4">
+						<img width="100%" src="images/logo/cowparade.png">
+					</div>
+					<div class="col-sm-4">
+						<img width="100%" src="images/logo/Logo3.png">
+					</div>
+					<div class="col-sm-4">
+						<img width="100%" src="images/logo/cowparade.png">
+					</div>
+					<div class="col-sm-12 alert alert-info">
 						Je bent momenteel niet ingelogd.
 					</div>
 					<h3>Vul uw login gegevens in.</h3>
