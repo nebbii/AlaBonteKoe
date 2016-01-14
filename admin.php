@@ -517,7 +517,16 @@
 				</div>
 			</div><!-- /.main-content -->
 			<?php else: ?>
-				<div class="container">
+				<style>
+				body {
+					background:				url("images/admin_login.jpg");
+					background-position:	top center;
+					background-repeat:		no-repeat;
+					background-size: 		80%;
+					background-opacity:		50%;
+				}
+				</style>
+				<div class="container admin_login">
 					<div class="alert alert-info">
 						Je bent momenteel niet ingelogd.
 					</div>
