@@ -1,8 +1,12 @@
 <?php 
-
+include_once("classes/database.class.php");
+include_once("include/config.php");
 include_once "page_navigation.php";
 
 echo getNav();
+
+$conn = Database::getInstance();
+$conn->connect(HOST,USER,PASS,DBNAME);
 ?>
 <body class="restaurant">
 
@@ -14,12 +18,36 @@ echo getNav();
             <h1 class="banner_header">Restaurant Module</h1>
         </div>
         <div class="banner_buttons">
-            <a href="#"><button>Home</button></a>
+            <a href="restaurant_home.php"><button>Home</button></a>
             <a href="restaurant_menukaart.php"><button>Menukaart</button></a>
             <a href="restaurant_reserveren.php"><button>Reserveren</button></a>
         </div>
     </div>
     <div class="main_div" >
+		<?php 
+		if((isset($_POST))&&$_POST!=null) 
+		{		
+			// build datetime
+			$datetime = explode("/",$_POST['date']);
+			$datetime = $datetime[2]."/".$datetime[1]."/".$datetime[0]." ".$_POST['tijd'];
+			
+			$sql = "INSERT INTO `reserveringen`(naam,aantalpers,date,opmerking) 
+				VALUES ('{$_POST['naam']}','{$_POST['aantalPers']}','{$datetime}','{$_POST['opmerking']}')";
+			
+			$conn->doQuery($sql);
+		?>
+			<center><h2 class="main_header">Uw reservering is aangemaakt!</h2></center>
+			<br>
+			<center><p class="main_p">
+				U zal binnenkort de factuur en een confirmatie mailtje ontvangen waarin
+				de datum en prijs van de reservering staat.
+				</p>
+			</center>
+		<?php
+		}
+			else
+		{
+		?>
         <center><h2 class="main_header">Welcome op de Restaurant Module</h2></center>
         <br>
         <center><p class="main_p">
@@ -36,6 +64,9 @@ echo getNav();
 
         </p>
         </center>
+		<?php
+		}
+		?>
         <br /><br /><br />
         <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 600px; height: 300px; overflow: hidden; visibility: hidden;">
             <!-- Loading Screen -->
