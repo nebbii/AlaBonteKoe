@@ -6,8 +6,8 @@ PHP groep project voor school
 	<li>Rick - Restaurant Module | DONE</li>
 	<li>Cyndi - Uitgaanscentrum</li>
 	<li>Shivam - Bioscoop Module</li>
-	<li>Maarten - Documentatie verbeteren</li>
-	<li>Ben - Admin pagina</li>
+	<li>Maarten - Main Front-End developer & Documentatie</li>
+	<li>Ben - Admin pagina & back-end Restaurant Module</li>
 </ul>
 
 <b>To-Do List</b>
