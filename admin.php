@@ -39,14 +39,6 @@
 			
 			// table edit for all modules
 			case "savechanges":
-				//echo "<pre>Post dump:\n"; print_r($_POST['res']);
-				/*if(isset($_POST['s_submit'])&&$_POST['s_submit']==true) {
-					$sql = "INSERT INTO `menukaart_soort_id`(`naam`) VALUES ('".$_POST['nsoort']."')";
-					$conn->doQuery($sql);
-					//echo $sql;
-					break;
-				}*/
-				
 				// alle form posts heten 'res'!
 				foreach($_POST['res'] as $entry)
 				{
@@ -335,40 +327,6 @@
 					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 				</script>
 
-				<!-- Niet nodig?
-				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
-					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-						<button class="btn btn-success">
-							<i class="ace-icon fa fa-signal"></i>
-						</button>
-
-						<button class="btn btn-info">
-							<i class="ace-icon fa fa-pencil"></i>
-						</button>
-
-						<!-- #section:basics/sidebar.layout.shortcuts 
-						<button class="btn btn-warning">
-							<i class="ace-icon fa fa-users"></i>
-						</button>
-
-						<button class="btn btn-danger">
-							<i class="ace-icon fa fa-cogs"></i>
-						</button>
-
-						<!-- /section:basics/sidebar.layout.shortcuts 
-					</div>
-
-					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-						<span class="btn btn-success"></span>
-
-						<span class="btn btn-info"></span>
-
-						<span class="btn btn-warning"></span>
-
-						<span class="btn btn-danger"></span>
-					</div>
-				</div>--><!-- /.sidebar-shortcuts -->
-
 				<ul class="nav nav-list">
 					<li class="<?php if ($case=='') echo 'active'; ?>">
 						<a href="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -583,10 +541,10 @@
 		<!-- <![endif]-->
 
 		<!--[if IE]>
-<script type="text/javascript">
- window.jQuery || document.write("<script src='assets/js/jquery1x.js'>"+"<"+"/script>");
-</script>
-<![endif]-->
+			<script type="text/javascript">
+ 			window.jQuery || document.write("<script src='assets/js/jquery1x.js'>"+"<"+"/script>");
+			</script>
+		<![endif]-->
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.js'>"+"<"+"/script>");
 		</script>
