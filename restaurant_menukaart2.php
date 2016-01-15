@@ -45,18 +45,22 @@
     <section class="container">        
         <div class="price-table-2">
             <div class="row">
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-6 col-md-1">
+                </div>
+                <div class="col-sm-6 col-md-3">
 					<img src="images/top1.png" class="img-responsive inline" alt="">
                 </div>
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-6 col-md-3">
                     <div class="single-price price-two">
 					<img src="images/top3.png" class="img-responsive inline" alt="">
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-6 col-md-3">
                     <div class="single-price price-three">
 						<img src="images/top2.png" class="img-responsive inline" alt="">
                     </div>
+                </div>
+                <div class="col-sm-6 col-md-1">
                 </div>
             </div>
         </div>
