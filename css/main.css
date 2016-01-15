@@ -20,6 +20,22 @@
     color: #000;
   }
 
+  table {
+    font-size: 20px;
+	width: 100%;
+}
+table, th, td {
+    padding-bottom: 5%;
+	padding-left: 5%;
+	padding-top: 5%;
+}
+th {
+    background-color: #ff6a00;
+    color: white;
+	margin-right: 5%;
+	
+}
+  
   html {
     height: 100%;
   }
