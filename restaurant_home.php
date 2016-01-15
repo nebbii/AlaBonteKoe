@@ -1,12 +1,27 @@
 <?php 
-include_once("classes/database.class.php");
-include_once("include/config.php");
-include_once "page_navigation.php";
+	include_once("classes/database.class.php");
+	include_once("include/config.php");
+	include_once "page_navigation.php";
 
-echo getNav();
+	echo getNav();
 
-$conn = Database::getInstance();
-$conn->connect(HOST,USER,PASS,DBNAME);
+	$conn = Database::getInstance();
+	$conn->connect(HOST,USER,PASS,DBNAME);
+
+	if((isset($_POST))&&$_POST!=null) 
+	{		
+		// build datetime
+		$datetime = explode("/",$_POST['date']);
+		$datetime = $datetime[2]."/".$datetime[1]."/".$datetime[0]." ".$_POST['tijd'];
+		
+		$sql = "INSERT INTO `reserveringen`(naam,aantalpers,date,opmerking) 
+			VALUES ('{$_POST['naam']}','{$_POST['aantalPers']}','{$datetime}','{$_POST['opmerking']}')";
+		
+		$conn->doQuery($sql);
+		// prg
+		header("Location: " . $_SERVER['REQUEST_URI'] . "?q=submitform");
+		exit();
+	}
 ?>
 <body class="restaurant">
 
@@ -25,16 +40,8 @@ $conn->connect(HOST,USER,PASS,DBNAME);
     </div>
     <div class="main_div" >
 		<?php 
-		if((isset($_POST))&&$_POST!=null) 
-		{		
-			// build datetime
-			$datetime = explode("/",$_POST['date']);
-			$datetime = $datetime[2]."/".$datetime[1]."/".$datetime[0]." ".$_POST['tijd'];
-			
-			$sql = "INSERT INTO `reserveringen`(naam,aantalpers,date,opmerking) 
-				VALUES ('{$_POST['naam']}','{$_POST['aantalPers']}','{$datetime}','{$_POST['opmerking']}')";
-			
-			$conn->doQuery($sql);
+		if((isset($_GET['q']))&&$_GET['q']=='submitform') 
+		{
 		?>
 			<center><h2 class="main_header">Uw reservering is aangemaakt!</h2></center>
 			<br>

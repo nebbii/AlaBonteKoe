@@ -101,7 +101,7 @@ function reserveringen_home()
 					?>
 					</table>
 					<div class="form-group"> 
-					    <span id="savechangecontain"></span>
+						<span id="savechangecontain"></span>
 					</div>
 					</form>
 				</div>
@@ -140,24 +140,24 @@ function reserveringen_form()
 					</div>
 				  </div>
 				  <div class="form-group">
-				    <label class="control-label col-sm-2" for="aantalpers">Aantal Personen: </label>
+					<label class="control-label col-sm-2" for="aantalpers">Aantal Personen: </label>
 					<div class="col-sm-2">
 					  <select class="form-control" name="aantalpers" id="aantalpers">
-					    <option value="1" selected>1</option>
-					    <option value="2">2</option>
-					    <option value="3">3</option>
-					    <option value="4">4</option>
-					    <option value="5">5</option>
-					    <option value="6">6</option>
-					    <option value="7">7</option>
-					    <option value="8">8</option>
-					    <option value="9">9</option>
-					    <option value="10">10</option>
+						<option value="1" selected>1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
 					  </select>
 					</div>
 				  </div>
 				  <div class="form-group">
-				    <label class="control-label col-sm-2">Datum &amp; Tijd</label>
+					<label class="control-label col-sm-2">Datum &amp; Tijd</label>
 					<div class='col-sm-3'>
 						<div class='input-group' id='date'>
 							<input type='text' class="form-control" name="date" value="<?php echo date("Y/m/d"); ?>">	
@@ -170,7 +170,7 @@ function reserveringen_form()
 					</div>
 				  </div>
 				  <div class="form-group">
-				    <label class="control-label col-sm-2" for="opmerking">Opmerking</label>
+					<label class="control-label col-sm-2" for="opmerking">Opmerking</label>
 					<div class="col-sm-6">
 					  <textarea class="form-control" name="opmerking" id="opmerking"></textarea>
 					</div><hr>
@@ -332,7 +332,7 @@ function menukaart_home()
 					?>
 					</table>
 					<div class="form-group"> 
-					    <span id="savechangecontain"></span>
+						<span id="savechangecontain"></span>
 					</div>
 					</form>
 				</div>
@@ -392,7 +392,7 @@ function menukaart_form()
 									$conn->doquery("select * from `menukaart_soort_id`");
 									while($row = $conn->loadobjectlist()){
 										if($row['course']==$key){
-						  				echo "<option value='".$row['id']."'>".$row['naam']."</option>";
+										echo "<option value='".$row['id']."'>".$row['naam']."</option>";
 										}
 									}
 									echo "</optgroup>";
@@ -520,7 +520,7 @@ function menukaart_soort_home()
 					?>
 					</table>
 					<div class="form-group"> 
-					    <span id="savechangecontain"></span>
+						<span id="savechangecontain"></span>
 					</div>
 					</form>
 				</div>
@@ -568,7 +568,7 @@ function bioscoop_home(){
 					}
 				?>
 			<div class='col-sm-12'><a href="<?php echo $_SERVER['PHP_SELF']."?q=bioscoop_new"; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nieuwe Zaal</a></div>
-    			<?php
+				<?php
 				while($row = $conn->loadObjectList() ) { 
 					echo "<div class='col-sm-4'>".
 							"<a class='' href='#'>".
@@ -756,5 +756,4 @@ function bioscoop_processform()
 	
 	$conn->doQuery($sql);
 }
-
 ?>
