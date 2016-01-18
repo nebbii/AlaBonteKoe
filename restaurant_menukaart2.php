@@ -1,6 +1,53 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+	<?php 
+		// navigation
+		include_once "page_navigation.php";
+		echo getNav();
+		
+		// restaurant menu build
+		include_once("classes/database.class.php");
+		include_once("include/config.php");
+		
+		$conn = Database::getInstance();
+		
+		// prepare menukaart
+		
+		$sql =	"SELECT 
+					`menukaart`.`id`,
+					`menukaart`.`naam`,
+					`menukaart`.`prijs`,
+					`menukaart`.`soort_id`,
+					`menukaart_soort_id_course`.`id` as courseid
+				FROM 
+					`menukaart`
+				INNER JOIN `menukaart_soort_id` 
+					ON `menukaart`.`soort_id` = `menukaart_soort_id`.`id` 
+				INNER JOIN `menukaart_soort_id_course` 
+					ON `menukaart_soort_id`.`course` = `menukaart_soort_id_course`.`id` 
+				ORDER BY
+					`menukaart`.`id`
+				ASC";
+					
+		$conn->connect(HOST,USER,PASS,DBNAME);
+		
+		$conn->doQuery($sql);
+		
+		while($row = $conn->loadObjectList()) {
+			$result[$row['id']] = array (
+				"id"			=> $row['id'],
+				"naam" 			=> $row['naam'],
+				"prijs"			=> $row['prijs'],
+				"soort_id"		=> $row['soort_id'],
+				"courseid"		=> $row['courseid']
+			);
+		}
+		
+		/* Debug echo */
+		//echo "<pre style='background: white; border-radius: 2px'>Regular visitor, don't look! You're not ready!\n"; print_r($result); echo "</pre>";
+	?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -41,7 +88,7 @@
         </div>
     </header>
     <!--/#header-->
-
+	
     <section class="container">        
         <div class="price-table-2">
             <div class="row">
@@ -66,177 +113,89 @@
         </div>
     </section>
   
-
-    <section class="container">        
-        <div class="price-table">
-            <div class="row">
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Voorgerecht</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">Koude voorgerechten</span></p>
-                        </div>
-                        <ul>                            
-                            <li>Haringtartaar met tomaat en lente-ui<span>€ 3,50</span></li>
-                            <li>Stokbrood met kruidenboter	<span>€ 2,50</span></li>
-                            <li>Garnalen Cocktail	<span>€ 3,50</span></li>
-                            <li>Gemarineerde champignons met geitenkaas<span>€ 3,- </span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow"></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Voorgerecht</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">Warme voorgerechten</span></p>
-                        </div>                        
-                        <ul>
-                            <li>Verse tomatensoep	 <span>€ 4,-</span></li>
-                            <li>Soep van de dag <span>€ 5,-</span></li>
-                            <li>Gefrituurde inktvis ringen<span>€ 6,50</span> </li>
-                            <li>Mini Hamburgers<span>€ 9,50</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow btn-hightlight"></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Voorgerecht</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">Salades</span></p>
-                        </div>
-                        <ul>
-                            <li>Groene Salade<span>	€ 4,-</span></li>
-                            <li>Salade met gerookte zalm <span>	€ 5,50</span></li>
-                            <li>Salade met gebakken scampi's <span>	€ 6,-</span> </li>
-                            <li>Salade met walnoten <span>	€ 5,-</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow"></a>
-                    </div>
-                </div>
-            </div>
-        </div><!--/#price-table-->
-		<h1>Alle vlees en vis hoofdgerechten worden geserveerd met patat en salade</h1>
-    </section>
-
-        <section class="container">        
-        <div class="price-table">
-            <div class="row">
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Hoofdgerecht</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">Vlees</span></p>
-                        </div>
-                        <ul>                            
-                            <li>Ossenhaas met champignonensaus<span>	€ 11,-</span></li>
-                            <li>Wienerschnitzel	<span>€ 12,50</span></li>
-                            <li>Biefstuk<span>€ 12,-</span></li>
-                            <li>Spareribs (4 stuks)<span>	€ 13,-</span></li>
-                            <li>De bonte koe hamburger met patat<span>€ 12,50</span></li>
-                            <li>Kipfile<span>€ 9,50</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow"></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Hoofdgerecht</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">Pizza's</span></p>
-                        </div>                        
-                        <ul>
-                            <li>Margarita<span>€8,-</span></li>
-                            <li>Peperoni <span>€9,50,-</span></li>
-                            <li>Tonijn <span>€10,-</span> </li>
-                            <li>Hawaii <span>€10,50</span></li>
-                            <li>Shoarma<span>€9,50</span></li>
-                            <li>De bonte koe pizza <span>€14</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow btn-hightlight"></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Hoofdgerecht</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">Vis</span></p>
-                        </div>
-                        <ul>
-                            <li>Groene Salade<span>	€ 4,-</span></li>
-                            <li>Salade met gerookte zalm <span>	€ 5,50</span></li>
-                            <li>Salade met gebakken scampi's <span>	€ 6,-</span> </li>
-                            <li>Salade met walnoten <span>	€ 5,-</span></li>
-                            <li>duidelijk ook een vis schotel <span>	€ 21,-</span></li>
-                            <li>haggis<span>€9,-</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow"></a>
-                    </div>
-                </div>
-            </div>
-        </div><!--/#price-table-->
-    </section>
-	
-	        <section class="container">        
-        <div class="price-table">
-            <div class="row">
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">nagerecht</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">ijs</span></p>
-                        </div>
-                        <ul>                            
-                            <li>Ijs ijs bbi<span>	€ 11,-</span></li>
-                            <li>Blue ijs	<span>€ 12,50</span></li>
-                            <li>white dragon<span>€ 12,-</span></li>
-                            <li>bacon<span>	€ 13,-</span></li>
-                            <li>Tears of thine enemies<span>€ 12,50</span></li>
-                            <li>weeaboo<span>€ 9,50</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow"></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Dranken</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">koude dranken</span></p>
-                        </div>                        
-                        <ul>
-                            <li>Drank A<span>€8,-</span></li>
-                            <li>Drank B <span>€9,50,-</span></li>
-                            <li>Drank C <span>€10,-</span> </li>
-                            <li>Drank D <span>€10,50</span></li>
-                            <li>Drank E<span>€9,50</span></li>
-                            <li>Drank Q <span>€14</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow btn-hightlight"></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="single-price price-one">
-                        <div class="table-heading">
-                            <p class="plan-name">Dranken</p>
-                            <p class="plan-price"><span class="dollar-sign"></span><span class="price"></span><span class="month">warme dranken		</span></p>
-                        </div>
-                        <ul>
-                            <li>Drank A<span>€8,-</span></li>
-                            <li>Drank B <span>€9,50,-</span></li>
-                            <li>Drank C <span>€10,-</span> </li>
-                            <li>Drank D <span>€10,50</span></li>
-                            <li>Drank E<span>€9,50</span></li>
-                            <li>Drank Q <span>€14</span></li>
-                        </ul>
-                        <a href="#" class="btn btn-buynow"></a>
-                    </div>
-                </div>
-            </div>
-        </div><!--/#price-table-->
-    </section>
-	
-	    <section class="container">
+	<?php
+		$conn->doQuery("SELECT * FROM `menukaart_soort_id` ORDER BY `id`");
+		while($row = $conn->loadObjectList())
+		{
+			$soort_id[] = $row;
+		}
+		// store courses for later use
+		$conn->doQuery("SELECT * FROM `menukaart_soort_id_course` ORDER BY `id`");
+		while($row = $conn->loadObjectList())
+		{
+			$course_id[] = $row;
+		}
+	?>
+	<?php
+		// 'Menukaart'
+		foreach($course_id as $ckey)
+		{
+		?>
+			<section class="container">        
+				<div class="price-table">
+					<div class="row">
+				<?php
+					foreach($soort_id as $skey)
+					{
+						if($skey['course']==$ckey['id'])
+						{
+					?>
+						<div class="col-sm-6 col-md-4">
+							<div class="single-price price-one">
+								<div class="table-heading">
+									<p class="plan-name"><?php echo $ckey['coursenaam'] ?></p>
+									<p class="plan-price">
+										<span class="dollar-sign"></span>
+										<span class="price"></span>
+										<span class="month"><?php echo $skey['naam'] ?></span>
+									</p>
+								</div>
+						
+					<?php
+						
+							echo "<ul>";
+							foreach($result as $key)
+							{
+								if(($key['soort_id']==$skey['id'])&&($key['courseid']==$ckey['id']))
+								{
+									// fix price decimals
+									if((strlen(substr($key['prijs'], strpos($key['prijs'], ".")+1))==1)&&strpos($key['prijs'], ".")==true)
+									{
+										$key['prijs'] .= 0;											
+									}
+										elseif(strpos($key['prijs'], ".")==false)
+									{
+										$key['prijs'] .= ",-";
+									}
+									$key['prijs'] = str_replace(".", ",", $key['prijs']);
+									echo "<li>";
+									echo $key['naam'];
+									echo "<span>".$key['prijs']."</span>";
+									echo "</li>";
+									/*echo "<tr>";
+									echo "<td>".$key['naam']."</td>";
+									echo "<td>&nbsp;</td>";
+									echo "<td>&euro;".$key['prijs']."</td>";
+									echo "</tr>";*/
+								}
+							}
+							echo "</ul>";
+						?>
+							</div>
+						</div>
+						<?php
+						}
+					}
+					?>
+						
+					</div>
+				</div>
+			</section>
+		<?php
+			
+		}
+	?>
+	<section class="container">
         
         <div class="price-table-2">
             <div class="row">
