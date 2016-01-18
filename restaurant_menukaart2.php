@@ -135,24 +135,35 @@
 				<div class="price-table">
 					<div class="row">
 				<?php
+					// count amount of soorten for pagination
+					$colcount=0;
 					foreach($soort_id as $skey)
 					{
 						if($skey['course']==$ckey['id'])
 						{
-					?>
-						<div class="col-sm-6 col-md-4">
-							<div class="single-price price-one">
-								<div class="table-heading">
-									<p class="plan-name"><?php echo $ckey['coursenaam'] ?></p>
-									<p class="plan-price">
-										<span class="dollar-sign"></span>
-										<span class="price"></span>
-										<span class="month"><?php echo $skey['naam'] ?></span>
-									</p>
-								</div>
+							$colcount++;
+						}
+					}
+					// page creation
+					foreach($soort_id as $skey)
+					{
 						
-					<?php
+						if($skey['course']==$ckey['id'])
+						{
+						?>
+							<?php if ($colcount==1) { ?> <div class="col-sm-12 col-md-12"> 	<?php } ?>
+							<?php if ($colcount>1) 	{ ?> <div class="col-sm-6 col-md-6"> 	<?php } ?>
+								<div class="single-price price-one">
+									<div class="table-heading">
+										<p class="plan-name"><?php echo $ckey['coursenaam'] ?></p>
+										<p class="plan-price">
+											<span class="dollar-sign"></span>
+											<span class="price"></span>
+											<span class="month"><?php echo $skey['naam'] ?></span>
+										</p>
+									</div>
 						
+						<?php
 							echo "<ul>";
 							foreach($result as $key)
 							{
@@ -183,7 +194,7 @@
 						?>
 							</div>
 						</div>
-						<?php
+					<?php
 						}
 					}
 					?>
