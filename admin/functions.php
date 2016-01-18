@@ -27,7 +27,19 @@ function main_page()
 function reserveringen_home() 
 {
 	global $conn;
-	$conn->doQuery("SELECT * FROM `reserveringen`");
+	$sql = "SELECT * FROM `reserveringen`";
+	
+	// pagination
+	if(isset($_GET['order_by']))
+	{
+		$sql .= " ORDER BY `".$_GET['order_by']."`";
+	}
+	if(isset($_GET['sort']))
+	{
+		$sql .= " ".strtoupper($_GET['sort']);
+	}
+	
+	$conn->doQuery($sql);
 	
 	?>
 		<!-- /section:basics/content.breadcrumbs -->
@@ -61,6 +73,10 @@ function reserveringen_home()
 							break;
 						}
 					}
+					if(isset($_GET['order_by']))
+					{
+						echo "<h6>Tabel gerangschikt op \"".$_GET['order_by']."\".</h6>";
+					}
 				?>
 				<script>
 					function tickupbox(id)
@@ -72,32 +88,49 @@ function reserveringen_home()
 				</script>
 				<div class="table-responsive">
 					<form action="<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_res&a=savechanges" method="POST"><table class="table">
-						<tr>	
-							<th>&nbsp;</th>
-							<th>Reservering #</th>
-							<th>Naam</th>
-							<th>Aantal Personen</th>
-							<th>Datum &amp Tijd</th>
-							<th>Opmerking</th>
-							<th>Verwijder</th>
-						</tr>
 					<?php
-					while($row = $conn->loadObjectList()) {
-						echo "<tr>";
-						echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";
-						echo "<input type='hidden' name='res[{$row['id']}][id]' value='".$row['id']."'>";
-						echo "<td><span id='checkboxglyph[{$row['id']}]'></span></td>";
-						//echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][id]' value='".$row['id']."'></td>";
-						echo "<td>".$row['id']."</td>";
-						echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
-						echo "<td><input type='number' maxlength='6' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][aantalpers]' value='".$row['aantalpers']."'></td>";
-						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][date]' value='".$row['date']."'></td>";
-						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][opmerking]' value='".$row['opmerking']."'></td>";
-						
-						echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_res&a=delres&id={$row['id']}'><span style='font-size:1.5em;' class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
-						
-						echo "</tr>";
-					}
+						$i=0;
+						while($row = $conn->loadObjectList()) 
+						{
+							if($i==0)
+							{	
+								//echo $sql;
+								echo "<tr>";
+								echo "<th>&nbsp;</th>"; //empty column for check mark
+								foreach ($row as $key => $value)
+								{
+									if((isset($_GET['order_by'])&&$_GET['order_by']==$key)&&isset($_GET['sort'])&&$_GET['sort']=='desc')
+									{
+										echo "<th><a href='".$_SERVER['PHP_SELF']."?q=rest_res&order_by=$key&sort=asc'><u>{$key}&nbsp;&#9660;</u></a></th>";
+									} 
+									  elseif((isset($_GET['order_by'])&&$_GET['order_by']==$key)&&isset($_GET['sort'])&&$_GET['sort']=='asc')
+									{
+										echo "<th><a href='".$_SERVER['PHP_SELF']."?q=rest_res&order_by=$key&sort=desc'><u>{$key}&nbsp;&#9650;</u></a></th>";
+									}
+									  else
+									{
+										echo "<th><a href='".$_SERVER['PHP_SELF']."?q=rest_res&order_by=$key&sort=asc'>$key</a></th>";
+									}
+								}
+								echo "<th>Verwijder</th>";
+								echo "</tr>";
+							}
+							echo "<tr>";
+							echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";
+							echo "<input type='hidden' name='res[{$row['id']}][id]' value='".$row['id']."'>";
+							echo "<td><span id='checkboxglyph[{$row['id']}]'></span></td>";
+							//echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][id]' value='".$row['id']."'></td>";
+							echo "<td>".$row['id']."</td>";
+							echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
+							echo "<td><input type='number' maxlength='6' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][aantalpers]' value='".$row['aantalpers']."'></td>";
+							echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][date]' value='".$row['date']."'></td>";
+							echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][opmerking]' value='".$row['opmerking']."'></td>";
+							
+							echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_res&a=delres&id={$row['id']}'><span style='font-size:1.5em;' class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
+							
+							echo "</tr>";
+							$i++;
+						}
 					?>
 					</table>
 					<div class="form-group"> 
@@ -287,48 +320,86 @@ function menukaart_home()
 				
 				<div class="table-responsive">
 					<form action='<?php echo $_SERVER['PHP_SELF']; ?>?q=rest_menu&a=savechanges' method='POST' id='res'><table class='table'>
-						<tr>	
+						<!--<tr>	
 							<th>&nbsp;</th>
 							<th>Gerecht #</th>
 							<th>Naam</th>
 							<th><span style='font-size:0.8em;' class="glyphicon glyphicon-euro"></span> Prijs</th>
 							<th>Soort&nbsp;<a href="<?php echo $_SERVER['PHP_SELF']."?q=rest_menu_soort"; ?>"><span class='glyphicon glyphicon-edit text-success'></span></a>
-								<!--<input type="text" name="nsoort" maxlength='64' placeholder="Nieuw Soort">-->
-								<!--<button type='submit' name="s_submit" value="true" class='btn btn-success btn-xs'><span class='glyphicon glyphicon-ok'></span>&nbsp;&nbsp;Voeg Toe</button>-->
 							</th>
 							<th>Verwijder</th>
-						</tr>
+						</tr>-->
 					<?php
-					$conn->doQuery("SELECT * FROM `menukaart`");
-					while($row = $conn->loadObjectList()) { 
-						echo "<tr>";
-						echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";
-						echo "<input type='hidden' name='res[{$row['id']}][id]' value='".$row['id']."'>";
-						
-						echo "<td><span id='checkboxglyph[{$row['id']}]'></span></td>";
-						echo "<td>".$row['id']."</td>";
-						echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
-						echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][prijs]' value='".$row['prijs']."'></td>";
-						echo "<td><select class='form-control' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][soort_id]' id='soort_id'>";
-						foreach($course_id as $ckey => $cvalue) {
-							echo "<optgroup label='".$cvalue."'>";			
-							foreach($option as $key => $value) 
-							{
-								if($value['c_id']==$ckey) {	
-									echo "<option value='".$key."' ".(($key==$row['soort_id']) ? 'selected' : '').">"
-									.$value['naam']."</option>";
-								}/* else {
-									echo "<option>course numb = ".$ckey.", option key is ".$value['c_id']."</option>";
-								}*/
-							}
-							echo "</optgroup>";
+						$i=0;
+						$sql = "SELECT * FROM `menukaart`";
+							
+						// pagination
+						if(isset($_GET['order_by']))
+						{
+							$sql .= " ORDER BY `".$_GET['order_by']."`";
 						}
-						echo "</select></td>";
-						
-						echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_menu&a=delres&id={$row['id']}'><span style='font-size:1.5em;' class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
-						
-						echo "</tr>";
-					}
+						if(isset($_GET['sort']))
+						{
+							$sql .= " ".strtoupper($_GET['sort']);
+						}
+						$conn->doQuery($sql);
+						while($row = $conn->loadObjectList()) { 
+							if($i==0)
+							{	
+								//echo $sql;
+								echo "<tr>";
+								echo "<th>&nbsp;</th>"; //empty column for check mark
+								foreach ($row as $key => $value)
+								{
+									if((isset($_GET['order_by'])&&$_GET['order_by']==$key)&&isset($_GET['sort'])&&$_GET['sort']=='desc')
+									{
+										echo "<th><a href='".$_SERVER['PHP_SELF']."?q=rest_menu&order_by=$key&sort=asc'><u>{$key}&nbsp;&#9660;</u></a></th>";
+									} 
+									  elseif((isset($_GET['order_by'])&&$_GET['order_by']==$key)&&isset($_GET['sort'])&&$_GET['sort']=='asc')
+									{
+										echo "<th><a href='".$_SERVER['PHP_SELF']."?q=rest_menu&order_by=$key&sort=desc'><u>{$key}&nbsp;&#9650;</u></a></th>";
+									}
+									  elseif($key=="soort_id")
+									{
+										echo "<th>Soort&nbsp;<a href='".$_SERVER['PHP_SELF']."?q=rest_menu_soort'><span class='glyphicon glyphicon-edit text-success'></span></a></th>";
+									}
+									  else
+									{
+										echo "<th><a href='".$_SERVER['PHP_SELF']."?q=rest_menu&order_by=$key&sort=asc'>$key</a></th>";
+									}
+								}
+								echo "<th>Verwijder</th>";
+								echo "</tr>";
+							}
+							echo "<tr>";
+							echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";
+							echo "<input type='hidden' name='res[{$row['id']}][id]' value='".$row['id']."'>";
+							
+							echo "<td><span id='checkboxglyph[{$row['id']}]'></span></td>";
+							echo "<td>".$row['id']."</td>";
+							echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
+							echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][prijs]' value='".$row['prijs']."'></td>";
+							echo "<td><select class='form-control' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][soort_id]' id='soort_id'>";
+							foreach($course_id as $ckey => $cvalue) {
+								echo "<optgroup label='".$cvalue."'>";			
+								foreach($option as $key => $value) 
+								{
+									if($value['c_id']==$ckey) {	
+										echo "<option value='".$key."' ".(($key==$row['soort_id']) ? 'selected' : '').">"
+										.$value['naam']."</option>";
+									}/* else {
+										echo "<option>course numb = ".$ckey.", option key is ".$value['c_id']."</option>";
+									}*/
+								}
+								echo "</optgroup>";
+							}
+							echo "</select></td>";
+							
+							echo "<td><a href='".$_SERVER['PHP_SELF']."?q=rest_menu&a=delres&id={$row['id']}'><span style='font-size:1.5em;' class='glyphicon glyphicon-remove-circle text-danger'></span></a></td>";
+							
+							echo "</tr>";
+							$i++;
+						}
 					?>
 					</table>
 					<div class="form-group"> 
@@ -502,7 +573,19 @@ function menukaart_soort_home()
 							<th>Verwijder</th>
 						</tr>
 					<?php
-					$conn->doQuery("SELECT * FROM `menukaart_soort_id`");
+					$sql = "SELECT * FROM `menukaart_soort_id`";
+					
+					// pagination
+					if(isset($_GET['order_by']))
+					{
+						$sql .= " ORDER BY `".$_GET['order_by']."`";
+					}
+					if(isset($_GET['sort']))
+					{
+						$sql .= " ".strtoupper($_GET['sort']);
+					}
+					
+					$conn->doQuery($sql);
 					while($row = $conn->loadObjectList()) { 
 						echo "<tr>";
 						echo "<input type='hidden' name='res[{$row['id']}][check]' id='rescheck[{$row['id']}]' value='0'>";

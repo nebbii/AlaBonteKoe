@@ -115,7 +115,7 @@
 										{
 											$key['prijs'] .= 0;											
 										}
-										elseif(strpos($key['prijs'], ".")==false)
+											elseif(strpos($key['prijs'], ".")==false)
 										{
 											$key['prijs'] .= ",-";
 										}
