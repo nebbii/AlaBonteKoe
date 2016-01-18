@@ -115,19 +115,19 @@
                     <div class="sidebar blog-sidebar">
                         <div class="sidebar-item  recent"> 
 							<br />
-        Dagelijks open van 16:00 t/m 23:00
+        <h3>Dagelijks open van 16:00 t/m 23:00</h3>
         </b>
         <br /><br /><br /><br />
-        Uitgaanscentrum De Bonte Koe<br />
+        <h3> Uitgaanscentrum De Bonte Koe<br />
         Dorpsstraat 14b<br />
         2481BA Woubrugge<br />
-        0172-518274
+        0172-518274</h3>
         <br /><br /><br /><br />
         <b>Website</b><br />
-        <small class="link"><a href="">http://uitgaanscentrumdebontekoe.nl/restaurant</a></small><br />
+           <h3><small class="link"><a href="">http://uitgaanscentrumdebontekoe.nl/restaurant</a></small><br /></h3>
         <br />
         <b>E-mail</b><br />
-        <small class="link"><a href="">restaurant@uitgaancentrumdebontekoe.nl</a></small>      
+           <h3><small class="link"><a href="">restaurant@uitgaancentrumdebontekoe.nl</a></small>    </h3>     
     </p> 
 	
                         </div>
