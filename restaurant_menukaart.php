@@ -1,157 +1,242 @@
-<?php 
-	// navigation
-	include_once "page_navigation.php";
-	echo getNav();
-	
-	// restaurant menu build
-	include_once("classes/database.class.php");
-	include_once("include/config.php");
-	
-	$conn = Database::getInstance();
-	
-	// prepare menukaart
-	
-	$sql =	"SELECT 
-				`menukaart`.`id`,
-				`menukaart`.`naam`,
-				`menukaart`.`prijs`,
-				`menukaart`.`soort_id`,
-				`menukaart_soort_id_course`.`id` as courseid
-			FROM 
-				`menukaart`
-			INNER JOIN `menukaart_soort_id` 
-				ON `menukaart`.`soort_id` = `menukaart_soort_id`.`id` 
-			INNER JOIN `menukaart_soort_id_course` 
-				ON `menukaart_soort_id`.`course` = `menukaart_soort_id_course`.`id` 
-			ORDER BY
-				`menukaart`.`id`
-			ASC";
-				
-	$conn->connect(HOST,USER,PASS,DBNAME);
-	
-	$conn->doQuery($sql);
-	
-	while($row = $conn->loadObjectList()) {
-		$result[$row['id']] = array (
-			"id"			=> $row['id'],
-			"naam" 			=> $row['naam'],
-			"prijs"			=> $row['prijs'],
-			"soort_id"		=> $row['soort_id'],
-			"courseid"		=> $row['courseid']
-		);
-	}
-	
-	/* Debug echo */
-	//echo "<pre style='background: white; border-radius: 2px'>Regular visitor, don't look! You're not ready!\n"; print_r($result); echo "</pre>";
-?>
-<body class="restaurant">
+<!DOCTYPE html>
 
-	<div class="banner_restaurant">
-	<div class="banner_div">
-		 <a href="index.php"><img src="images/Logo/Logo3.png" class="banner_img" /></a>
-	</div>
-	<div class="banner_div">
-		<h1 class="banner_header">Restaurant Module</h1>
-	</div>
-	<div class="banner_buttons">
-		<a href="restaurant_home.php"><button>Home</button></a>
-		<a href="#"><button>Menukaart</button></a>
-		<a href="restaurant_reserveren.php"><button>Reserveren</button></a>
-	</div>
-	</div>
-	<div class="menukaart_div" >
-		<center>
-			<h2 class="main_header"><img src="images/decoratie_menukaart_links2.png" style="width: 10%;"><i style="padding: 10px;">Menukaart</i><img src="images/decoratie_menukaart_rechts2.png" style="width: 10%;"></h2>
-			<div id="tabs" class="tabs">
-				
-				<div class="content">
+<html lang="en">
+<head>
+	<?php 
+		// navigation
+		//include_once "page_navigation.php";
+		//echo getNav();
+		
+		// restaurant menu build
+		include_once("classes/database.class.php");
+		include_once("include/config.php");
+		
+		$conn = Database::getInstance();
+		
+		// prepare menukaart
+		
+		$sql =	"SELECT 
+					`menukaart`.`id`,
+					`menukaart`.`naam`,
+					`menukaart`.`prijs`,
+					`menukaart`.`soort_id`,
+					`menukaart_soort_id_course`.`id` as courseid
+				FROM 
+					`menukaart`
+				INNER JOIN `menukaart_soort_id` 
+					ON `menukaart`.`soort_id` = `menukaart_soort_id`.`id` 
+				INNER JOIN `menukaart_soort_id_course` 
+					ON `menukaart_soort_id`.`course` = `menukaart_soort_id_course`.`id` 
+				ORDER BY
+					`menukaart`.`id`
+				ASC";
+					
+		$conn->connect(HOST,USER,PASS,DBNAME);
+		
+		$conn->doQuery($sql);
+		
+		while($row = $conn->loadObjectList()) {
+			$result[$row['id']] = array (
+				"id"			=> $row['id'],
+				"naam" 			=> $row['naam'],
+				"prijs"			=> $row['prijs'],
+				"soort_id"		=> $row['soort_id'],
+				"courseid"		=> $row['courseid']
+			);
+		}
+		
+		/* Debug echo */
+		//echo "<pre style='background: white; border-radius: 2px'>Regular visitor, don't look! You're not ready!\n"; print_r($result); echo "</pre>";
+	?>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/prettyPhoto.css" rel="stylesheet"> 
+    <link href="css/animate.min.css" rel="stylesheet"> 
+	<link href="css/main.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">    
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container">			
+			
+			<!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigatie">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span> 
+			</button>-->
+			<!--<div class="collapse navbar-collapse" id="navigatie">-->
+				<ul class="nav navbar-nav">
+					<li>
+					<a class="navbar-brand" href="index.php">
+						<img src="images/logo3.png" class="img-responsive inline"  height="100" width="100" alt="">
+					</a>
+					</li>
+					<li><a href="restaurant_home.php">Home</a></li>
+					<li><a href="restaurant_menukaart.php">Menukaart</a></li>                       
+					<li><a href="restaurant_reserveren.php">Reserveren</a></li>                       
+				</ul>
+			<!--</div>-->
+		</div>
+	</nav><br />
+    <!--/#header-->
+	
+    <section class="container">        
+        <div class="price-table-2">
+            <div class="row">
+                <div class="col-md-12">
+                </div>
+                <div class="col-sm-4 col-md-4">
+					<img src="images/top1.png" class="img-responsive inline" alt="">
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <div class="single-price price-two">
+					<img src="images/top3.png" class="img-responsive inline" alt="">
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <div class="single-price price-three">
+						<img src="images/top2.png" class="img-responsive inline" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+	<?php
+		$conn->doQuery("SELECT * FROM `menukaart_soort_id` ORDER BY `id`");
+		while($row = $conn->loadObjectList())
+		{
+			$soort_id[] = $row;
+		}
+		// store courses for later use
+		$conn->doQuery("SELECT * FROM `menukaart_soort_id_course` ORDER BY `id`");
+		while($row = $conn->loadObjectList())
+		{
+			$course_id[] = $row;
+		}
+	?>
+	<?php
+		// 'Menukaart'
+		foreach($course_id as $ckey)
+		{
+		?>
+			<section class="container">        
+				<div class="price-table">
+					<div class="row">
 				<?php
-					// store soorten for later use
-					$conn->doQuery("SELECT * FROM `menukaart_soort_id` ORDER BY `id`");
-					while($row = $conn->loadObjectList())
+					// count amount of soorten for pagination
+					$colcount=0;
+					foreach($soort_id as $skey)
 					{
-						$soort_id[] = $row;
-					}
-					// store courses for later use
-					$conn->doQuery("SELECT * FROM `menukaart_soort_id_course` ORDER BY `id`");
-					while($row = $conn->loadObjectList())
-					{
-						$course_id[] = $row;
-					}
-					?>
-					<nav>
-						<ul style="list-style-type: none;">
-						<?php
-							// page index
-							foreach($course_id as $key)
-							{
-								echo "<li><a href='#section-".$key['id']."'><span>".$key['coursenaam']."</span></a></li>";
-							}
-						?>
-						</ul>
-					</nav>
-				<?php
-					// 'Menukaart'
-					foreach($course_id as $ckey)
-					{
-					?>
-						<section id="section-<?php echo $ckey['id'] ?>">
-							<div class="mediabox">
-								
-								<h2><?php echo $ckey['coursenaam'] ?></h2>
-								<table class='menukaart'>
-					<?php
-						foreach($soort_id as $skey)
+						if($skey['course']==$ckey['id'])
 						{
-							if($skey['course']==$ckey['id'])
+							$colcount++;
+						}
+					}
+					// page creation
+					foreach($soort_id as $skey)
+					{
+						
+						if($skey['course']==$ckey['id'])
+						{
+						?>
+							<?php if ($colcount==1) { ?> <div class="col-sm-12"> <?php } ?>
+							<?php if ($colcount>1) { ?> <div class="col-sm-4">	<?php } ?>
+								<div class="single-price price-one">
+									<div class="table-heading">
+										<p class="plan-name"><?php echo $ckey['coursenaam'] ?></p>
+										<p class="plan-price">
+											<span class="dollar-sign"></span>
+											<span class="price"></span>
+											<span class="month"><?php echo $skey['naam'] ?></span>
+										</p>
+									</div>
+						
+						<?php
+							echo "<ul>";
+							foreach($result as $key)
 							{
-								echo "<tr><th colspan='10'>".$skey['naam']."</th></tr>";
-								foreach($result as $key)
+								if(($key['soort_id']==$skey['id'])&&($key['courseid']==$ckey['id']))
 								{
-									if(($key['soort_id']==$skey['id'])&&($key['courseid']==$ckey['id']))
+									// fix price decimals
+									if((strlen(substr($key['prijs'], strpos($key['prijs'], ".")+1))==1)&&strpos($key['prijs'], ".")==true)
 									{
-										// fix price decimals
-										if((strlen(substr($key['prijs'], strpos($key['prijs'], ".")+1))==1)&&strpos($key['prijs'], ".")==true)
-										{
-											$key['prijs'] .= 0;											
-										}
-											elseif(strpos($key['prijs'], ".")==false)
-										{
-											$key['prijs'] .= ",-";
-										}
-										$key['prijs'] = str_replace(".", ",", $key['prijs']);
-										
-										echo "<tr>";
-										echo "<td>".$key['naam']."</td>";
-										echo "<td>&nbsp;</td>";
-										echo "<td>&euro;".$key['prijs']."</td>";
-										echo "</tr>";
+										$key['prijs'] .= 0;											
 									}
+										elseif(strpos($key['prijs'], ".")==false)
+									{
+										$key['prijs'] .= ",-";
+									}
+									$key['prijs'] = str_replace(".", ",", $key['prijs']);
+									echo "<li>";
+									echo $key['naam'];
+									echo "<span>".$key['prijs']."</span>";
+									echo "</li>";
+									/*echo "<tr>";
+									echo "<td>".$key['naam']."</td>";
+									echo "<td>&nbsp;</td>";
+									echo "<td>&euro;".$key['prijs']."</td>";
+									echo "</tr>";*/
 								}
 							}
-						}
-					?>
-								</table>	
+							echo "</ul>";
+						?>
 							</div>
-						</section>
-						</br>
+						</div>
 					<?php
-						
+						}
 					}
-				?>
-				</div><!-- /content -->
-			</div><!-- /tabs -->
-			<img src="images/decoratie_menukaart_onder.png" style="height: 100px; width: 350px;"/>
-		</center>
-		<br /><br /><br />
-	</div>
-	
-	<br /><br />
-	
-	<link rel="stylesheet" type="text/css" href="css/tabs_menukaart.css" />
-	<script src="js/cbpFWTabs.js"></script>
-	<script>
-		new CBPFWTabs( document.getElementById( 'tabs' ) );
-	</script>
-	
+					?>
+						
+					</div>
+				</div>
+			</section>
+		<?php
+			
+		}
+	?>
+	<section class="container">
+        
+        <div class="price-table-2">
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                </div>
+                <div class="col-sm-6 col-md-6	">
+                    <div class="single-price price-two">
+					<img src="images/bot.png" class="img-responsive inline" alt="">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="single-price price-three">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center bottom-separator">
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--/#footer-->
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/wow.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>   
 </body>
+</html>
