@@ -13,6 +13,21 @@ body{
     color: #333;
 }
 
+.restaurant {
+    background: #fff url(../images/bg_restaurant.png) repeat top left;
+}
+
+.uitgaans {
+    background: #fff url(../images/bg_uitgaan.png) repeat top left;
+}
+
+.bioscoop {
+    background: #fff url(../images/bg_bioscoop.png) repeat top left;
+}
+
+.contact {
+    background: #fff url(../images/bg_contact.png) repeat top left;
+}
 
 .link {
     border-bottom: 1px dashed #363639;
@@ -52,7 +67,7 @@ body{
 
 .banner_buttons {
     float: bottom;
-    margin-top: 10%;
+    margin-top: 8%;
     
 }
 
@@ -150,18 +165,6 @@ input[type="submit"]:hover {
     margin-top: 35px;
 }
 
-.restaurant {
-    background: #fff url(../images/bg_restaurant.png) repeat top left;
-}
-
-.uitgaans {
-    background: #fff url(../images/bg_uitgaan.png) repeat top left;
-}
-
-.bioscoop {
-    background: #fff url(../images/bg_bioscoop.png) repeat top left;
-}
-
 #slider {
     background-color:rgba(0,0,0,0.5);
     bottom:0;
@@ -194,8 +197,6 @@ input[type="submit"]:hover {
     border: none !important;
     background-color: #eceff0; 
 }
-
-
 
 
 .menukaart_div{
@@ -410,4 +411,69 @@ input[type="submit"]:hover {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     margin-left: 0;
+}
+
+/* ===========================
+   ===== Contact Pagina ====== 
+   =========================== */
+
+.contact_div{
+    width: 71%;
+    min-height: 20%;
+    background-color: #eceff0;
+    margin: -3% 15%;
+    border-radius: 5px;
+    float: left;
+    box-shadow: 6px 6px 0 #a1a1a1;
+}
+
+.contact_restaurant {
+    margin-top: 3%;
+    width: 30%;
+    height: 500px;
+    background-color: #D8267D;
+    margin-left: 2.5%;
+    float: left;
+    border-radius: 30px;
+    border: 15px #D8267D solid; 
+}
+
+.contact_restaurant:hover {
+    border: 15px #961956 solid; 
+   
+}
+
+.contact_uitgaan {
+    margin-top: 3%;
+    width: 30%;
+    height: 500px;
+    background-color: #41BCEB;
+    margin-left: 2.5%;
+    float: left;
+    border-radius: 30px;
+    border: 15px #41BCEB solid; 
+}
+
+.contact_uitgaan:hover {
+    border: 15px #2E7F9E solid; 
+}
+
+.contact_bioscoop {
+    margin-top: 3%;
+    width: 30%;
+    height: 500px;
+    background-color: #FF6A00;
+    margin-left: 2.5%;
+    float: left;
+    border-radius: 30px;
+    border: 15px #FF6A00 solid; 
+}
+
+.contact_bioscoop:hover {
+    border: 15px #AF4901 solid; 
+}
+
+.contact_p {
+    font-family:  "Shadows Into Light Two";
+    font-size: 30px;
 }

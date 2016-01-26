@@ -1,0 +1,132 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Reservation for <br />{{ showschemaEntity.getMovie().getTitle() }} on {{ showschemaEntity.getDatetime().format("j F Y H:i") }}</h1>
+
+    <div id="Seats" style="display: none;">
+        {% for row in 1..showschemaEntity.getCinema().getRows() %}
+            {% for rowSeat in 1..showschemaEntity.getCinema().getRowSeats() %}
+                <img src="../images/cinema_stoel_normaal.png" style="width: 20px; height: 20px;" data-row={{ row }} data-row-seat={{ rowSeat }} />
+            {% endfor %}
+            <br />
+
+        {% endfor %}
+
+    </div>
+
+    <div id="Reservations">
+
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.get('get-ordered-seats?showschema_id={{ showschemaEntity.getId() }}', function(results) {
+                for (var i in results) {
+                    var row = results[i].row;
+                    var rowSeat = results[i].rowSeat;
+                    var mySeat = results[i].mySeat;
+
+                    if (mySeat) {
+                        $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").attr("src", "../images/cinema_stoel_selected.png");
+                        $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").addClass("Selected");
+
+                        $("#Reservations").append('<div>Row: '+ row +', RowSeat: '+ rowSeat +'<br /><select data-row='+ row +' data-row-seat='+ rowSeat +'><option value="Adult">Adult 9.95</option><option value="Child">Child 5.95</option><option value="Student">Student 7.95</option></select><br /><br />');
+                    } else {
+                        $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").attr("src", "../images/cinema_stoel_bezet.png");
+                        $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").addClass("Reserved");
+                    }
+                }
+
+                $("#Seats").show();
+            });
+
+            $("#Seats img").on("click", function() {
+                var row = $(this).data("row");
+                var rowSeat = $(this).data("rowSeat");
+
+                if ($("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").hasClass("Reserved")) {
+                    alert("This seat has been reserved");
+
+                    return;
+                } else if ($("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").hasClass("Selected")) {
+                    $.ajax({
+                        url: 'seat?showschema_id={{ showschemaEntity.getId() }}',
+                        method: 'DELETE',
+                        data: {
+                            'row': row,
+                            'rowSeat': rowSeat,
+                        },
+                        success: function() {
+                            $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").attr("src", "../images/cinema_stoel_normaal.png");
+                            $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").removeClass("Selected");
+
+                            $("#Reservations select[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").parent().remove();
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: 'seat?showschema_id={{ showschemaEntity.getId() }}',
+                        method: 'PUT',
+                        data: {
+                            'row': row,
+                            'rowSeat': rowSeat
+                        },
+                        success: function() {
+                            $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").attr("src", "../images/cinema_stoel_selected.png");
+                            $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").addClass("Selected");
+
+                            $("#Reservations").append('<div>Row: '+ row +', RowSeat: '+ rowSeat +'<br /><select data-row='+ row +' data-row-seat='+ rowSeat +'><option value="Adult">Adult 9.95</option><option value="Child">Child 5.95</option><option value="Student">Student 7.95</option></select><br /><br />');
+                        },
+                        error: function() {
+                            alert("Helaas, de stoel is niet meer beschikbaar");
+
+                            $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").attr("src", "../images/cinema_stoel_bezet.png");
+                            $("#Seats img[data-row='"+ row +"'][data-row-seat='"+ rowSeat +"']").addClass("Reserved");
+                        }
+                    });
+                }
+            });
+
+            $("body").on("change", "#Reservations select", function() {
+                var row = $(this).data("row");
+                var rowSeat = $(this).data("rowSeat");
+                var type = $(this).val();
+
+                $.ajax({
+                    url: 'seat?showschema_id={{ showschemaEntity.getId() }}',
+                    method: 'POST',
+                    data: {
+                        'row': row,
+                        'rowSeat': rowSeat,
+                        'type': type
+                    },
+                    success: function() {
+
+                    },
+                    error: function() {
+
+                    }
+                });
+            });
+
+            $("#Cancel").on("click", function() {
+                $.ajax({
+                    url: 'cancel?show_id={{ showschemaEntity.getId() }}',
+                    method: 'DELETE',
+                    success: function() {
+                        document.location.href = '{{ path('movie') }}';
+                    }
+                });
+            });
+        });
+    </script>
+    <br />
+
+
+
+
+    <a href="payment"><button id="Submit">Payment</button></a>
+
+    <button id="Cancel">Cancel</button>
+{% endblock %}

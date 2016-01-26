@@ -32,7 +32,7 @@ echo getNav();
                 </div>
         </li>
         <li>
-            <a href="bioscoop_home.php">
+            <a href="bioscoop/web/">
                 <img src="images/bioscoo_home.jpg"  width="100%" height="100%" draggable="false" />
             </a>
                 <div class="slider-bg-bioscoop"></div>
