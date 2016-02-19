@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="single-price price-two">
-					<img src="images/hpimage.jpg" class="img-responsive inline" alt="Homepagina (image moet gemaakt worden!)">
+					<img src="images/hpimage.jpg" class="img-responsive inline" alt="Homepagina">
                     </div>
                 </div>
                 <div class="col-sm-4">
