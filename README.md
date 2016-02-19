@@ -3,7 +3,7 @@ PHP groep project voor school
 
 <b>Crew:</b>
 <ul>
-	<li>Rick - Restaurant Module | DONE</li>
+	<li>Rick - Restaurant Module</li>
 	<li>Cyndi - Uitgaanscentrum</li>
 	<li>Shivam - Bioscoop Module</li>
 	<li>Maarten - Front-End & Documentatie</li>
