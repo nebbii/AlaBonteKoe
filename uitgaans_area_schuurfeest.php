@@ -27,8 +27,12 @@ echo getNav();
         <a href="#"><button class="rechts">Schuurfeest</button></a>
         <h2 class="main_header">Area Schuurfeest</h2>
         <br /><br />
-        <p style="font-size: 18px; margin: 0 15% 0 15%;">
-            Hier zie je de plattegrond van de Bonte Koe, Als je op 1 van de Area's klik dan kan je precies zien wat het is en waarom het bij ons de beste discotheek van Nederland is!
+
+        <img src="images/schuren.jpg" class="img-responsive" width="50%" width="50%">
+
+        <p style="font-size: 18px; margin: 0 15% 0 15%;"><br />
+            DeBonteKoe was klein begonnen in een schuurtje. Omdat onze oorsprong een schuurfeest was hebben we deze naam dan ook aangehouden. Tijdens ons eerste schuurfeest waren er maar liefst 350 bezoekers! Voor ons was dit een mijlpaal en dit smaakte zeker naar meer.<br/><br/>
+            Na de derde editie bleek al gauw dat de boerenschuur te klein werd, nu konden we natuurlijk een grotere schuur gaan bouwen maar een tent was toch een betere oplossing. Het schuurfeest hedendaags wordt dus georganiseerd in een grote tent met ruimte voor duizenden bezoekers, de sfeer is nog als vanouds, we zijn dus eigenlijk nog steeds een echt schuurfeest.
         </p>
         <br />
         </center>  

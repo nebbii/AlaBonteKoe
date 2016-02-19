@@ -27,8 +27,12 @@ echo getNav();
         <a href="uitgaans_area_schuurfeest.php"><button class="rechts">Schuurfeest</button></a>
         <h2 class="main_header">Area 80's & 90's</h2>
         <br /><br />
-        <p style="font-size: 18px; margin: 0 15% 0 15%;">
-            Hier zie je de plattegrond van de Bonte Koe, Als je op 1 van de Area's klik dan kan je precies zien wat het is en waarom het bij ons de beste discotheek van Nederland is!
+
+        <img src="images/8090.jpg" class="img-responsive" width="50%" width="50%">
+
+        <p style="font-size: 18px; margin: 0 15% 0 15%;"><br>
+            Het is weer zover! Het beste van de jaren 80 en 90 komen er weer aan! Alles in het teken staat van de leukste twee decennia ooit. Zo zullen de VJ&#39;s beelden tonen van alle klassieke momenten van toen. Verlang jij ook zo terug naar die tijd dat je uit je dak ging op &#39;Like a virgin&#39; van Madonna en er vrolijk op los moonwalkte en hiphopte? Het is allemaal weer up to date tijdens We All Love 80&#39;s & 90&#39;s! <br><br>
+            Beleef het totaalplaatje van de muziek, de videobeelden en natuurlijk de ouderwetse goede sfeer door je viewmaster. Zoek dus je beenwarmers op, laat je bakkebaarden staan en kom naar de BonteKoe 80&#39;s & 90&#39;s area!
         </p>
         <br />
         </center>  

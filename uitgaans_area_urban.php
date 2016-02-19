@@ -27,8 +27,15 @@ echo getNav();
         <a href="uitgaans_area_schuurfeest.php"><button class="rechts">Schuurfeest</button></a>
         <h2 class="main_header">Area Urban</h2>
         <br /><br />
-        <p style="font-size: 18px; margin: 0 15% 0 15%;">
-            Hier zie je de plattegrond van de Bonte Koe, Als je op 1 van de Area's klik dan kan je precies zien wat het is en waarom het bij ons de beste discotheek van Nederland is!
+
+        <img src="images/urban.jpg" class="img-responsive" width="50%" width="50%">
+
+        <p style="font-size: 18px; margin: 0 15% 0 15%;"><br />
+            DeBonteKoe is een regelrecht clubparadijs. Het richt zich op een onvergetelijke totaalbeleving, waarbij je van de ene verrassing in de andere valt. De bezoeker kan alle kanten op.
+            In de Main area regeren de Urban-tunes. Funky, Latin, Groovy, Trendy en vooral erg lekker. <br /><br />De residents staan te popelen om de draaitafels te bestieren.
+                <br />
+            Je kunt er ook broodjes bestellen tevens kun je er lekkere cocktails, Bubbels in diverse smaken bestellen.
+            Dit totaalpakket aan party elementen maken van DeBonteKoe de nieuwste clubsensatie van Nederland. Duizenden party addicts uit heel Nederland weten dit uitgaanscentrum te vinden. Niet zo gek, want DeBonteKoe geeft clubben een nieuwe dimensie vol hoogtepunten.
         </p>
         <br />
         </center>  

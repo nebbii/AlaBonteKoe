@@ -25,7 +25,7 @@ echo getNav();
             Bij ons zijn er 3 area's met alle een andere muziek en style: <br />
             Urban, 80's&90's en een schuurfeest. 
             <br><br>
-            Dus waar wacht u nog op kom zosnel mogelijk naar de discotheek bij <b>De Bonte Koe</b>
+            Dus waar wacht u nog op kom zo snel mogelijk naar de discotheek bij <b>De Bonte Koe</b>
 
         </p>
         </center>
@@ -91,14 +91,15 @@ echo getNav();
             <b>Openingstijden:</b>
             </b>
             <br /><br />
-            <b>Vrijdag & Zaterdag:</b><br />
-            20:00 t/m 07:00<br />
+            <b>Vrijdag & Zaterdag</b><br />
+            20:00 t/m 07:00 uur<br />
             <br />
             <b>Zondag</b><br />
-            16:00 t/m 02:00
+            16:00 t/m 02:00 uur
             <br /><br /><br />
-            <b>Toegangsprijs:</b> &euro; 7,50(incl. btw)<br />
-            (Je kan tussen de zalen switchen)
+            <b>Toegangsprijs</b><br />
+            &euro; 7,50 euro (incl. btw)<br />
+            <small>(Je kan tussen de zalen switchen)</small>
             <br /><br />
             <b>Email</b><br />
             <small class="link"><a href="">uitgaan@uitgaancentrumdebontekoe.nl</a></small> 

@@ -23,12 +23,13 @@ echo getNav();
         <h2 class="main_header">Area's</h2>
         <br /><br />
         <p style="font-size: 18px; margin: 0 15% 0 15%;">
-            Hier zie je de plattegrond van de Bonte Koe, Als je op 1 van de Area's klik dan kan je precies zien wat het is en waarom het bij ons de beste discotheek van Nederland is!
+            Hier zie je de plattegrond van de Bonte Koe, Als je op 1 van de Area's klikt dan kan je precies zien wat het is en waarom het bij ons de beste discotheek van Nederland is!
         </p>
         <br />
+        <img class="img-responsive" style="width:100%" id="veg" src="images/uitgaans/plattegrond.jpg" usemap="#veg">
     <div id="veg_demo">
 	<div style="">
-            <img id="veg" src="images/uitgaans/plattegrond.jpg" usemap="#veg" style="width:1200px;" />
+
 	</div>
         <div style="clear:both; height:8px;"></div>
         <div id="selections" style="clear:both;"></div>
