@@ -27,7 +27,7 @@ function main_page()
 function reserveringen_home() 
 {
 	global $conn;
-	$sql = "SELECT * FROM `reserveringen`";
+	$sql = "SELECT * FROM `reserveringen_restaurant`";
 	
 	// pagination
 	if(isset($_GET['order_by']))
@@ -123,6 +123,7 @@ function reserveringen_home()
 							echo "<td>".$row['id']."</td>";
 							echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][naam]' value='".$row['naam']."'></td>";
 							echo "<td><input type='number' maxlength='6' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][aantalpers]' value='".$row['aantalpers']."'></td>";
+                                                        echo "<td><input type='text' maxlength='64' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][email]' value='".$row['email']."'></td>";
 							echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][date]' value='".$row['date']."'></td>";
 							echo "<td><input type='text' onchange='tickupbox({$row['id']})' name='res[{$row['id']}][opmerking]' value='".$row['opmerking']."'></td>";
 							
@@ -147,7 +148,7 @@ function reserveringen_home()
 function reserveringen_form()
 {
 	global $conn;
-	$conn->doQuery("SELECT * FROM `reserveringen`");
+	$conn->doQuery("SELECT * FROM `reserveringen_restaurant`");
 	
 	?>
 		<!-- /section:basics/content.breadcrumbs -->
@@ -189,6 +190,12 @@ function reserveringen_form()
 					  </select>
 					</div>
 				  </div>
+                                    <div class="form-group">
+					<label class="control-label col-sm-2" for="email">Email adres:</label>
+					<div class="col-sm-6">
+					  <input type="text" class="form-control" name="email" id="naam" placeholder="Email adres">
+					</div>
+				  </div>
 				  <div class="form-group">
 					<label class="control-label col-sm-2">Datum &amp; Tijd</label>
 					<div class='col-sm-3'>
@@ -226,7 +233,7 @@ function reserveringen_form()
 function reservering_processform()
 {
 	// begin met sql variabel bouwen
-	$sql = "INSERT INTO `reserveringen`(";
+	$sql = "INSERT INTO `reserveringen_restaurant`(";
 	
 	$_POST['date'] .= " ".$_POST['time'];
 	unset($_POST['time']);

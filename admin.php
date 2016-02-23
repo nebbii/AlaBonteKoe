@@ -47,7 +47,7 @@
 						switch($_GET['q']) 
 						{
 							case 'rest_res':
-							$sql = "UPDATE `reserveringen` SET";
+							$sql = "UPDATE `reserveringen_restaurant` SET";
 							break;
 							case 'rest_menu':
 							$sql = "UPDATE `menukaart` SET";
@@ -76,7 +76,7 @@
 			break;
 			
 			case "delres":
-				$conn->doQuery("DELETE FROM `reserveringen` where `id`={$_GET['id']}");
+				$conn->doQuery("DELETE FROM `reserveringen_restaurant` where `id`={$_GET['id']}");
 			break;
 		}
 	}
@@ -92,7 +92,7 @@
 			  }
 			  if((isset($_GET['a']))&&($_GET['a']=='delres'))
 			  {
-				$conn->doQuery("DELETE FROM `reserveringen` where `id`={$_GET['id']}");
+				$conn->doQuery("DELETE FROM `reserveringen_restaurant` where `id`={$_GET['id']}");
 			  }
 			  $cpath = array(
 				array("head" => "Restaurant", "url" => ""),
@@ -187,6 +187,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
+                <link rel="shortcut icon" href="images/ico/favicon.ico">
 		<title>De Bonte Koe - <?php echo $cpath[count($cpath)-1]["head"] ?></title>
 
 		<meta name="description" content="overview &amp; stats" />
@@ -252,7 +253,7 @@
 					<!-- #section:basics/navbar.layout.brand -->
 					<a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="navbar-brand">
 						<small>
-							<i class="fa fa-leaf"></i>
+                                                    <img src="images/logo/admin_logo.png" class="admin_logo" />
 							Admin Pagina
 						</small>
 					</a>
@@ -281,9 +282,10 @@
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a href="#">
-										<i class="ace-icon fa fa-cog"></i>
-										Settings
+                                                                        <a href="index.php">
+                                                                            <img src="images/logo/favicon.png" class="logo_bonte_koe" />
+										De Bonte Koe
+                                                                            
 									</a>
 								</li>
 
@@ -419,15 +421,7 @@
 							<li class='active'><?php echo $cpath[count($cpath)-1]["head"]; /*echo "<pre>";print_r($cpath);echo "</pre>";*/ ?></li>
 						</ul><!-- /.breadcrumb -->
 
-						<!-- #section:basics/content.searchbox -->
-						<div class='nav-search' id='nav-search'>
-							<form class='form-search'>
-								<span class='input-icon'>
-									<input type='text' placeholder='Search ...' class='nav-search-input' id='nav-search-input' autocomplete='off' />
-									<i class='ace-icon fa fa-search nav-search-icon'></i>
-								</span>
-							</form>
-						</div><!-- /.nav-search -->
+						
 
 						<!-- /section:basics/content.searchbox -->
 					</div>

@@ -19904,3 +19904,7 @@ input.typeahead.scrollable ~ .tt-dropdown-menu {
     display: none !important;
   }
 }
+
+.admin_logo {
+    width: 10px;
+}
