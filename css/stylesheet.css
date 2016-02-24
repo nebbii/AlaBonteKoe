@@ -142,8 +142,8 @@ input[type="submit"]:hover {
 .logo_home {
     position: absolute;
     z-index: 20;
-    margin: 5% 35%;
-    width: 30%;
+    margin: 7% 30%;
+    width: 42%;
     background: url(../images/header_bg.png) ;
     float: left;
     border-radius: 75px;
@@ -174,8 +174,6 @@ input[type="submit"]:hover {
     width:100%;
     z-index:10;
 }
-
-
 
 /* ===========================
    ==== Restaurant Pagina ==== 

@@ -18,17 +18,19 @@ echo getNav();
                 <div class="slider-bg-restaurant"></div>
                 <div class="slider-info">
                         <strong>Het Restaurant</strong>
-                        <p class="slider-text">Dit is het restaurant van de Bonte Koe. Hier zie je het beste koks en de lekkerste eten. Als je naar deze pagina gaat dan kan je ook reserveren en de menukaart zien.</p>
+                        <p class="slider-text">Bij het restaurant van De Bonte Koe vind je de beste koks en het lekkerste eten! Je kan reserveren en zie ook de menukaart!
+                            <!--Dit is het restaurant van de Bonte Koe. Hier zie je het beste koks en de lekkerste eten. Als je naar deze pagina gaat dan kan je ook reserveren en de menukaart zien.--></p>
                 </div>
         </li>
         <li>
             <a href="uitgaan_home.php">
-                <img src="images/colorful-music-speaker-wide.jpg"  width="100%" height="100%"  draggable="false"/>
+                <img src="images/blue.jpg"  width="100%" height="100%"  draggable="false"/>
             </a>
             <div class="slider-bg-uitgaan"></div>
                 <div class="slider-info">
                         <strong>Uitgaanscentrum</strong>
-                        <p class="slider-text">Dit is de Uitgaanscentrum van de Bonte Koe, hier kan je kijken welke zalen wij hebben en wat er te beleven is. Er zijn totaal 3 zalen met allemaal een andere stijl. Dus kom een keertje langs om het te beleven!!!</p>
+                        <p class="slider-text">Bij het uitgaanscentrum van De Bonte Koe zijn er 3 zalen: 80's & 90's, Urban en het Schuurfeest, Dans en maak plezier!
+                            <!--Dit is de Uitgaanscentrum van de Bonte Koe, hier kan je kijken welke zalen wij hebben en wat er te beleven is. Er zijn totaal 3 zalen met allemaal een andere stijl. Dus kom een keertje langs om het te beleven!!!--></p>
                 </div>
         </li>
         <li>
@@ -38,7 +40,8 @@ echo getNav();
                 <div class="slider-bg-bioscoop"></div>
                 <div class="slider-info">
                         <strong>De Bioscoop</strong>
-                        <p class="slider-text">Dit is de Bioscoop van de Bonte Koe, Hier kan je naar de nieuwste films in de beste kwaliteit. Op deze pagina kan je ook gelijk zien hoelaat elke film draait en hoeveel plekken ernog beschikbaar zijn.</p>
+                        <p class="slider-text">Bij De Bonte Koe Bioscoop kan je de nieuwste films zien in HD. Zelf kan je ook zien hoeveel plekken er nog beschikbaar zijn, bestel snel!
+                            <!--Dit is de Bioscoop van de Bonte Koe, Hier kan je naar de nieuwste films in de beste kwaliteit. Op deze pagina kan je ook gelijk zien hoelaat elke film draait en hoeveel plekken ernog beschikbaar zijn.--></p>
                 </div>
         </li>
 </ul>
