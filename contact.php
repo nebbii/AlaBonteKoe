@@ -36,8 +36,8 @@ echo getNav();
 
     <style>
         div.scroll {
-            width: 280px;
-            height: 350px;
+            width: 250px;
+            height: 320px;
             overflow-x: hidden;
             overflow-y: scroll;
             background: transparent;
@@ -101,10 +101,12 @@ echo getNav();
             <div id="panel">Dagelijks open van &nbsp; 16:00uur t/m 23:00uur <hr> Uitgaanscentrum <br />De Bonte Koe <br /> Dorpsstraat 14b <br /> 2481BA Woubrugge <br />0172-518274</div></div></div>
 
     <div class="contact_uitgaan"><center><p class="contact_p"><div id="flip2"><h1>Contact gegevens Uitgaan</h1></div></p></center>
-        <div id="panel2">Openingstijden: &nbsp;&nbsp; Vrijdag & Zaterdag &nbsp; 16:00uur t/m 02:00uur <hr>&nbsp; Toegangsprijs &nbsp; &euro;7,50 euro (inc. btw) &nbsp; 3 zalen: 80's en 90's, Urban & Schuurfeest!</div></div>
+        <div class="scroll">
+            <div id="panel2">Openingstijden: <br /> Vrijdag & Zaterdag <br /> 16:00uur t/m 02:00uur <hr> Toegangsprijs: <br /> &euro;7,50 euro <hr> 3 zalen:<br /> 80's en 90's, Urban & Schuurfeest!</div></div></div>
 
     <div class="contact_bioscoop"><center><p class="contact_p"><div id="flip3"><h1>Contact gegevens Bioscoop</h1></div></p></center>
-        <div id="panel3">Elke snorhaar is welkom</div></div>
+        <div class="scroll">
+            <div id="panel3">Elke snorhaar is welkom</div></div></div>
 </div>
 
 <script>
