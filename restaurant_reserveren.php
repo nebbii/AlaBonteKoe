@@ -8,6 +8,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
 
     <!--[if lt IE 9]>
 	    <script src="js/html5shiv.js"></script>
@@ -72,42 +73,34 @@
                     <div class="row">
                          <div class="col-md-12 col-sm-8">
                             <div class="single-blog blog-details two-column">
-                                <div class="post-thumb">
-                                    
-                                </div>
-								<form name="reserveren" action="restaurant_home2.php" method="post">
-									<table class="reserveer_table">
-										<tr>
-											<th>Naam:</th>
-											<td><input type="text" name="naam" class="reserveer_input"  required></td>
-										</tr>
-										<tr>
-											<th>E-mailadres:</th>
-											<td><input type="email" name="email" class="reserveer_input" required></td>
-										</tr>
-										<tr>
-											<th>Datum:</th>
-											<td><input  type="text" name="date" class="reserveer_input"  id="datepicker" required></td>
-										</tr>
-										<tr>
-											<th>Tijd:</th>
-											<td><input type="time" name="tijd" class="reserveer_input" required></td>
-										</tr>
-										<tr>
-											<th>Aantal Personen:</th>
-											<td><input type="number" name="aantalPers" class="reserveer_input" required></td>
-										</tr>
+                                <div class="post-thumb">                          
+								</div>
+								<div class="form-style-10">
+									<form>
+										<div class="section"><span>1</span>Wie</div>
+										<div class="inner-wrap">
+											<label>Naam <input type="text" name="field1" /></label>
+											<label>E-mail <input type="email" name="field2" /></label>
+										</div>
 
-										<tr>
-											<th>Opmerking:</th>
-											<td><textarea rows="4" name="opmerking" class="reserveer_textarea"></textarea></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-											<input type="submit" name="submit" value="Reserveer"></td>
-										</tr>
-									</table>
-								</form>
+										<div class="section"><span>2</span>Wanneer</div>
+										<div class="inner-wrap">
+											<label>Datum<input type="date" name="field3" /></label>
+											<label>TIjd <input type="time" name="tijd" class="reserveer_input" required></label>
+										</div>
+
+										<div class="section"><span>3</span>Personen</div>
+											<div class="inner-wrap">
+											<label>Aantal personen <input type="text" name="field5" /></label>
+											<label>Opmerking <textarea name="field2"></textarea></label>
+										</div>
+										<div class="button-section">
+										 <input type="submit" name="Sign Up" />
+										 <span class="privacy-policy">
+										 </span>
+										</div>
+									</form>
+								</div>
                             </div>
                         </div>
                     </div>
