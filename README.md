@@ -12,6 +12,6 @@ PHP groep project voor school
 
 <b>To-Do List</b>
 <ul>
-	<li>Homepage mooi maken</li>
+	<li>Pagina's mooi maken</li>
 	<li>De gehele Website responsive maken</li>
 </ul>
