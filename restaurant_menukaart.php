@@ -1,242 +1,67 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang=\"nl\">
 <head>
-	<?php 
-		// navigation
-		//include_once "page_navigation.php";
-		//echo getNav();
-		
-		// restaurant menu build
-		include_once("classes/database.class.php");
-		include_once("include/config.php");
-		
-		$conn = Database::getInstance();
-		
-		// prepare menukaart
-		
-		$sql =	"SELECT 
-					`menukaart`.`id`,
-					`menukaart`.`naam`,
-					`menukaart`.`prijs`,
-					`menukaart`.`soort_id`,
-					`menukaart_soort_id_course`.`id` as courseid
-				FROM 
-					`menukaart`
-				INNER JOIN `menukaart_soort_id` 
-					ON `menukaart`.`soort_id` = `menukaart_soort_id`.`id` 
-				INNER JOIN `menukaart_soort_id_course` 
-					ON `menukaart_soort_id`.`course` = `menukaart_soort_id_course`.`id` 
-				ORDER BY
-					`menukaart`.`id`
-				ASC";
-					
-		$conn->connect(HOST,USER,PASS,DBNAME);
-		
-		$conn->doQuery($sql);
-		
-		while($row = $conn->loadObjectList()) {
-			$result[$row['id']] = array (
-				"id"			=> $row['id'],
-				"naam" 			=> $row['naam'],
-				"prijs"			=> $row['prijs'],
-				"soort_id"		=> $row['soort_id'],
-				"courseid"		=> $row['courseid']
-			);
-		}
-		
-		/* Debug echo */
-		//echo "<pre style='background: white; border-radius: 2px'>Regular visitor, don't look! You're not ready!\n"; print_r($result); echo "</pre>";
-	?>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeBonteKoe</title>
+    <meta charset="iso-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
     <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/prettyPhoto.css" rel="stylesheet"> 
-    <link href="css/animate.min.css" rel="stylesheet"> 
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/responsive.css" rel="stylesheet">    
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-</head><!--/head-->
+    <meta name="author" name="Rick van Koppen">
+    <link rel="shortcut icon" href="../favicon.ico"> 
+    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/ace.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/bootstrap.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/font-awesome.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/jquery-ui.custom.css" type="text/css" /> 
+</head>
+<body class="restaurant">
 
-<body>
-	<nav class="navbar navbar-default">
-		<div class="container">			
-			
-			<!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigatie">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span> 
-			</button>-->
-			<!--<div class="collapse navbar-collapse" id="navigatie">-->
-				<ul class="nav navbar-nav">
-					<li>
-					<a class="navbar-brand" href="index.php">
-						<img src="images/logo3.png" class="img-responsive inline"  height="100" width="100" alt="">
-					</a>
-					</li>
-					<li><a href="restaurant_home.php">Home</a></li>
-					<li><a href="restaurant_menukaart.php">Menukaart</a></li>                       
-					<li><a href="restaurant_reserveren.php">Reserveren</a></li>                       
-				</ul>
-			<!--</div>-->
+<div class="banner_restaurant">
+    <div class="banner_div">
+         <a href="index.php"><img src="images/Logo/Logo3.png" class="banner_img" /></a>
+    </div>
+    <div class="banner_div">
+        <h1 class="banner_header">Restaurant</h1>
+    </div>
+    <div class="banner_buttons">
+        <a href="restaurant_home.php"><button>Home</button></a>
+        <a href="#"><button>Menukaart</button></a>
+        <a href="restaurant_reserveren.php"><button>Reserveren</button></a>
+    </div>
+</div>
+<div class="menukaart_div" >
+    <center>
+        <h2 class="main_header">Het Menukaart</h2>
+        <br />
+		<center><div class="banner_buttons2">
+        <a href="restaurant_menukaart_accordion.php"><button>Voorgerecht</button></a>
+        <a href="restaurant_menukaart_accordion.php"><button>Hoofdgerecht</button></a>
+        <a href="restaurant_menukaart_accordion.php"><button>Nagerecht</button></a>
+        <a href="restaurant_menukaart_accordion.php"><button>Dranken</button></a>
 		</div>
-	</nav><br />
-    <!--/#header-->
-	
-    <section class="container">        
-        <div class="price-table-2">
-            <div class="row">
-                <div class="col-md-12">
-                </div>
-                <div class="col-sm-4 col-md-4">
-					<img src="images/top1.png" class="img-responsive inline" alt="">
-                </div>
-                <div class="col-sm-4 col-md-4">
-                    <div class="single-price price-two">
-					<img src="images/top3.png" class="img-responsive inline" alt="">
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-4">
-                    <div class="single-price price-three">
-						<img src="images/top2.png" class="img-responsive inline" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-  
-	<?php
-		$conn->doQuery("SELECT * FROM `menukaart_soort_id` ORDER BY `id`");
-		while($row = $conn->loadObjectList())
-		{
-			$soort_id[] = $row;
-		}
-		// store courses for later use
-		$conn->doQuery("SELECT * FROM `menukaart_soort_id_course` ORDER BY `id`");
-		while($row = $conn->loadObjectList())
-		{
-			$course_id[] = $row;
-		}
-	?>
-	<?php
-		// 'Menukaart'
-		foreach($course_id as $ckey)
-		{
-		?>
-			<section class="container">        
-				<div class="price-table">
-					<div class="row">
-				<?php
-					// count amount of soorten for pagination
-					$colcount=0;
-					foreach($soort_id as $skey)
-					{
-						if($skey['course']==$ckey['id'])
-						{
-							$colcount++;
-						}
-					}
-					// page creation
-					foreach($soort_id as $skey)
-					{
-						
-						if($skey['course']==$ckey['id'])
-						{
-						?>
-							<?php if ($colcount==1) { ?> <div class="col-sm-12"> <?php } ?>
-							<?php if ($colcount>1) { ?> <div class="col-sm-4">	<?php } ?>
-								<div class="single-price price-one">
-									<div class="table-heading">
-										<p class="plan-name"><?php echo $ckey['coursenaam'] ?></p>
-										<p class="plan-price">
-											<span class="dollar-sign"></span>
-											<span class="price"></span>
-											<span class="month"><?php echo $skey['naam'] ?></span>
-										</p>
-									</div>
-						
-						<?php
-							echo "<ul>";
-							foreach($result as $key)
-							{
-								if(($key['soort_id']==$skey['id'])&&($key['courseid']==$ckey['id']))
-								{
-									// fix price decimals
-									if((strlen(substr($key['prijs'], strpos($key['prijs'], ".")+1))==1)&&strpos($key['prijs'], ".")==true)
-									{
-										$key['prijs'] .= 0;											
-									}
-										elseif(strpos($key['prijs'], ".")==false)
-									{
-										$key['prijs'] .= ",-";
-									}
-									$key['prijs'] = str_replace(".", ",", $key['prijs']);
-									echo "<li>";
-									echo $key['naam'];
-									echo "<span>".$key['prijs']."</span>";
-									echo "</li>";
-									/*echo "<tr>";
-									echo "<td>".$key['naam']."</td>";
-									echo "<td>&nbsp;</td>";
-									echo "<td>&euro;".$key['prijs']."</td>";
-									echo "</tr>";*/
-								}
-							}
-							echo "</ul>";
-						?>
-							</div>
-						</div>
-					<?php
-						}
-					}
-					?>
-						
-					</div>
-				</div>
-			</section>
-		<?php
-			
-		}
-	?>
-	<section class="container">
-        
-        <div class="price-table-2">
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                </div>
-                <div class="col-sm-6 col-md-6	">
-                    <div class="single-price price-two">
-					<img src="images/bot.png" class="img-responsive inline" alt="">
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="single-price price-three">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <br /><br />      
+    
 
-    <footer id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center bottom-separator">
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!--/#footer-->
+    </center>    
 
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/wow.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>   
-</body>
-</html>
+
+<!-- #section:elements.accordion -->
+<div id="accordion" class="accordion-style1 panel-group accordion-style2" style="width: 80%;">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+			<br/><br/>
+		Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.
+			<br/><br/>
+		Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+</div>
+
+
+    <br /><br /><br />
+</div>
+    <script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../bootstrap/assets/js/bootstrap.js" type="text/javascript"></script>
+    <script src="../bootstrap/assets/js/ace/ace.js" type="text/javascript"></script>
+    <script src="../bootstrap/assets/js/ace.js" type="text/javascript"></script>
+<script>
+    jQuery(function($) {
+				
+                       }
+</script>

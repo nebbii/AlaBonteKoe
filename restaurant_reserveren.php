@@ -8,6 +8,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/stylesheet.css" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="../bootstrap/assets/css/ace.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/bootstrap.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/font-awesome.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/jquery-ui.custom.css" type="text/css" /> 
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 
     <!--[if lt IE 9]>
 	    <script src="js/html5shiv.js"></script>
@@ -21,28 +28,19 @@
 </head><!--/head-->
 
 <body>
-	<nav class="navbar navbar-default">
-		<div class="container">			
-			
-			<!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigatie">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span> 
-			</button>-->
-			<!--<div class="collapse navbar-collapse" id="navigatie">-->
-				<ul class="nav navbar-nav">
-					<li>
-					<a class="navbar-brand" href="index.php">
-						<img src="images/logo3.png" class="img-responsive inline"  height="100" width="100" alt="">
-					</a>
-					</li>
-					<li><a href="restaurant_home.php">Home</a></li>
-					<li><a href="restaurant_menukaart.php">Menukaart</a></li>                       
-					<li><a href="restaurant_reserveren.php">Reserveren</a></li>                       
-				</ul>
-			<!--</div>-->
-		</div>
-	</nav><br />
+<div class="banner_restaurant">
+    <div class="banner_div">
+        <img src="images/Logo/Logo3.png" class="banner_img" />
+    </div>
+    <div class="banner_div">
+        <h1 class="banner_header">Restaurant Module</h1>
+    </div>
+    <div class="banner_buttons">
+        <a href="restaurant_home.php"><button>Home</button></a>
+        <a href="restaurant_menukaart.php"><button>Menukaart</button></a>
+        <a href="restaurant_reserveren.php"><button>Reserveren</button></a>
+    </div>
+</div>
     <!--/#header-->
     <section class="container">        
         <div class="price-table-2">
@@ -75,6 +73,7 @@
                                 <div class="post-thumb">
                                     
                                 </div>
+								<div id = "formulierhulp">
 								<form name="reserveren" action="restaurant_home2.php" method="post">
 									<table class="reserveer_table">
 										<tr>
@@ -108,11 +107,13 @@
 										</tr>
 									</table>
 								</form>
+								</div>
                             </div>
                         </div>
                     </div>
                 </div></br></br>	
                 <div class="col-md-3 col-sm-12">
+				<div id = "formulierhulp">
                     <div class="sidebar blog-sidebar">
                         <div class="sidebar-item  recent"> 
 							<br>
@@ -131,6 +132,7 @@
                         </div>
                     </div>
                 </div>
+				</div>
             </div>
         </div>
     </section>

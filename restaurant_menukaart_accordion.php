@@ -11,10 +11,14 @@
     <meta charset="iso-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
     <meta name="description" content="">
-    <meta name="author" name="Rick van Koppen">
+    <meta name="author" name="Rick van Koppen/ Maarten Wijsman">
     <link rel="shortcut icon" href="../favicon.ico"> 
     <link rel="stylesheet" href="css/stylesheet.css" type="text/css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="../bootstrap/assets/css/ace.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/bootstrap.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/font-awesome.css" type="text/css" /> 
+    <link rel="stylesheet" href="../bootstrap/assets/css/jquery-ui.custom.css" type="text/css" /> 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>
@@ -92,7 +96,7 @@
         };
   </script>
 </head>
-<body>
+	<body class="restaurant">
 
 <div class="banner_restaurant">
     <div class="banner_div">
@@ -103,7 +107,7 @@
     </div>
     <div class="banner_buttons">
         <a href="restaurant_home.php"><button>Home</button></a>
-        <a href="#"><button>Menukaart</button></a>
+        <a href="restaurant_menukaart.php"><button>Menukaart</button></a>
         <a href="restaurant_reserveren.php"><button>Reserveren</button></a>
     </div>
 </div>
