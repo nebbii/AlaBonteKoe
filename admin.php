@@ -173,6 +173,13 @@
 				);
 			  $pagename = "Nieuwe Bioscoop";
 			break;
+			case "bioscoop_film":
+				$cpath = array(
+				array("head" => "Bioscoop", "url" => "?q=bioscoop"),
+				array("head" => "Bioscoop Filmlijst", "url" => "?q=bioscoop_film")
+				);
+			  $pagename = "Nieuwe Films";
+			break;
 		
 		/* Admin Panel */
 			default:
@@ -463,6 +470,9 @@
 								break;
 								  case "bioscoop_new":
 								    bioscoop_form();
+								  break;
+								  case "bioscoop_film":
+								    bioscoop_film();
 								  break;
 							
 								/* Admin Panel */

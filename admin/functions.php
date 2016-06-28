@@ -658,6 +658,8 @@ function bioscoop_home(){
 							"<div class='thumbnail'>".
 							  "<img src='data:image/jpeg;base64,".base64_encode($row['foto'])."'/></a>".
 							  "<h4>".$row['naam']." ".
+							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop_film&id={$row['id']}'><span class='glyphicon glyphicon-film text-warning'></span></a>".
+							  "&nbsp;".
 							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop_new&a=editres&id={$row['id']}'><span class='glyphicon glyphicon-edit text-success'></span></a>".
 							  "&nbsp;".
 							  "<a href='".$_SERVER['PHP_SELF']."?q=bioscoop&a=delres&id={$row['id']}'><span class='glyphicon glyphicon-remove-sign text-danger'></span></a>".
@@ -780,6 +782,59 @@ function bioscoop_form()
 		</div><!-- /.page-content -->
 	<?php
 	}
+}
+
+function bioscoop_film() {
+	global $conn;
+	$zaalid = $_GET['id'];
+	$sql = "SELECT * from `films`";
+	$conn->doQuery($sql);
+	
+	?>
+	<!-- /section:basics/content.breadcrumbs -->
+		<div class='page-content'>
+			<div class='page-header'>
+				<h1>
+					Films voor Zaal #<?php echo $zaalid; ?>
+					<small>
+						<i class='ace-icon fa fa-angle-double-right'></i>
+						Bioscopen, films &amp; meer
+					</small>
+				</h1>
+			</div><!-- /.page-header -->
+			<div class="container col-sm-12">
+			<?php 
+					// table notification box
+					if(isset($_GET['a']))
+					{	
+						switch($_GET['a']) 
+						{
+							case "submit":
+								echo "<h4>Nieuw item aangemaakt.</h4>";
+							break;
+							case "edit":
+								echo "<h4>Wijzigingen opgeslagen.</h4>";
+							break;
+							case "delres":
+								echo "<h4>Item verwijderd.</h4>";
+							break;
+						}
+					}
+				?>
+			<div class='col-sm-12'><a href="<?php echo $_SERVER['PHP_SELF']."?q=bioscoop_film_new&zaalid=".$zaalid; ?>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nieuwe Film</a></div>
+				<?php
+				while($row = $conn->loadObjectList() ) { 
+					echo "<div class='col-sm-4'>".
+							"<a class='' href='#'>".
+							"<div class='thumbnail'>".
+							  "<img src='data:image/jpeg;base64,".base64_encode($row['filmposter'])."'/></a>".
+							  "<h4>".$row['titel']." ".
+							"</div>".
+						"</div>";
+				}
+			  ?>
+			</div>
+			<?php
 }
 
 function bioscoop_processform()
